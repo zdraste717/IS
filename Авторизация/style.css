@@ -1,0 +1,13 @@
+body {
+    background-color: #fff;
+
+  }
+  
+  form input::placeholder {
+    color: #aaa;
+  }
+  
+  h2 {
+    font-weight: bold;
+  }
+  
