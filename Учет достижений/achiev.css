@@ -1,0 +1,33 @@
+body {
+    background: linear-gradient(to right, #e0eafc, #cfdef3);
+  }
+  
+  .card {
+    background-color: #ffffffee;
+  }
+  
+  .section-tile {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #fff;
+    color: #333;
+    border: 1px solid transparent;
+  }
+  
+  .section-tile:hover {
+    background-color: #172b4d; /* Синий фон */
+    color: #fff; /* Белый текст */
+    border-color: #172b4d;
+    transform: translateY(-4px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .achievement-section {
+    animation: fadeIn 0.5s ease;
+  }
+  
+  @keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+  

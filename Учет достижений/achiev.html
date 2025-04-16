@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Профиль студента</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="achiev.css">
+</head>
+
+<body class="bg-light">
+
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card shadow-lg rounded-4 position-relative p-4">
+
+                    <!-- Кнопка Выйти -->
+                    <a href="../Авторизация/index.html"
+                        class="btn btn-outline-danger position-absolute top-0 end-0 m-3">Выйти</a>
+
+                    <!-- Блок профиля -->
+                    <div class="d-flex align-items-center gap-4 mb-4">
+                        <img src="./achiev_photo/icon.jpg" alt="Аватар" class="rounded-circle"
+                            style="width: 120px; height: 120px; object-fit: cover;">
+                        <div>
+                            <h3 class="fw-bold mb-1">Иван Петров</h3>
+                            <p class="mb-1 text-muted">Студент 4 курса</p>
+                            <p class="mb-1">Факультет: Информационные технологии</p>
+                            <p class="mb-1">Группа: ИСАУ-41</p>
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <!-- Карточки-достижения -->
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-4">
+                            <div class="card section-tile text-center py-3" onclick="showSection('science')">
+                                <h6 class="mb-0">Научные достижения</h6>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card section-tile text-center py-3" onclick="showSection('creative')">
+                                <h6 class="mb-0">Творческие достижения</h6>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card section-tile text-center py-3" onclick="showSection('sport')">
+                                <h6 class="mb-0">Спортивные достижения</h6>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card section-tile text-center py-3" onclick="showSection('sport')">
+                                <h6 class="mb-0">Различный уровень</h6>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card section-tile text-center py-3" onclick="showSection('sport')">
+                                <h6 class="mb-0">Публикации</h6>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card section-tile text-center py-3" onclick="showSection('sport')">
+                                <h6 class="mb-0">Студенческое самоуправление</h6>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card section-tile text-center py-3" onclick="showSection('sport')">
+                                <h6 class="mb-0">Иные достижения</h6>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card section-tile text-center py-3" onclick="showSection('sport')">
+                                <h6 class="mb-0">Освоение доп. программ</h6>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card section-tile text-center py-3" onclick="showSection('sport')">
+                                <h6 class="mb-0">Опыт работы</h6>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Скрытые секции: Научные достижения -->
+                    <div id="science" class="achievement-section d-none mt-4">
+                        <h5 class="fw-bold mb-3">Научные достижения</h5>
+                      
+                        <div class="accordion" id="scienceAccordion">
+                          <!-- Первый шаблон достижений -->
+                          <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                                Проект: Исследование ИИ в образовании
+                              </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#scienceAccordion">
+                              <div class="accordion-body">
+                                <p><strong>Название НИР:</strong> Исследование применения ИИ в образовании</p>
+                                <p><strong>Заказчик:</strong> Минобрнауки</p>
+                                <p><strong>Уровень программы:</strong> Федеральный</p>
+                                <p><strong>Название проекта:</strong> EdTech AI Lab</p>
+                                <p><strong>Дата начала:</strong> 01.09.2023</p>
+                                <p><strong>Дата окончания:</strong> 31.12.2023</p>
+                                <p><strong>Результат:</strong> Опубликована статья, внедрение прототипа</p>
+                              </div>
+                            </div>
+                          </div>
+                      
+                          <!-- Второй шаблон (ещё одно достижение) -->
+                          <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingTwo">
+                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                                Проект: Анализ данных в экологии
+                              </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#scienceAccordion">
+                              <div class="accordion-body">
+                                <p><strong>Название НИР:</strong> Анализ загрязнителей воздуха</p>
+                                <p><strong>Заказчик:</strong> Институт экологии</p>
+                                <p><strong>Уровень программы:</strong> Региональный</p>
+                                <p><strong>Название проекта:</strong> CleanAirAnalytics</p>
+                                <p><strong>Дата начала:</strong> 15.01.2024</p>
+                                <p><strong>Дата окончания:</strong> 15.04.2024</p>
+                                <p><strong>Результат:</strong> Создан отчёт, получен грант</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+
+                    <div id="creative" class="achievement-section d-none mt-4">
+                        <h5 class="fw-bold">Творческие достижения</h5>
+                        <ul>
+                            <li>Победа в конкурсе дизайна интерфейсов</li>
+                            <li>Фотопроект "Образ студента Дубны"</li>
+                        </ul>
+                    </div>
+
+                    <div id="sport" class="achievement-section d-none mt-4">
+                        <h5 class="fw-bold">Спортивные достижения</h5>
+                        <ul>
+                            <li>1 место — турнир по волейболу</li>
+                            <li>Сборная университета по лёгкой атлетике</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS -->
+    <script>
+        function showSection(id) {
+            // Скрыть все секции
+            const sections = document.querySelectorAll('.achievement-section');
+            sections.forEach(section => section.classList.add('d-none'));
+
+            // Показать выбранную
+            const selected = document.getElementById(id);
+            selected.classList.remove('d-none');
+
+            // Скролл к секции
+            selected.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
