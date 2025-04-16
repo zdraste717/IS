@@ -1,31 +1,30 @@
-/* Базовые стили */
 body {
     background-color: #f0f0f0;
     font-family: 'Inter', sans-serif;
-  }
-  
-  .navbar .bi {
+}
+
+.navbar .bi {
     font-size: 1.4rem;
     color: #172b4d;
     cursor: pointer;
     transition: color 0.2s ease;
-  }
-  
-  .navbar .bi:hover {
+}
+
+.navbar .bi:hover {
     color: #0d6efd;
-  }
-  
-  /* Ссылки меню (десктоп) */
-  .nav-link {
+}
+
+/* Ссылки меню (десктоп) */
+.nav-link {
     position: relative;
     font-weight: 400;
     font-size: 13px;
     padding-bottom: 5px;
     transition: color 0.3s ease;
-  }
-  
-  /* Подчеркивание активной ссылки */
-  .nav-link::after {
+}
+
+/* Подчеркивание активной ссылки */
+.nav-link::after {
     content: "";
     position: absolute;
     bottom: 0;
@@ -35,51 +34,174 @@ body {
     background-color: #172b4d;
     border-radius: 2px;
     transition: width 0.4s ease;
-  }
-  
-  .nav-link.active::after {
+}
+
+.nav-link.active::after {
     width: 100%;
-  }
-  
-  .nav-link:hover::after {
+}
+
+.nav-link:hover::after {
     width: 100%;
-  }
-  
-  /* 📱 Мобильная адаптация */
-  @media (max-width: 991.98px) {
+}
+
+/* Мобильная адаптация */
+@media (max-width: 991.98px) {
     .navbar-nav {
-      padding: 0;
-      margin: 0;
+        padding: 0;
+        margin: 0;
     }
-  
+
     .navbar-nav .nav-item {
-      width: 100%;
-      border-bottom: 1px solid #dee2e6; /* светло-серая линия */
+        width: 100%;
+        border-bottom: 1px solid #dee2e6;
     }
-  
+
     .navbar-nav .nav-item:last-child {
-      border-bottom: none;
+        border-bottom: none;
     }
-  
+
     .navbar-nav .nav-link {
-      display: block;
-      width: 100%;
-      padding: 12px 16px;
-      color: #000;
+        display: block;
+        width: 100%;
+        padding: 12px 16px;
+        color: #000;
     }
-  
+
     .navbar-nav .nav-link.active {
-      background-color: #1b2b4b !important;
-      color: #ffffff !important;
-      border-radius: 0;
+        background-color: #1b2b4b !important;
+        color: #ffffff !important;
+        border-radius: 0;
     }
-  
+
     .navbar-nav .nav-link::after {
-      display: none !important;
+        display: none !important;
+    }
+}
+
+.custom-toggler {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(23,43,77, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+.card {
+    border: none;
+    border-radius: 12px;
+    background-color: #ffffff;
+    padding: 20px;
+}
+
+.card-title {
+    font-weight: 600;
+    color: #1b2b4b;
+}
+
+#calendar {
+    font-size: 14px;
+}
+
+/* Дополнительно для FullCalendar */
+.fc-toolbar.fc-header-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1.5rem;
+}
+
+.fc-toolbar-title {
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: #1b2b4b;
+}
+
+.fc .fc-button {
+    background-color: #1b2b4b;
+    border: none;
+    border-radius: 6px;
+    padding: 0.4em 1em;
+    font-size: 0.9rem;
+}
+
+.fc .fc-button-primary:not(:disabled).fc-button-active,
+.fc .fc-button-primary:not(:disabled):hover {
+    background-color: #0e1b30;
+}
+
+/* Цвет текста чисел и дней недели */
+.fc-daygrid-day-number,
+.fc-col-header-cell-cushion {
+    color: #172b4d;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+/* Ячейки календаря */
+.fc-daygrid-day-frame {
+    padding: 10px;
+    transition: background-color 0.2s ease;
+    border-radius: 8px;
+}
+
+.fc-daygrid-day:hover .fc-daygrid-day-frame {
+    background-color: #f1f3f5;
+}
+
+/* Скрытые дни следующего/предыдущего месяца*/
+.fc-daygrid-day.fc-day-other {
+    background-color: #f8f9fa;
+    color: #adb5bd;
+}
+
+/* Сегодняшняя дата */
+.fc-day-today {
+    background-color: #fff7e6 !important;
+    border-radius: 8px;
+    box-shadow: inset 0 0 0 2px #172b4d;
+}
+
+/* Окошко */
+
+.fc-popup {
+    position: absolute;
+    z-index: 999;
+    background: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    width: 260px;
+    font-size: 14px;
+    transition: 0.2s ease;
+}
+
+.fc-popup h6 {
+    font-weight: 600;
+    color: #172b4d;
+}
+
+.fc-popup .btn {
+    background-color: #1b2b4b;
+    color: #fff;
+    border: none;
+}
+
+.fc-popup .btn:disabled {
+    background-color: #adb5bd;
+}
+
+.fc-popup::after {
+    content: "";
+    position: absolute;
+    top: -12px;
+    left: 30px;
+    border-width: 0 10px 10px;
+    border-style: solid;
+    border-color: transparent transparent #fff transparent;
+}
+
+@media (max-width: 576px) {
+    .fc-popup {
+      width: 90%;
+      max-width: 320px;
     }
   }
-  
-  .custom-toggler {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(23,43,77, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
-  }
-  

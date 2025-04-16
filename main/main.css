@@ -1,4 +1,3 @@
-/* Базовые стили */
 body {
     background-color: #f0f0f0;
     font-family: 'Inter', sans-serif;
@@ -45,7 +44,7 @@ body {
     width: 100%;
   }
   
-  /* 📱 Мобильная адаптация */
+  /* Мобильная адаптация */
   @media (max-width: 991.98px) {
     .navbar-nav {
       padding: 0;
@@ -54,7 +53,7 @@ body {
   
     .navbar-nav .nav-item {
       width: 100%;
-      border-bottom: 1px solid #dee2e6; /* светло-серая линия */
+      border-bottom: 1px solid #dee2e6; 
     }
   
     .navbar-nav .nav-item:last-child {
