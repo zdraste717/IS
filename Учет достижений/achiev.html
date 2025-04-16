@@ -42,42 +42,42 @@
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <div class="card section-tile text-center py-3" onclick="showSection('creative')">
-                                <h6 class="mb-0">Творческие достижения</h6>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
                             <div class="card section-tile text-center py-3" onclick="showSection('sport')">
                                 <h6 class="mb-0">Спортивные достижения</h6>
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <div class="card section-tile text-center py-3" onclick="showSection('sport')">
+                            <div class="card section-tile text-center py-3" onclick="showSection('creative')">
+                                <h6 class="mb-0">Творческие достижения</h6>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card section-tile text-center py-3" onclick="showSection('various_level')">
                                 <h6 class="mb-0">Различный уровень</h6>
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <div class="card section-tile text-center py-3" onclick="showSection('sport')">
+                            <div class="card section-tile text-center py-3" onclick="showSection('publication')">
                                 <h6 class="mb-0">Публикации</h6>
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <div class="card section-tile text-center py-3" onclick="showSection('sport')">
+                            <div class="card section-tile text-center py-3" onclick="showSection('s_government')">
                                 <h6 class="mb-0">Студенческое самоуправление</h6>
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <div class="card section-tile text-center py-3" onclick="showSection('sport')">
+                            <div class="card section-tile text-center py-3" onclick="showSection('other_achiev')">
                                 <h6 class="mb-0">Иные достижения</h6>
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <div class="card section-tile text-center py-3" onclick="showSection('sport')">
+                            <div class="card section-tile text-center py-3" onclick="showSection('add_program')">
                                 <h6 class="mb-0">Освоение доп. программ</h6>
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <div class="card section-tile text-center py-3" onclick="showSection('sport')">
+                            <div class="card section-tile text-center py-3" onclick="showSection('experience')">
                                 <h6 class="mb-0">Опыт работы</h6>
                             </div>
                         </div>
@@ -86,88 +86,235 @@
                     <!-- Скрытые секции: Научные достижения -->
                     <div id="science" class="achievement-section d-none mt-4">
                         <h5 class="fw-bold mb-3">Научные достижения</h5>
-                      
                         <div class="accordion" id="scienceAccordion">
-                          <!-- Первый шаблон достижений -->
-                          <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingOne">
-                              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
-                                Проект: Исследование ИИ в образовании
-                              </button>
-                            </h2>
-                            <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#scienceAccordion">
-                              <div class="accordion-body">
-                                <p><strong>Название НИР:</strong> Исследование применения ИИ в образовании</p>
-                                <p><strong>Заказчик:</strong> Минобрнауки</p>
-                                <p><strong>Уровень программы:</strong> Федеральный</p>
-                                <p><strong>Название проекта:</strong> EdTech AI Lab</p>
-                                <p><strong>Дата начала:</strong> 01.09.2023</p>
-                                <p><strong>Дата окончания:</strong> 31.12.2023</p>
-                                <p><strong>Результат:</strong> Опубликована статья, внедрение прототипа</p>
-                              </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseOne">
+                                        Проект: Исследование ИИ в образовании
+                                    </button>
+                                </h2>
+                                <div id="collapseOne" class="accordion-collapse collapse show"
+                                    data-bs-parent="#scienceAccordion">
+                                    <div class="accordion-body">
+                                        <p><strong>Название НИР:</strong> Исследование применения ИИ в образовании</p>
+                                        <p><strong>Заказчик:</strong> Минобрнауки</p>
+                                        <p><strong>Уровень программы:</strong> Федеральный</p>
+                                        <p><strong>Название проекта:</strong> EdTech AI Lab</p>
+                                        <p><strong>Дата начала:</strong> 01.09.2023</p>
+                                        <p><strong>Дата окончания:</strong> 31.12.2023</p>
+                                        <p><strong>Результат:</strong> Опубликована статья, внедрение прототипа</p>
+                                    </div>
+                                </div>
                             </div>
-                          </div>
-                      
-                          <!-- Второй шаблон (ещё одно достижение) -->
-                          <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingTwo">
-                              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
-                                Проект: Анализ данных в экологии
-                              </button>
-                            </h2>
-                            <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#scienceAccordion">
-                              <div class="accordion-body">
-                                <p><strong>Название НИР:</strong> Анализ загрязнителей воздуха</p>
-                                <p><strong>Заказчик:</strong> Институт экологии</p>
-                                <p><strong>Уровень программы:</strong> Региональный</p>
-                                <p><strong>Название проекта:</strong> CleanAirAnalytics</p>
-                                <p><strong>Дата начала:</strong> 15.01.2024</p>
-                                <p><strong>Дата окончания:</strong> 15.04.2024</p>
-                                <p><strong>Результат:</strong> Создан отчёт, получен грант</p>
-                              </div>
-                            </div>
-                          </div>
                         </div>
-                      </div>
-                      
-
-                    <div id="creative" class="achievement-section d-none mt-4">
-                        <h5 class="fw-bold">Творческие достижения</h5>
-                        <ul>
-                            <li>Победа в конкурсе дизайна интерфейсов</li>
-                            <li>Фотопроект "Образ студента Дубны"</li>
-                        </ul>
                     </div>
-
+                    <!--Скрытые секции: Спортивные достижения-->
                     <div id="sport" class="achievement-section d-none mt-4">
-                        <h5 class="fw-bold">Спортивные достижения</h5>
-                        <ul>
-                            <li>1 место — турнир по волейболу</li>
-                            <li>Сборная университета по лёгкой атлетике</li>
-                        </ul>
+                        <h5 class="fw-bold mb-3">Спортивные достижения</h5>
+                        <div class="accordion" id="sportAccordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingTwo">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseTwo">
+                                        Чемпионат по плаванию
+                                    </button>
+                                </h2>
+                                <div id="collapseTwo" class="accordion-collapse collapse show"
+                                    data-bs-parent="#sportAccordion">
+                                    <div class="accordion-body">
+                                        <p><strong>Вид спорта:</strong> Плавание</p>
+                                        <p><strong>Участие в соревнованиях:</strong> XVI универсиада студенческого
+                                            спорта университета "Дубна" и филиалов</p>
+                                        <p><strong>Дата соревнований:</strong> 24.04.2021 0:00:00</p>
+                                        <p><strong>Примечание:</strong> Дистанция 50 н/с - Первое место</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
+                    <!--Скрытые секции: Творческие достижения-->
+                    <div id="creative" class="achievement-section d-none mt-4">
+                        <h5 class="fw-bold mb-3">Спортивные достижения</h5>
+                        <div class="accordion" id="creativeAccordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingThree">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseThree">
+                                        Фотограф
+                                    </button>
+                                </h2>
+                                <div id="collapseThree" class="accordion-collapse collapse show"
+                                    data-bs-parent="#creativeAccordion">
+                                    <div class="accordion-body">
+                                        <p><strong>Вид деятельности:</strong> Фотограф</p>
+                                        <p><strong>Участие в конкурсах/фестивалях:</strong> Участвовал в "GOOD DAY" как
+                                            фотограф</p>
+                                        <p><strong>Дата:</strong> 2021-04-01 00:00:00</p>
+                                        <p><strong>Примечание:</strong> Есть</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Скрытые секции: Различный уровень-->
+                    <div id="various_level" class="achievement-section d-none mt-4">
+                        <h5 class="fw-bold mb-3">Различный уровень</h5>
+                        <div class="accordion" id="variousAccordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingFour">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseFour">
+                                        Фотограф
+                                    </button>
+                                </h2>
+                                <div id="collapseFour" class="accordion-collapse collapse show"
+                                    data-bs-parent="#variousAccordion">
+                                    <div class="accordion-body">
+                                        <p><strong>Вид мероприятия:</strong> Соревнование</p>
+                                        <p><strong>Уровень мероприятия:</strong> Региональный</p>
+                                        <p><strong>Название мероприятия:</strong> Конкурс молодежных научно-технических
+                                            проектов ОЭЗ «Дубна» и Объединенного института ядерных исследований</p>
+                                        <p><strong>Место проведения:</strong> "ОЭЗ" Дубна</p>
+                                        <p><strong>Дата:</strong> 2020-03-19 00:00:00</p>
+                                        <p><strong>Результат:</strong> В категории Сложные технические системы среди
+                                            студентов, работа удостоилась особого внимания (прикреплена ссылка с
+                                            новостью oezdubna)</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="publication" class="achievement-section d-none mt-4">
+                        <h5 class="fw-bold mb-3">Публикации</h5>
+                        <div class="accordion" id="publicAccordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingFive">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseFive">
+                                        Фотограф
+                                    </button>
+                                </h2>
+                                <div id="collapseFive" class="accordion-collapse collapse show"
+                                    data-bs-parent="#publicAccordion">
+                                    <div class="accordion-body">
+                                        <p><strong>Соавтор(ы):</strong> Булавин М.В., Галушко А.В., Алтынов А.В.,</p>
+                                        <p><strong>Полное название работы:</strong> Система автоматизации
+                                            транспортировки высокорадиоактивных образцов облучательной установки
+                                            реактора ИБР-2</p>
+                                        <p><strong>Выходные данные:</strong> Physics of Particles and Nuclei Letters
+                                            12.04.2021</p>
+                                        <p><strong>Форма работы:</strong> Электронный</p>
+                                        <p><strong>Тип издания:</strong> статья</p>
+                                        <p><strong>Статья входит в перечень ВАК, РИНЦ и т.д.:</strong> -</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="s_government" class="achievement-section d-none mt-4">
+                        <h5 class="fw-bold mb-3">Студенческое самоуправление</h5>
+                        <div class="accordion" id="governmentAccordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingSix">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseSix">
+                                        Староста группы
+                                    </button>
+                                </h2>
+                                <div id="collapseSix" class="accordion-collapse collapse show"
+                                    data-bs-parent="#governmentAccordion">
+                                    <div class="accordion-body">
+                                        <p><strong>Орган студенческого самоуправления:</strong> Институт САУ</p>
+                                        <p><strong>Вид деятельности:</strong> Староста группы</p>
+                                        <p><strong>Период деятельности:</strong> 01.02.2021-30.06.2021</p>
+                                        <p><strong>Примечание:</strong> Служебка</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="other_achiev" class="achievement-section d-none mt-4">
+                        <h5 class="fw-bold mb-3">Иные достижения</h5>
+                        <div class="accordion" id="otherAccordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingSeven">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseSeven">
+                                        Участие в X Всероссийском форуме
+                                    </button>
+                                </h2>
+                                <div id="collapseSeven" class="accordion-collapse collapse show"
+                                    data-bs-parent="#otherAccordion">
+                                    <div class="accordion-body">
+                                        <p><strong>Вид деятельности:</strong> Участие в X Всероссийском форуме молодых
+                                            лидеров технологических изменений BreakPoint 2021,даты: 17-19 апреля 2021
+                                            года</p>
+                                        <p><strong>Достижение:</strong> Сертификат участника</p>
+                                        <p><strong>Дата:</strong> 2021-04-17 00:00:00</p>
+                                        <p><strong>Примечание:</strong> Сертификат участника</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="add_program" class="achievement-section d-none mt-4">
+                        <h5 class="fw-bold mb-3">Освоение доп. программ</h5>
+                        <div class="accordion" id="addAccordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingEight">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseEight">
+                                        Повышение квалификации
+                                    </button>
+                                </h2>
+                                <div id="collapseEight" class="accordion-collapse collapse show"
+                                    data-bs-parent="#addAccordion">
+                                    <div class="accordion-body">
+                                        <p><strong>Название программы:</strong> "Консультант Плюс| Технология ТОП"</p>
+                                        <p><strong>Вид обучения:</strong> Повышение квалификации</p>
+                                        <p><strong>Кол-во часов:</strong> -</p>
+                                        <p><strong>Сроки обучения:</strong> 2019-10-18 00:00:00</p>
+                                        <p><strong>Место обучения:</strong> Университет "Дубна"</p>
+                                        <p><strong>Название и реквизиты:</strong> Дополнительные программы</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="experience" class="achievement-section d-none mt-4">
+                        <h5 class="fw-bold mb-3">Опыт работы</h5>
+                        <div class="accordion" id="experienceAccordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingNine">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseNine">
+                                        ПАО "Тензор"
+                                    </button>
+                                </h2>
+                                <div id="collapseNine" class="accordion-collapse collapse show"
+                                    data-bs-parent="#experienceAccordion">
+                                    <div class="accordion-body">
+                                        <p><strong>Место работы:</strong> ПАО "Тензор"</p>
+                                        <p><strong>Вид работы:</strong> Трудоустройство</p>
+                                        <p><strong>Должность:</strong> Инженер-конструктор</p>
+                                        <p><strong>Сроки:</strong> 2020-01-23 00:00:00</p>
+                                        <p><strong>Обязанности:</strong> Разрабатывает эскизные, технические и рабочие
+                                            проекты особо сложных, сложных и средней сложности изделий, используя
+                                            средства автоматизации проектирования, передовой опыт разработки
+                                            конкурентоспособных изделий.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- JS -->
-    <script>
-        function showSection(id) {
-            // Скрыть все секции
-            const sections = document.querySelectorAll('.achievement-section');
-            sections.forEach(section => section.classList.add('d-none'));
-
-            // Показать выбранную
-            const selected = document.getElementById(id);
-            selected.classList.remove('d-none');
-
-            // Скролл к секции
-            selected.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-    </script>
-
+    <script src="./showSection.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
