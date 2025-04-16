@@ -1,0 +1,9 @@
+/* Цвет фона всей страницы */
+body {
+    background-color: #f0f0f0; /* светло-серый фон */
+}
+
+/* Цвет фона шапки */
+header {
+    background-color: #ffffff; /* белый фон */
+}
