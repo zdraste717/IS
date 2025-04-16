@@ -1,9 +1,64 @@
-/* Цвет фона всей страницы */
 body {
-    background-color: #f0f0f0; /* светло-серый фон */
+    background-color: #f0f0f0;
+    font-family: 'Inter', sans-serif;
 }
 
-/* Цвет фона шапки */
-header {
-    background-color: #ffffff; /* белый фон */
+header .navbar {
+    background-color: #ffffff;
+    font-family: 'Inter', sans-serif;
+}
+
+.navbar a {
+    color: #000 !important;
+    font-weight: 400;
+    font-size: 13px;
+}
+
+.navbar-icons {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.navbar-icons i {
+    color: #000;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.navbar-icons i:hover {
+    color: #172b4d;
+}
+
+/* Ссылки меню */
+.nav-link {
+    position: relative;
+    font-weight: 400;
+    font-size: 13px;
+    padding-bottom: 5px;
+    transition: color 0.3s ease;
+    overflow: hidden;
+}
+
+/* Линия под активной ссылкой — с анимацией */
+.nav-link::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background-color: #172b4d;
+    border-radius: 2px;
+    transition: width 0.4s ease;
+}
+
+/* Показываем линию только у активной */
+.nav-link.active::after {
+    width: 100%;
+}
+
+/* Можно добавить hover-анимацию по желанию */
+.nav-link:hover::after {
+    width: 100%;
 }
