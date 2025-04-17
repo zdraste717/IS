@@ -1,6 +1,28 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .models import Student
+from .models import (
+    Student, Scienes, Sport, Creation, VariousLevel, Publication,
+    StudentGovernment, OtherAchiev, AddProgramm, Experience
+)
+
+def achiev_view(request):
+    fullname = request.session.get('student_fullname')
+    if not fullname:
+        return redirect('login')  # если нет авторизации — назад
+
+    context = {
+        'scienes': Scienes.objects.filter(fullname=fullname),
+        'sport': Sport.objects.filter(fullname=fullname),
+        'creation': Creation.objects.filter(fullname=fullname),
+        'various_level': VariousLevel.objects.filter(fullname=fullname),
+        'publication': Publication.objects.filter(fullname=fullname),
+        'student_government': StudentGovernment.objects.filter(fullname=fullname),
+        'other_achiev': OtherAchiev.objects.filter(fullname=fullname),
+        'add_programm': AddProgramm.objects.filter(fullname=fullname),
+        'experience': Experience.objects.filter(fullname=fullname),
+    }
+
+    return render(request, 'achiev.html', context)
 
 def main_view(request):
     return render(request, 'main.html')

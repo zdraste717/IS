@@ -1,3 +1,5 @@
+console.log("✅ JS подключен");
+
 function showSection(id) {
     // Скрыть все секции
     const sections = document.querySelectorAll('.achievement-section');

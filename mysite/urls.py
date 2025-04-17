@@ -15,9 +15,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
-from achievements.views import login_view, main_view
+from achievements.views import login_view, main_view, achiev_view
 
 urlpatterns = [
     path('login/', login_view, name='login'),
-    path('main/', main_view, name='main'),  # если у тебя есть главная страница
+    path('main/', main_view, name='main'),  
+    path('achiev/', achiev_view, name='achiev'),  
 ]
+
+

@@ -58,6 +58,7 @@ TEMPLATES = [
         'DIRS': [
             BASE_DIR / 'auto',
             BASE_DIR / 'main',
+            BASE_DIR / 'achiev',
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -126,7 +127,8 @@ STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
 
-    BASE_DIR / "photo",     # если картинки в photo/
+    BASE_DIR / "photo",
+    BASE_DIR / "achiev",
     
 ]
 
