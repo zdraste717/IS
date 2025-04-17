@@ -30,6 +30,12 @@
 
             <hr class="my-4" />
 
+            {% if not has_achievements %}
+                        <div class="alert alert-info text-center mt-4" role="alert">
+                            У вас пока нет достижений.
+                        </div>
+                    {% else %}
+
             <!-- Карточки-достижения -->
             <div class="row g-3 mb-3">
               <div class="col-md-4">
@@ -375,7 +381,7 @@
         </div>
       </div>
     </div>
-
+{%endif%}
     <!-- JS -->
     <script src="{% static 'showSection.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

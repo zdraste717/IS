@@ -8,9 +8,9 @@ from .models import (
 def achiev_view(request):
     fullname = request.session.get('student_fullname')
     if not fullname:
-        return redirect('login')  # если нет авторизации — назад
+        return redirect('login')
 
-    context = {
+    data = {
         'scienes': Scienes.objects.filter(fullname=fullname),
         'sport': Sport.objects.filter(fullname=fullname),
         'creation': Creation.objects.filter(fullname=fullname),
@@ -22,7 +22,14 @@ def achiev_view(request):
         'experience': Experience.objects.filter(fullname=fullname),
     }
 
-    return render(request, 'achiev.html', context)
+    # Проверяем — есть ли хоть одно достижение
+    has_achievements = any(qs.exists() for qs in data.values())
+
+    return render(request, 'achiev.html', {
+        **data,
+        'fullname': fullname,
+        'has_achievements': has_achievements
+    })
 
 def main_view(request):
     return render(request, 'main.html')
@@ -34,14 +41,8 @@ def login_view(request):
         middle_name = request.POST.get('middle_name', '').strip()
 
         full_name = f"{last_name} {first_name} {middle_name}"
+        request.session['student_fullname'] = full_name
 
-        student = Student.objects.filter(fullname__iexact=full_name).first()
-
-        if student:
-            request.session['student_fullname'] = student.fullname  # ✅ вот здесь
-            return redirect('main')
-        else:
-            messages.error(request, "Студент с таким ФИО не найден.")
+        return redirect('main')
 
     return render(request, 'index.html')
-
