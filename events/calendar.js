@@ -12,17 +12,17 @@ document.addEventListener('DOMContentLoaded', function () {
             today: 'Сегодня'
         },
         events: [
-            {
-                title: 'День открытых дверей',
-                start: '2025-05-02',
-                description: 'Актовый зал, 12:00'
-            },
-            {
-                title: 'Научная конференция',
-                start: '2025-05-10',
-                end: '2025-05-12',
-                description: '3-й корпус, конференц-зал'
-            }
+            // {
+            //     title: 'День открытых дверей',
+            //     start: '2025-05-02',
+            //     description: 'Актовый зал, 12:00'
+            // },
+            // {
+            //     title: 'Научная конференция',
+            //     start: '2025-05-10',
+            //     end: '2025-05-12',
+            //     description: '3-й корпус, конференц-зал'
+            // }
         ],
         dateClick: function (info) {
             const calendarRect = calendarEl.getBoundingClientRect();
@@ -52,10 +52,17 @@ document.addEventListener('DOMContentLoaded', function () {
             popup.dataset.date = info.dateStr;
 
             popup.innerHTML = `
-            <h6>${new Date(info.dateStr).toLocaleDateString('ru-RU')}</h6>
-            <p class="text-muted">Здесь будет информация о мероприятиях.</p>
-            <button class="btn btn-sm mt-2" disabled>Записаться</button>
+                <div class="d-flex justify-content-between align-items-start">
+                    <h6 class="mb-1">${new Date(info.dateStr).toLocaleDateString('ru-RU')}</h6>
+                    <button type="button" class="btn-close ms-2" aria-label="Закрыть" id="close-popup-btn"></button>
+                </div>
+                <p class="text-muted">Здесь будет информация о мероприятиях.</p>
+                <button class="btn btn-sm mt-2" disabled>Записаться</button>
           `;
+            document.getElementById('close-popup-btn').addEventListener('click', function () {
+                popup.classList.add('d-none');
+                popup.dataset.date = '';
+            });
 
             popup.classList.remove('d-none');
         }
