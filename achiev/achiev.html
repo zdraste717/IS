@@ -128,6 +128,9 @@
                     <div id="collapseSport{{ forloop.counter }}" class="accordion-collapse collapse" data-bs-parent="#sportAccordion">
                       <div class="accordion-body">
                         <p>
+                            <strong>Вид спорта:</strong> {{ item.sport_t }}
+                          <p>
+                        <p>
                           <strong>Соревнование:</strong> {{ item.compet }}
                         </p>
                         <p>
@@ -153,6 +156,9 @@
                     <h2 class="accordion-header" id="headingCreative{{ forloop.counter }}"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCreative{{ forloop.counter }}">{{ item.activity_t }}</button></h2>
                     <div id="collapseCreative{{ forloop.counter }}" class="accordion-collapse collapse" data-bs-parent="#creativeAccordion">
                       <div class="accordion-body">
+                        <p>
+                          <strong>Вид деятельности:</strong> {{ item.activity_t }}
+                        </p>
                         <p>
                           <strong>Участие в фестивалях:</strong> {{ item.part_fest }}
                         </p>
@@ -180,10 +186,13 @@
                     <div id="collapseVarious{{ forloop.counter }}" class="accordion-collapse collapse" data-bs-parent="#variousAccordion">
                       <div class="accordion-body">
                         <p>
-                          <strong>Вид мероприятия:</strong> {{ item.event_e }}
+                          <strong>Вид мероприятия:</strong> {{ item.event_t }}
                         </p>
                         <p>
                           <strong>Уровень:</strong> {{ item.level_e }}
+                        </p>
+                        <p>
+                          <strong>Название мероприятия:</strong> {{ item.name_e }}
                         </p>
                         <p>
                           <strong>Место проведения:</strong> {{ item.venue }}
@@ -213,6 +222,9 @@
                       <div class="accordion-body">
                         <p>
                           <strong>Соавторы:</strong> {{ item.coauthors }}
+                        </p>
+                        <p>
+                          <strong>Полное название работы:</strong> {{ item.fname_work }}
                         </p>
                         <p>
                           <strong>Выходные данные:</strong> {{ item.output_d }}
@@ -247,6 +259,9 @@
                           <strong>Орган:</strong> {{ item.body_g }}
                         </p>
                         <p>
+                          <strong>Вид деятельности:</strong> {{ item.activity_t }}
+                        </p>
+                        <p>
                           <strong>Период:</strong> {{ item.activity_per }}
                         </p>
                         <p>
@@ -269,6 +284,9 @@
                     <h2 class="accordion-header" id="headingOther{{ forloop.counter }}"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOther{{ forloop.counter }}">{{ item.activity_t }}</button></h2>
                     <div id="collapseOther{{ forloop.counter }}" class="accordion-collapse collapse" data-bs-parent="#otherAccordion">
                       <div class="accordion-body">
+                        <p>
+                          <strong>Вид деятельности:</strong> {{ item.activity_t }}
+                        </p>
                         <p>
                           <strong>Достижение:</strong> {{ item.achiev }}
                         </p>
@@ -295,6 +313,9 @@
                     <h2 class="accordion-header" id="headingAdd{{ forloop.counter }}"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAdd{{ forloop.counter }}">{{ item.name_p }}</button></h2>
                     <div id="collapseAdd{{ forloop.counter }}" class="accordion-collapse collapse" data-bs-parent="#addAccordion">
                       <div class="accordion-body">
+                        <p>
+                          <strong>Название программы:</strong> {{ item.name_p }}
+                        </p>
                         <p>
                           <strong>Вид обучения:</strong> {{ item.education_t }}
                         </p>
@@ -327,6 +348,9 @@
                     <h2 class="accordion-header" id="headingExp{{ forloop.counter }}"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExp{{ forloop.counter }}">{{ item.place_w }}</button></h2>
                     <div id="collapseExp{{ forloop.counter }}" class="accordion-collapse collapse" data-bs-parent="#experienceAccordion">
                       <div class="accordion-body">
+                        <p>
+                          <strong>Место работы:</strong> {{ item.place_w }}
+                        </p>
                         <p>
                           <strong>Вид работы:</strong> {{ item.work_t }}
                         </p>
