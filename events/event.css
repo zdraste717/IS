@@ -201,7 +201,44 @@ body {
 
 @media (max-width: 576px) {
     .fc-popup {
-      width: 90%;
-      max-width: 320px;
+        width: 90%;
+        max-width: 320px;
     }
+}
+
+.popup-page {
+    font-size: 14px;
+    color: #333;
+}
+
+.icon-btn {
+    width: 32px;
+    height: 32px;
+    border: 1px solid #dee2e6;
+    border-radius: 50%;
+    background-color: #f8f9fa;
+    color: #172b4d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: 0.2s ease;
+  }
+  
+  .icon-btn:hover:not(:disabled) {
+    background-color: #e2e6ea;
+  }
+  
+  .icon-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .register-btn {
+    background-color: #1b2b4b;
+    border: none;
+  }
+  
+  .register-btn:disabled {
+    background-color: #adb5bd;
   }
