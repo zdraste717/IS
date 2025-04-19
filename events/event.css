@@ -353,4 +353,34 @@ body {
     }
   }
   
-  
+  /* Цвет выбранной даты и времени в date/time input */
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator {
+    filter: invert(15%) sepia(100%) saturate(1000%) hue-rotate(180deg);
+}
+
+/* Для Firefox */
+input[type="date"],
+input[type="time"] {
+    accent-color: #0e1b30; /* влияет на выделение */
+}
+
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange {
+    background-color: #0e1b30 !important;
+    color: #fff !important;
+    border-radius: 4px;
+}
+
+/* Время */
+select {
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    color: #0e1b30;
+}
+
+select option:checked {
+    background-color: #0e1b30;
+    color: #fff;
+}

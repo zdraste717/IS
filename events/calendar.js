@@ -45,31 +45,55 @@ form.addEventListener('submit', function (e) {
     const time = form.time_s.value;
     const duration = form.duration.value;
     const place = form.place.value;
-
     const fullDateTime = `${date}T${time}`;
 
-    const eventObj = {
-        title,
-        start: fullDateTime,
-        description,
-        extendedProps: {
-            place,
-            duration
+    const editIndex = form.edit_event_index.value;
+    const editDate = form.edit_event_date.value;
+
+    if (editIndex !== '' && editDate !== '') {
+        const ev = eventsByDate[editDate][editIndex];
+        if (ev) {
+            ev.title = title;
+            ev.description = description;
+            ev.start = fullDateTime;
+            ev.extendedProps.place = place;
+            ev.extendedProps.duration = duration;
+
+            if (ev._ref) {
+                ev._ref.setProp('title', title);
+                ev._ref.setStart(fullDateTime);
+            }
+
+            if (document.getElementById('floating-event-form').dataset.date === editDate) {
+                openPopup(editDate);
+            }
         }
-    };
+    } else {
+        const eventObj = {
+            title,
+            start: fullDateTime,
+            description,
+            extendedProps: { place, duration }
+        };
 
-    const calendarEvent = calendar.addEvent(eventObj);
-    eventObj._ref = calendarEvent;
+        const calendarEvent = calendar.addEvent(eventObj);
+        eventObj._ref = calendarEvent;
 
-    if (!eventsByDate[date]) eventsByDate[date] = [];
-    eventsByDate[date].push(eventObj);
+        if (!eventsByDate[date]) eventsByDate[date] = [];
+        eventsByDate[date].push(eventObj);
+
+        if (document.getElementById('floating-event-form').dataset.date === date) {
+            openPopup(date);
+        }
+    }
 
     bootstrap.Modal.getInstance(document.getElementById('addEventModal')).hide();
     form.reset();
+    form.edit_event_index.value = '';
+    form.edit_event_date.value = '';
+    document.querySelector('#addEventModal button[type="submit"]').textContent = 'Добавить';
 
-    if (document.getElementById('floating-event-form').dataset.date === date) {
-        openPopup(date);
-    }
+    showToast('Мероприятие успешно сохранено!');
 });
 
 function openPopup(dateStr) {
@@ -153,6 +177,7 @@ function openPopup(dateStr) {
 
         popup.querySelector('.delete-btn-global').onclick = () => {
             if (events.length > 0) {
+                if (!confirm('Вы уверены, что хотите удалить это мероприятие?')) return;
                 const removed = events.splice(currentPage - 1, 1)[0];
                 if (removed._ref) removed._ref.remove();
                 if (events.length === 0) {
@@ -161,7 +186,29 @@ function openPopup(dateStr) {
                 } else {
                     renderPages();
                 }
+                showToast('Мероприятие удалено');
             }
+        };
+
+        popup.querySelector('.edit-btn-global').onclick = () => {
+            const eventToEdit = events[currentPage - 1];
+            if (!eventToEdit) return;
+
+            form.name_e.value = eventToEdit.title;
+            form.description.value = eventToEdit.description;
+            form.data_s.value = dateStr;
+            form.time_s.value = new Date(eventToEdit.start).toTimeString().slice(0, 5);
+            form.place.value = eventToEdit.extendedProps.place || '';
+            form.duration.value = eventToEdit.extendedProps.duration || '';
+
+            form.edit_event_date.value = dateStr;
+            form.edit_event_index.value = currentPage - 1;
+
+            const submitBtn = document.querySelector('#addEventModal button[type="submit"]');
+            submitBtn.textContent = 'Сохранить';
+
+            const modal = new bootstrap.Modal(document.getElementById('addEventModal'));
+            modal.show();
         };
 
         popup.querySelectorAll('.consent-checkbox').forEach((checkbox) => {
@@ -180,4 +227,32 @@ function openPopup(dateStr) {
 
     renderPages();
     popup.classList.remove('d-none');
+}
+
+function showToast(message) {
+    const toastContainer = document.getElementById('toast-container');
+    const toast = document.createElement('div');
+    toast.className = 'toast align-items-center text-bg-primary border-0 show';
+    toast.role = 'alert';
+    toast.ariaLive = 'assertive';
+    toast.ariaAtomic = 'true';
+    toast.style.zIndex = 1055;
+    toast.innerHTML = `
+      <div class="d-flex">
+        <div class="toast-body">${message}</div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Закрыть"></button>
+      </div>
+    `;
+    toastContainer.appendChild(toast);
+
+    setTimeout(() => {
+        toast.remove();
+    }, 3000);
+}
+
+if (!document.getElementById('toast-container')) {
+    const container = document.createElement('div');
+    container.id = 'toast-container';
+    container.className = 'toast-container position-fixed bottom-0 end-0 p-3';
+    document.body.appendChild(container);
 }
