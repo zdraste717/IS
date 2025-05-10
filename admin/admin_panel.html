@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Панель администратора</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+      body {
+        background-color: #f8f9fa;
+      }
+      .layout-container {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        padding: 40px;
+        position: relative;
+      }
+      .filter-panel {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 280px;
+        position: absolute;
+        left: -320px;
+        top: 0;
+        transition: left 0.3s ease;
+        z-index: 1000;
+      }
+      .filter-panel.show {
+        left: 0;
+      }
+      .form-container {
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 800px;
+        max-height: 93vh;
+        overflow-y: auto;
+      }
+      .toggle-btn {
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        z-index: 1100;
+      }
+    </style>
+  </head>
+  <body class="bg-light">
+    <header>
+      <nav class="navbar navbar-expand-lg bg-white">
+        <div class="container-fluid">
+          <!-- Гамбургер -->
+          <button class="navbar-toggler border-0 me-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon custom-toggler"></span></button>
+
+          <!-- Логотип -->
+          <a class="navbar-brand d-none d-lg-block" href="#"><img src="../photo/logo.jpg" alt="Logo" width="80" height="50" /></a>
+
+          <!-- Иконки -->
+          <div class="d-flex align-items-center ms-auto order-lg-3">
+            <div class="position-relative me-3">
+              <i class="bi bi-bell fs-4 text-primary"></i>
+            </div>
+            <i class="bi bi-person-circle fs-4 text-primary"></i>
+          </div>
+          <!-- Меню -->
+            <div class="collapse navbar-collapse order-lg-2" id="navbarNav">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link active me-3" href="#">В начало</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link me-3" href="#">Управление мероприятиями</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link me-3" href="#">Управление достижениями</a>
+                </li>
+              </ul>
+            </div>
+        </div>
+      </nav>
+    </header>
+    <div class="layout-container">
+      <button class="btn btn-outline-primary toggle-btn" id="toggleFiltersBtn" onclick="toggleFilters()">☰ Фильтры</button>
+
+      <!-- Боковая панель фильтров -->
+      <form class="filter-panel" id="filterPanel">
+        <h5 class="mb-3">Фильтры</h5>
+        <div class="mb-3">
+          <label for="typeFilter" class="form-label">Тип достижения</label>
+          <select id="typeFilter" class="form-select">
+            <option selected>Все</option>
+            <option>Научные</option>
+            <option>Спортивные</option>
+            <option>Творческие</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Период</label>
+          <input type="date" class="form-control mb-2" />
+          <input type="date" class="form-control" />
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Поиск</label>
+          <input type="text" class="form-control" placeholder="Введите текст" />
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Применить</button>
+      </form>
+
+      <div class="center-wrapper">
+        <div class="form-container">
+          <!-- Карточка научного достижения -->
+          <div class="card mb-4 w-100 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title d-flex justify-content-between align-items-center">
+                ИИ в образовании
+                <span class="badge bg-info text-dark">Научное достижение</span>
+              </h5>
+
+              <p class="mb-1">
+                <strong>ФИО:</strong> Иванов Иван Иванович
+              </p>
+              <p class="mb-1">
+                <strong>Название НИР:</strong> Исследование применения ИИ в образовании
+              </p>
+              <p class="mb-1">
+                <strong>Дата начала:</strong> 01.09.2023
+              </p>
+              <p class="mb-1">
+                <strong>Дата окончания:</strong> 31.12.2023
+              </p>
+              <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#scienceModal">Подробнее</button>
+            </div>
+          </div>
+
+          <!-- Модальное окно -->
+          <div class="modal fade" id="scienceModal" tabindex="-1" aria-labelledby="scienceModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="scienceModalLabel">Подробности</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                  <p>
+                    <strong>Название НИР:</strong> Иванов Иван Иванович
+                  </p>
+                  <p>
+                    <strong>Название НИР:</strong> 1011
+                  </p>
+                  <p>
+                    <strong>Название НИР:</strong> Исследование применения ИИ в образовании
+                  </p>
+                  <p>
+                    <strong>Заказчик:</strong> Минобрнауки
+                  </p>
+                  <p>
+                    <strong>Программа:</strong> Федеральный уровень
+                  </p>
+                  <p>
+                    <strong>Название проекта:</strong> EdTech Lab
+                  </p>
+                  <p>
+                    <strong>Дата начала:</strong> 01.09.2023
+                  </p>
+                  <p>
+                    <strong>Дата окончания:</strong> 31.12.2023
+                  </p>
+                  <p>
+                    <strong>Результат:</strong> Разработка и внедрение прототипа
+                  </p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Конец карточки -->
+
+          <!-- Карточка спортивного достижения -->
+          <div class="card mb-4 w-100 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title d-flex justify-content-between align-items-center">
+                Плавание
+                <span class="badge bg-info text-dark">Спортивное достижение</span>
+              </h5>
+
+              <p class="mb-1">
+                <strong>ФИО:</strong> Артемов Артем Артемьевич
+              </p>
+              <p class="mb-1">
+                <strong>Вид спорта:</strong> Плавание
+              </p>
+              <p class="mb-1">
+                <strong>Дата:</strong> 01.09.2023
+              </p>
+              <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#sportModal">Подробнее</button>
+            </div>
+          </div>
+
+          <!-- Модальное окно -->
+          <div class="modal fade" id="sportModal" tabindex="-1" aria-labelledby="sportModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="sportModalLabel">Подробности</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                  <p>
+                    <strong>ФИО:</strong> Артемов Артем Артемьевич
+                  </p>
+                  <p>
+                    <strong>Группа:</strong> 1012
+                  </p>
+                  <p>
+                    <strong>Вид спорта:</strong> Плавание
+                  </p>
+                  <p>
+                    <strong>Соревнование:</strong> Флеров
+                  </p>
+                  <p>
+                    <strong>Дата:</strong> 01.09.2023
+                  </p>
+                  <p>
+                    <strong>Примечание:</strong> Победа
+                  </p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Конец карточки -->
+
+          <!-- Карточка творческого достижения -->
+          <div class="card mb-4 w-100 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title d-flex justify-content-between align-items-center">
+                Хор
+                <span class="badge bg-info text-dark">Творческое достижение</span>
+              </h5>
+
+              <p class="mb-1">
+                <strong>ФИО:</strong> Кукин Арсений Андреевич
+              </p>
+              <p class="mb-1">
+                <strong>Вид деятельности:</strong> Танцульки под фонк
+              </p>
+              <p class="mb-1">
+                <strong>Дата :</strong> 01.09.2023
+              </p>
+              <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#creativeModal">Подробнее</button>
+            </div>
+          </div>
+
+          <!-- Модальное окно -->
+          <div class="modal fade" id="creativeModal" tabindex="-1" aria-labelledby="creativeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="creativeModalLabel">Подробности</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                  <p>
+                    <strong>ФИО:</strong> Кукин Арсений Андреевич
+                  </p>
+                  <p>
+                    <strong>Группа:</strong> 1013
+                  </p>
+                  <p>
+                    <strong>Вид деятельности:</strong> Танцы
+                  </p>
+                  <p>
+                    <strong>Участие в фестивалях:</strong> Международный день фонка
+                  </p>
+                  <p>
+                    <strong>Дата:</strong> 01.09.2023
+                  </p>
+                  <p>
+                    <strong>Примечание:</strong> Не победа
+                  </p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Конец карточки -->
+
+          <!-- Карточка научного достижения -->
+          <div class="card mb-4 w-100 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title d-flex justify-content-between align-items-center">
+                Международник
+                <span class="badge bg-info text-dark">Участие в мероприятиях различного уровня</span>
+              </h5>
+
+              <p class="mb-1">
+                <strong>ФИО:</strong> Ремняков Кирилл Дмитриевич
+              </p>
+              <p class="mb-1">
+                <strong>Вид мероприятия:</strong> Теория "50%"
+              </p>
+              <p class="mb-1">
+                <strong>Уровень:</strong> Международный
+              </p>
+              <p class="mb-1">
+                <strong>Дата:</strong> 31.12.2023
+              </p>
+              <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#variousModal">Подробнее</button>
+            </div>
+          </div>
+
+          <!-- Модальное окно -->
+          <div class="modal fade" id="variousModal" tabindex="-1" aria-labelledby="variousModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="variousModalLabel">Подробности</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                  <p>
+                    <strong>ФИО:</strong> Ремняков Кирилл Дмитриевич
+                  </p>
+                  <p>
+                    <strong>Группа:</strong> 1014
+                  </p>
+                  <p>
+                    <strong>Вид мероприятия:</strong> Теория "50%"
+                  </p>
+                  <p>
+                    <strong>Уровень:</strong> Международный
+                  </p>
+                  <p>
+                    <strong>Название мероприятия:</strong> 50%
+                  </p>
+                  <p>
+                    <strong>Место проведения:</strong> Энтузы
+                  </p>
+                  <p>
+                    <strong>Дата:</strong> 11.12.2024
+                  </p>
+                  <p>
+                    <strong>Результат:</strong> Проблемы
+                  </p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Конец карточки -->
+
+          <!-- Карточка Публикации -->
+          <div class="card mb-4 w-100 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title d-flex justify-content-between align-items-center">
+                Конспект по Линалу
+                <span class="badge bg-info text-dark">Публикации</span>
+              </h5>
+
+              <p class="mb-1">
+                <strong>ФИО:</strong> Куманяев Даниил Сергеевич
+              </p>
+              <p class="mb-1">
+                <strong>Соавторы:</strong> Кукин, Ремняков
+              </p>
+              <p class="mb-1">
+                <strong>Полное название работы:</strong> Вероятность азотного отравления
+              </p>
+              <p class="mb-1">
+                <strong>Форма работы:</strong> Электронная
+              </p>
+              <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#publicationModal">Подробнее</button>
+            </div>
+          </div>
+
+          <!-- Модальное окно -->
+          <div class="modal fade" id="publicationModal" tabindex="-1" aria-labelledby="publicationModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="publicationModalLabel">Подробности</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                  <p>
+                    <strong>ФИО:</strong> Куманяев Даниил Сергеевич
+                  </p>
+                  <p>
+                    <strong>Группа:</strong> 1015
+                  </p>
+                  <p>
+                    <strong>Соавторы:</strong> Кукин, Ремняков
+                  </p>
+                  <p>
+                    <strong>Полное название работы:</strong> Азотная атака
+                  </p>
+                  <p>
+                    <strong>Выходные данные:</strong> Очень много
+                  </p>
+                  <p>
+                    <strong>Форма работы:</strong> Электронная
+                  </p>
+                  <p>
+                    <strong>Тип издания:</strong> Разработка и внедрение прототипа
+                  </p>
+                  <p>
+                    <strong>Входит в ВАК/РИНЦ:</strong> ДА
+                  </p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Конец карточки -->
+
+          <!-- Карточка Студенческое самоуправление -->
+          <div class="card mb-4 w-100 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title d-flex justify-content-between align-items-center">
+                Помощь университету
+                <span class="badge bg-info text-dark">Студенческое самоуправление</span>
+              </h5>
+
+              <p class="mb-1">
+                <strong>ФИО:</strong> Сергеев Сергей Сергеевич
+              </p>
+              <p class="mb-1">
+                <strong>Вид деятельности:</strong> Помощь
+              </p>
+              <p class="mb-1">
+                <strong>Период:</strong> Большой
+              </p>
+              <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#governmentModal">Подробнее</button>
+            </div>
+          </div>
+
+          <!-- Модальное окно -->
+          <div class="modal fade" id="governmentModal" tabindex="-1" aria-labelledby="governmentModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="governmentModalLabel">Подробности</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                  <p>
+                    <strong>ФИО:</strong> Сергеев Сергей Сергеевич
+                  </p>
+                  <p>
+                    <strong>Группа:</strong> 2011
+                  </p>
+                  <p>
+                    <strong>Орган:</strong> Студ. совет
+                  </p>
+                  <p>
+                    <strong>Вид деятельности:</strong> Помощь
+                  </p>
+                  <p>
+                    <strong>Период:</strong> Большой
+                  </p>
+                  <p>
+                    <strong>Примечание:</strong> Получилось
+                  </p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Конец карточки -->
+
+          <!-- Карточка Иные достижения -->
+          <div class="card mb-4 w-100 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title d-flex justify-content-between align-items-center">
+                Другое достижение
+                <span class="badge bg-info text-dark">Иные достижения</span>
+              </h5>
+
+              <p class="mb-1">
+                <strong>ФИО:</strong> Никтоев Никто Никтоевич
+              </p>
+              <p class="mb-1">
+                <strong>Достижение:</strong> Супер крутой
+              </p>
+              <p class="mb-1">
+                <strong>Дата:</strong> 12.12.2024
+              </p>
+              <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#otherModal">Подробнее</button>
+            </div>
+          </div>
+
+          <!-- Модальное окно -->
+          <div class="modal fade" id="otherModal" tabindex="-1" aria-labelledby="otherModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="otherModalLabel">Подробности</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                  <p>
+                    <strong>ФИО:</strong> Никтоев Никто Никтоевич
+                  </p>
+                  <p>
+                    <strong>Группа:</strong> 2012
+                  </p>
+                  <p>
+                    <strong>Вид деятельности:</strong> Прополка
+                  </p>
+                  <p>
+                    <strong>Достижение:</strong>Супер крутой
+                  </p>
+                  <p>
+                    <strong>Дата:</strong> 12.12.2025
+                  </p>
+                  <p>
+                    <strong>Примечание:</strong> Крутяк
+                  </p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Конец карточки -->
+
+          <!-- Карточка Освоение доп. программ -->
+          <div class="card mb-4 w-100 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title d-flex justify-content-between align-items-center">
+                Изучил технику КНБ
+                <span class="badge bg-info text-dark">Освоение доп. программ</span>
+              </h5>
+
+              <p class="mb-1">
+                <strong>ФИО:</strong> Петин Петя Петькович
+              </p>
+              <p class="mb-1">
+                <strong>Вид обучения:</strong> Сложный
+              </p>
+              <p class="mb-1">
+                <strong>Часы:</strong> 50
+              </p>
+              <p class="mb-1">
+                <strong>Сроки:</strong> Долго
+              </p>
+              <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#addModal">Подробнее</button>
+            </div>
+          </div>
+
+          <!-- Модальное окно -->
+          <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="addModalLabel">Подробности</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                  <p>
+                    <strong>ФИО:</strong> Петин Петя Петькович
+                  </p>
+                  <p>
+                    <strong>Группа:</strong> 2013
+                  </p>
+                  <p>
+                    <strong>Название программы:</strong> Работяга
+                  </p>
+                  <p>
+                    <strong>Вид обучения:</strong> Сложный
+                  </p>
+                  <p>
+                    <strong>Часы:</strong> Долго
+                  </p>
+                  <p>
+                    <strong>Сроки:</strong>Большие
+                  </p>
+                  <p>
+                    <strong>Место обучения:</strong> Ставрополь
+                  </p>
+                  <p>
+                    <strong>Документ:</strong> Есть
+                  </p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Конец карточки -->
+
+          <!-- Карточка Опыт работы -->
+          <div class="card mb-4 w-100 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title d-flex justify-content-between align-items-center">
+                Поработали
+                <span class="badge bg-info text-dark">Опыт работы</span>
+              </h5>
+
+              <p class="mb-1">
+                <strong>ФИО:</strong> Куманяев Даниил Сергеевич
+              </p>
+              <p class="mb-1">
+                <strong>Должность:</strong> Кукин, Ремняков
+              </p>
+              <p class="mb-1">
+                <strong>Сроки:</strong> Вероятность азотного отравления
+              </p>
+              <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#experienceModal">Подробнее</button>
+            </div>
+          </div>
+
+          <!-- Модальное окно -->
+          <div class="modal fade" id="experienceModal" tabindex="-1" aria-labelledby="experienceModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="experienceModalLabel">Подробности</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                  <p>
+                    <strong>ФИО:</strong> Куманяев Даниил Сергеевич
+                  </p>
+                  <p>
+                    <strong>Группа:</strong> 1015
+                  </p>
+                  <p>
+                    <strong>Место работы:</strong> Кукин, Ремняков
+                  </p>
+                  <p>
+                    <strong>Вид работы:</strong> Азотная атака
+                  </p>
+                  <p>
+                    <strong>Должность:</strong> Очень много
+                  </p>
+                  <p>
+                    <strong>Сроки:</strong> Электронная
+                  </p>
+                  <p>
+                    <strong>Обязанности:</strong> Разработка и внедрение прототипа
+                  </p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Конец карточки -->
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function toggleFilters() {
+        const panel = document.getElementById('filterPanel')
+        const btn = document.getElementById('toggleFiltersBtn')
+      
+        if (panel.classList.contains('show')) {
+          panel.classList.remove('show')
+          btn.style.display = 'block'
+        } else {
+          panel.classList.add('show')
+          btn.style.display = 'none'
+        }
+      }
+      
+      // Автоматически скрывать фильтры, если клик вне фильтра
+      document.addEventListener('click', function (event) {
+        const panel = document.getElementById('filterPanel')
+        const btn = document.getElementById('toggleFiltersBtn')
+      
+        if (!panel.contains(event.target) && !btn.contains(event.target)) {
+          if (panel.classList.contains('show')) {
+            panel.classList.remove('show')
+            btn.style.display = 'block'
+          }
+        }
+      })
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

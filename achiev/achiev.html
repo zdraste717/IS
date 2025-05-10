@@ -21,10 +21,10 @@
             <div class="d-flex align-items-center gap-4 mb-4">
               <img src="{% static 'achiev_photo/icon.jpg' %}" alt="Аватар" class="rounded-circle" style="width: 120px; height: 120px; object-fit: cover;" />
               <div>
-                <h3 class="fw-bold mb-1">Иван Петров</h3>
-                <p class="mb-1 text-muted">Студент 4 курса</p>
-                <p class="mb-1">Факультет: Информационные технологии</p>
-                <p class="mb-1">Группа: ИСАУ-41</p>
+                <h3 class="fw-bold mb-1">{{ fullname }}</h3>
+                <p class="mb-1 text-muted">Студент - курса</p>
+                <p class="mb-1">Факультет: {{ student.faculty }}</p>
+                <p class="mb-1">Группа: -</p>
               </div>
             </div>
 
@@ -38,51 +38,77 @@
 
             <!-- Карточки-достижения -->
             <div class="row g-3 mb-3">
+              {% if science %}
               <div class="col-md-4">
                 <div class="card section-tile text-center py-3" onclick="showSection('science')">
                   <h6 class="mb-0">Научные достижения</h6>
                 </div>
               </div>
+              {% endif %}
+
+              {% if sport %}
               <div class="col-md-4">
                 <div class="card section-tile text-center py-3" onclick="showSection('sport')">
                   <h6 class="mb-0">Спортивные достижения</h6>
                 </div>
               </div>
+              {% endif %}
+
+              {% if creative %}
               <div class="col-md-4">
                 <div class="card section-tile text-center py-3" onclick="showSection('creative')">
                   <h6 class="mb-0">Творческие достижения</h6>
                 </div>
               </div>
+              {% endif %}
+
+              {% if various_level %}
               <div class="col-md-4">
                 <div class="card section-tile text-center py-3" onclick="showSection('various_level')">
                   <h6 class="mb-0">Различный уровень</h6>
                 </div>
               </div>
+              {% endif %}
+
+              {% if publication %}
               <div class="col-md-4">
                 <div class="card section-tile text-center py-3" onclick="showSection('publication')">
                   <h6 class="mb-0">Публикации</h6>
                 </div>
               </div>
+              {% endif %}
+
+              {% if s_government%}
               <div class="col-md-4">
                 <div class="card section-tile text-center py-3" onclick="showSection('s_government')">
                   <h6 class="mb-0">Студенческое самоуправление</h6>
                 </div>
               </div>
+              {% endif %}
+
+              {%if other_achiev%}
               <div class="col-md-4">
                 <div class="card section-tile text-center py-3" onclick="showSection('other_achiev')">
                   <h6 class="mb-0">Иные достижения</h6>
                 </div>
               </div>
+              {% endif %}
+
+              {% if add_program %}
               <div class="col-md-4">
                 <div class="card section-tile text-center py-3" onclick="showSection('add_program')">
                   <h6 class="mb-0">Освоение доп. программ</h6>
                 </div>
               </div>
+              {% endif %}
+
+              {% if experience %}
               <div class="col-md-4">
                 <div class="card section-tile text-center py-3" onclick="showSection('experience')">
                   <h6 class="mb-0">Опыт работы</h6>
                 </div>
               </div>
+              {% endif %}
             </div>
 
             <!-- Научные достижения -->

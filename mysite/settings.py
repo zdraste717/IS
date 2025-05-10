@@ -59,6 +59,7 @@ TEMPLATES = [
             BASE_DIR / 'auto',
             BASE_DIR / 'main',
             BASE_DIR / 'achiev',
+            BASE_DIR / 'admin'
         ],
         'APP_DIRS': True,
         'OPTIONS': {
