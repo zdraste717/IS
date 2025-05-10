@@ -1,0 +1,40 @@
+body {
+        background-color: #f8f9fa;
+      }
+      .layout-container {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        padding: 40px;
+        position: relative;
+      }
+      .filter-panel {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 280px;
+        position: absolute;
+        left: -320px;
+        top: 0;
+        transition: left 0.3s ease;
+        z-index: 1000;
+      }
+      .filter-panel.show {
+        left: 0;
+      }
+      .form-container {
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 800px;
+        max-height: 93vh;
+        overflow-y: auto;
+      }
+      .toggle-btn {
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        z-index: 1100;
+      }
