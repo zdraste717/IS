@@ -1,40 +1,66 @@
+html,
 body {
-        background-color: #f8f9fa;
-      }
-      .layout-container {
-        display: flex;
-        justify-content: center;
-        gap: 30px;
-        padding: 40px;
-        position: relative;
-      }
-      .filter-panel {
-        background-color: #ffffff;
-        padding: 20px;
-        border-radius: 15px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        width: 280px;
-        position: absolute;
-        left: -320px;
-        top: 0;
-        transition: left 0.3s ease;
-        z-index: 1000;
-      }
-      .filter-panel.show {
-        left: 0;
-      }
-      .form-container {
-        background-color: #ffffff;
-        padding: 30px;
-        border-radius: 15px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        width: 800px;
-        max-height: 93vh;
-        overflow-y: auto;
-      }
-      .toggle-btn {
-        position: absolute;
-        left: 10px;
-        top: 10px;
-        z-index: 1100;
-      }
+  height: 100%;
+  margin: 0;
+  background-color: #f8f9fa;
+}
+
+.admin-panel-container {
+  max-width: 1400px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.filters-box {
+  background-color: #f1f1f1;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.card-list {
+  max-height: 75vh;
+  overflow-y: auto;
+}
+
+#filtersSection {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.4s ease;
+  opacity: 0;
+  margin-bottom: 1.5rem;
+}
+
+#filtersSection.show {
+  max-height: 500px;
+  opacity: 1;
+}
+
+
+.t-outline {
+  border: 2px solid #172b4d;
+  color: black;
+  background-color: transparent;
+  padding: 0.5em 1em;
+  border-radius: 0.5rem;
+  font-weight: 500;
+}
+
+.btn-more {
+  border: 1px solid #172b4d;
+  color: #ffffff;
+  background-color: #172b4d;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-more:hover {
+  border: 1px solid #172b4d;
+  background-color: transparent;
+  color: #172b4d;
+}

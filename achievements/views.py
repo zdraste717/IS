@@ -72,4 +72,5 @@ def admin_panel_view(request):
         'add_programm': AddProgramm.objects.all(),
         'experience': Experience.objects.all(),
     }
+
     return render(request, 'admin_panel.html', context)

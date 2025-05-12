@@ -130,6 +130,7 @@ STATICFILES_DIRS = [
 
     BASE_DIR / "photo",
     BASE_DIR / "achiev",
+    BASE_DIR / "admin",
     
 ]
 

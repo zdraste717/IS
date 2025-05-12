@@ -14,6 +14,7 @@ class Student(models.Model):
 class Scienes(models.Model):
     id = models.AutoField(primary_key=True)
     fullname = models.CharField(max_length=255)
+    group_s = models.CharField(max_length=255)
     srw_name = models.CharField(max_length=255)
     customer = models.CharField(max_length=255)
     l_programm = models.CharField(max_length=255)
@@ -28,6 +29,7 @@ class Scienes(models.Model):
 class Sport(models.Model):
     id = models.AutoField(primary_key=True)
     fullname = models.CharField(max_length=255)
+    group_s = models.CharField(max_length=255)
     sport_t = models.CharField(max_length=255)
     compet = models.CharField(max_length=255)
     date_c = models.DateField()
@@ -39,6 +41,7 @@ class Sport(models.Model):
 class Creation(models.Model):
     id = models.AutoField(primary_key=True)
     fullname = models.CharField(max_length=255)
+    group_s = models.CharField(max_length=255)
     activity_t = models.CharField(max_length=255)
     part_fest = models.CharField(max_length=255)
     date_f = models.DateField()
@@ -50,6 +53,7 @@ class Creation(models.Model):
 class VariousLevel(models.Model):
     id = models.AutoField(primary_key=True)
     fullname = models.CharField(max_length=255)
+    group_s = models.CharField(max_length=255)
     event_t = models.CharField(max_length=255)
     level_e = models.CharField(max_length=255)
     name_e = models.CharField(max_length=255)
@@ -63,6 +67,7 @@ class VariousLevel(models.Model):
 class Publication(models.Model):
     id = models.AutoField(primary_key=True)
     fullname = models.CharField(max_length=255)
+    group_s = models.CharField(max_length=255)
     coauthors = models.CharField(max_length=255)
     fname_work = models.CharField(max_length=255)
     output_d = models.DateField()
@@ -76,6 +81,7 @@ class Publication(models.Model):
 class StudentGovernment(models.Model):
     id = models.AutoField(primary_key=True)
     fullname = models.CharField(max_length=255)
+    group_s = models.CharField(max_length=255)
     body_g = models.CharField(max_length=255)
     activity_t = models.CharField(max_length=255)
     activity_per = models.CharField(max_length=255)
@@ -87,6 +93,7 @@ class StudentGovernment(models.Model):
 class OtherAchiev(models.Model):
     id = models.AutoField(primary_key=True)
     fullname = models.CharField(max_length=255)
+    group_s = models.CharField(max_length=255)
     activity_t = models.CharField(max_length=255)
     achiev = models.CharField(max_length=255)
     date_o = models.DateField()
@@ -98,6 +105,7 @@ class OtherAchiev(models.Model):
 class AddProgramm(models.Model):
     id = models.AutoField(primary_key=True)
     fullname = models.CharField(max_length=255)
+    group_s = models.CharField(max_length=255)
     name_p = models.CharField(max_length=255)
     education_t = models.CharField(max_length=255)
     hours = models.IntegerField()
@@ -111,6 +119,7 @@ class AddProgramm(models.Model):
 class Experience(models.Model):
     id = models.AutoField(primary_key=True)
     fullname = models.CharField(max_length=255)
+    group_s = models.CharField(max_length=255)
     place_w = models.CharField(max_length=255)
     work_t = models.CharField(max_length=255)
     title_j = models.CharField(max_length=255)
