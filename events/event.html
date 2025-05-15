@@ -176,13 +176,33 @@
 
                 <div class="modal-footer">
                     <button type="submit" form="addEventForm" class="btn custom-btn">Добавить</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancelEditBtn">Отмена</button>
                 </div>
             </div>
         </div>
     </div>
 
 </body>
+
+<!-- Модальное окно подтверждения удаления -->
+<div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteConfirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content rounded-4">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteConfirmModalLabel">Подтверждение удаления</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+        </div>
+        <div class="modal-body">
+          Вы действительно хотите удалить это мероприятие?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="cancelDeleteBtn">Отмена</button>
+          <button type="button" class="btn custom-btn" id="confirmDeleteBtn">Удалить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 <script src="calendar.js"></script>
 
 </html>

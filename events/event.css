@@ -140,6 +140,7 @@ body {
     padding: 10px;
     transition: background-color 0.2s ease;
     border-radius: 8px;
+
 }
 
 .fc-daygrid-day:hover .fc-daygrid-day-frame {
@@ -201,12 +202,12 @@ body {
 
 @media (max-width: 576px) {
     .fc-popup {
-      width: 90%;
-      max-width: 320px;
-      left: 50% !important;
-      transform: translateX(-50%);
+        width: 90%;
+        max-width: 320px;
+        left: 50% !important;
+        transform: translateX(-50%);
     }
-  }
+}
 
 .popup-page {
     font-size: 14px;
@@ -304,18 +305,68 @@ body {
 @media (max-width: 576px) {
     .fc-toolbar.fc-header-toolbar {
         flex-wrap: wrap;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
+    }
+
+    .fc-toolbar.fc-header-toolbar > div {
+        display: flex;
+        flex-wrap: wrap;
         gap: 0.5rem;
         justify-content: space-between;
     }
 
-    .fc-addEventButton-button,
-    .fc-today-button,
-    .fc-prev-button,
-    .fc-next-button {
-        flex: 1 1 auto;
+    .fc-toolbar .fc-button,
+    .fc-toolbar .fc-addEventButton-button {
+        flex: 1 1 48%;
+        min-width: 48%;
+    }
+
+    .fc-toolbar-title {
         text-align: center;
+        width: 100%;
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .fc-daygrid-day-frame {
+        min-height: 100px;
+        padding: 6px;
+    }
+
+    .card {
+        width: 100% !important;
+        padding: 10px !important;
+    }
+
+    #calendar {
+        width: 100% !important;
+    }
+
+    .fc {
+        font-size: 0.75rem; /* уменьшает шрифт, помогает вместить контент */
+    }
+
+    .fc-daygrid-day-frame {
+        min-height: 90px; /* чтобы события помещались */
+        padding: 4px;
+    }
+
+    .fc-daygrid-event {
+        font-size: 0.7rem;
+        padding: 2px 4px;
+    }
+
+    .fc-daygrid-more-link {
+        font-size: 0.7rem;
+    }
+
+    main.container {
+        padding: 0 0.5rem;
     }
 }
+
 
 #addEventModal .modal-content {
     border-radius: 1rem;
@@ -326,34 +377,9 @@ body {
     color: #0e1b30;
 }
 
-@media (max-width: 576px) {
-    .fc-toolbar.fc-header-toolbar {
-      flex-direction: column;
-      align-items: stretch;
-      gap: 0.5rem;
-    }
-  
-    .fc-toolbar.fc-header-toolbar > div {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      justify-content: space-between;
-    }
-  
-    .fc-toolbar .fc-button,
-    .fc-toolbar .fc-addEventButton-button {
-      flex: 1 1 48%;
-      min-width: 48%;
-    }
-  
-    .fc-toolbar-title {
-      text-align: center;
-      width: 100%;
-      margin-bottom: 0.5rem;
-    }
-  }
-  
-  /* Цвет выбранной даты и времени в date/time input */
+
+
+/* Цвет выбранной даты и времени в date/time input */
 input[type="date"]::-webkit-calendar-picker-indicator,
 input[type="time"]::-webkit-calendar-picker-indicator {
     filter: invert(15%) sepia(100%) saturate(1000%) hue-rotate(180deg);
@@ -362,7 +388,8 @@ input[type="time"]::-webkit-calendar-picker-indicator {
 /* Для Firefox */
 input[type="date"],
 input[type="time"] {
-    accent-color: #0e1b30; /* влияет на выделение */
+    accent-color: #0e1b30;
+    /* влияет на выделение */
 }
 
 .flatpickr-day.selected,
@@ -383,4 +410,67 @@ select {
 select option:checked {
     background-color: #0e1b30;
     color: #fff;
+}
+
+/* Стилизация отдельного события */
+.fc-daygrid-event {
+    background-color: #1c2d4f !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 6px;
+    padding: 2px 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+/* Убираем подчеркивание при наведении */
+.fc-daygrid-event:hover {
+    text-decoration: none;
+    background-color: #0e1b30 !important;
+}
+
+/* Убираем границу и фон у события */
+.fc-event-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Стилизация "+ ещё N" */
+.fc-daygrid-more-link {
+    font-size: 0.8rem;
+    color: #1c2d4f;
+    font-weight: 500;
+    display: inline-block;
+    margin-top: 3px;
+}
+
+.fc-daygrid-more-link:hover {
+    text-decoration: underline;
+    color: #1a2845;
+}
+
+.fc-popup.modal-like {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%);
+    z-index: 1060;
+    width: 90%;
+    max-width: 450px;
+    max-height: 80vh;
+    overflow-y: auto;
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
+    font-size: 14px;
+}
+
+@media (max-width: 576px) {
+    .fc-popup.modal-like {
+        width: 95%;
+        max-height: 85vh;
+        font-size: 13px;
+    }
 }

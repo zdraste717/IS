@@ -1,14 +1,18 @@
 // calendar.js
 // Глобальное хранилище событий по датам
 const eventsByDate = {};
-
+let eventToDelete = null;
+let eventDateToDelete = null;
+let currentPageToDelete = null;
 // Инициализация календаря
 const calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
     initialView: 'dayGridMonth',
     locale: 'ru',
     firstDay: 1,
     showNonCurrentDates: false,
-    height: 'auto',
+    eventDisplay: 'block',
+    aspectRatio: 1.2,
+    dayMaxEventRows: true,
     buttonText: {
         today: 'Сегодня'
     },
@@ -93,26 +97,23 @@ form.addEventListener('submit', function (e) {
     form.edit_event_date.value = '';
     document.querySelector('#addEventModal button[type="submit"]').textContent = 'Добавить';
 
-    showToast('Мероприятие успешно сохранено!');
+    if (editIndex !== '' && editDate !== '') {
+        showToast('Мероприятие успешно отредактировано!', 'success');
+    } else {
+        showToast('Мероприятие успешно добавлено!', 'success');
+    }
 });
 
 function openPopup(dateStr) {
     const popup = document.getElementById('floating-event-form');
-    const calendarRect = document.getElementById('calendar').getBoundingClientRect();
-    const cell = document.querySelector(`[data-date="${dateStr}"]`);
-    if (!cell) return;
-
-    const cellRect = cell.getBoundingClientRect();
-    const top = cellRect.bottom - calendarRect.top + 8;
-    const left = cell.offsetLeft;
-
-    popup.style.top = `${top}px`;
-    popup.style.left = `${left}px`;
+    popup.classList.add('modal-like');
+    popup.dataset.date = dateStr;
     popup.dataset.date = dateStr;
 
     const events = eventsByDate[dateStr] || [];
     let currentPage = 1;
     const getTotalPages = () => Math.max(1, events.length);
+
 
     const renderPages = () => {
         const totalPages = getTotalPages();
@@ -176,22 +177,20 @@ function openPopup(dateStr) {
         };
 
         popup.querySelector('.delete-btn-global').onclick = () => {
-            if (events.length > 0) {
-                if (!confirm('Вы уверены, что хотите удалить это мероприятие?')) return;
-                const removed = events.splice(currentPage - 1, 1)[0];
-                if (removed._ref) removed._ref.remove();
-                if (events.length === 0) {
-                    popup.classList.add('d-none');
-                    popup.dataset.date = '';
-                } else {
-                    renderPages();
-                }
-                showToast('Мероприятие удалено');
-            }
+            currentPageToDelete = currentPage - 1;
+            eventToDelete = events[currentPageToDelete];
+            eventDateToDelete = dateStr;
+
+            const popup = document.getElementById('floating-event-form');
+            popup.classList.add('d-none'); 
+
+            const deleteModal = new bootstrap.Modal(document.getElementById('deleteConfirmModal'));
+            deleteModal.show();
         };
 
         popup.querySelector('.edit-btn-global').onclick = () => {
             const eventToEdit = events[currentPage - 1];
+            document.getElementById('floating-event-form').classList.add('d-none');
             if (!eventToEdit) return;
 
             form.name_e.value = eventToEdit.title;
@@ -221,6 +220,7 @@ function openPopup(dateStr) {
 
         popup.querySelector('#close-popup-btn').onclick = () => {
             popup.classList.add('d-none');
+            popup.classList.remove('modal-like');
             popup.dataset.date = '';
         };
     };
@@ -229,26 +229,75 @@ function openPopup(dateStr) {
     popup.classList.remove('d-none');
 }
 
-function showToast(message) {
+function showToast(message, type = 'success') {
     const toastContainer = document.getElementById('toast-container');
     const toast = document.createElement('div');
-    toast.className = 'toast align-items-center text-bg-primary border-0 show';
+
+    const backgroundColor = type === 'success' ? '#0e1b30' : '#dc3545';
+
+    toast.className = 'toast align-items-center border-0 show';
     toast.role = 'alert';
     toast.ariaLive = 'assertive';
     toast.ariaAtomic = 'true';
     toast.style.zIndex = 1055;
+    toast.style.backgroundColor = backgroundColor;
+    toast.style.color = '#fff';
+
     toast.innerHTML = `
       <div class="d-flex">
         <div class="toast-body">${message}</div>
         <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Закрыть"></button>
       </div>
     `;
+
     toastContainer.appendChild(toast);
 
     setTimeout(() => {
         toast.remove();
     }, 3000);
 }
+
+document.getElementById('confirmDeleteBtn').onclick = () => {
+    if (!eventToDelete || !eventDateToDelete) return;
+
+    const events = eventsByDate[eventDateToDelete];
+    const removed = events.splice(currentPageToDelete, 1)[0];
+    if (removed._ref) removed._ref.remove();
+
+    if (events.length === 0) {
+        const popup = document.getElementById('floating-event-form');
+        popup.classList.add('d-none');
+        popup.dataset.date = '';
+    } else {
+        openPopup(eventDateToDelete);
+    }
+
+    bootstrap.Modal.getInstance(document.getElementById('deleteConfirmModal')).hide();
+    showToast('Мероприятие удалено', 'success');
+
+    eventToDelete = null;
+    eventDateToDelete = null;
+    currentPageToDelete = null;
+};
+
+document.getElementById('cancelDeleteBtn').addEventListener('click', () => {
+    if (eventDateToDelete && eventsByDate[eventDateToDelete]?.length > 0) {
+        openPopup(eventDateToDelete);
+    }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const cancelEditBtn = document.getElementById('cancelEditBtn');
+    if (cancelEditBtn) {
+        cancelEditBtn.addEventListener('click', () => {
+            const popup = document.getElementById('floating-event-form');
+            const date = popup.dataset.date;
+            if (date && eventsByDate[date]?.length > 0) {
+                openPopup(date);
+            }
+        });
+    }
+});
 
 if (!document.getElementById('toast-container')) {
     const container = document.createElement('div');
