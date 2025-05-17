@@ -3,6 +3,7 @@ body {
     font-family: 'Inter', sans-serif;
 }
 
+/* Навигация */
 .navbar .bi {
     font-size: 1.4rem;
     color: #172b4d;
@@ -14,7 +15,6 @@ body {
     color: #172b4d;
 }
 
-/* Ссылки меню (десктоп) */
 .nav-link {
     position: relative;
     font-weight: 400;
@@ -23,7 +23,6 @@ body {
     transition: color 0.3s ease;
 }
 
-/* Подчеркивание активной ссылки */
 .nav-link::after {
     content: "";
     position: absolute;
@@ -36,28 +35,15 @@ body {
     transition: width 0.4s ease;
 }
 
-.nav-link.active::after {
-    width: 100%;
-}
-
+.nav-link.active::after,
 .nav-link:hover::after {
     width: 100%;
 }
 
-/* Мобильная адаптация */
 @media (max-width: 991.98px) {
-    .navbar-nav {
-        padding: 0;
-        margin: 0;
-    }
-
     .navbar-nav .nav-item {
         width: 100%;
         border-bottom: 1px solid #dee2e6;
-    }
-
-    .navbar-nav .nav-item:last-child {
-        border-bottom: none;
     }
 
     .navbar-nav .nav-link {
@@ -69,8 +55,7 @@ body {
 
     .navbar-nav .nav-link.active {
         background-color: #1b2b4b !important;
-        color: #ffffff !important;
-        border-radius: 0;
+        color: #fff !important;
     }
 
     .navbar-nav .nav-link::after {
@@ -82,10 +67,11 @@ body {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(23,43,77, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
+/* Контейнер */
 .card {
     border: none;
     border-radius: 12px;
-    background-color: #ffffff;
+    background-color: #fff;
     padding: 20px;
 }
 
@@ -94,11 +80,12 @@ body {
     color: #1b2b4b;
 }
 
-#calendar {
+#calendar,
+.fc {
     font-size: 14px;
 }
 
-/* Дополнительно для FullCalendar */
+/* FullCalendar */
 .fc-toolbar.fc-header-toolbar {
     display: flex;
     flex-wrap: wrap;
@@ -109,25 +96,26 @@ body {
 }
 
 .fc-toolbar-title {
-    font-weight: 600;
     font-size: 1.25rem;
-    color: #1b2b4b;
+    font-weight: 600;
+    color: #0e1b30;
 }
 
-.fc .fc-button {
+.fc .fc-button,
+.fc-addEventButton-button {
     background-color: #1b2b4b;
+    color: #fff;
     border: none;
     border-radius: 6px;
     padding: 0.4em 1em;
     font-size: 0.9rem;
 }
 
-.fc .fc-button-primary:not(:disabled).fc-button-active,
-.fc .fc-button-primary:not(:disabled):hover {
+.fc .fc-button:hover,
+.fc-addEventButton-button:hover {
     background-color: #0e1b30;
 }
 
-/* Цвет текста чисел и дней недели */
 .fc-daygrid-day-number,
 .fc-col-header-cell-cushion {
     color: #172b4d;
@@ -135,44 +123,90 @@ body {
     text-decoration: none;
 }
 
-/* Ячейки календаря */
-.fc-daygrid-day-frame {
-    padding: 10px;
-    transition: background-color 0.2s ease;
-    border-radius: 8px;
-
-}
-
 .fc-daygrid-day:hover .fc-daygrid-day-frame {
     background-color: #f1f3f5;
 }
 
-/* Скрытые дни следующего/предыдущего месяца*/
 .fc-daygrid-day.fc-day-other {
     background-color: #f8f9fa;
     color: #adb5bd;
 }
 
-/* Сегодняшняя дата */
 .fc-day-today {
     background-color: #fff7e6 !important;
     border-radius: 8px;
     box-shadow: inset 0 0 0 2px #172b4d;
 }
 
-/* Окошко */
+.fc-header-toolbar .fc-button {
+    margin-left: 0.5rem;
+}
+
+/* Мероприятия */
+.fc-daygrid-event {
+    background-color: #1c2d4f !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 4px;
+    padding: 1px 4px !important;
+    font-size: 12px !important;
+    line-height: 1.2 !important;
+    font-weight: 500;
+    margin-bottom: 2px !important;
+    white-space: nowrap;
+}
+
+.fc-daygrid-event:hover {
+    background-color: #0e1b30 !important;
+    text-decoration: none;
+}
+
+.fc-event-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.fc-daygrid-more-link {
+    font-size: 0.8rem;
+    color: #1c2d4f;
+    font-weight: 500;
+    margin-top: 3px;
+}
+
+.fc-daygrid-more-link:hover {
+    text-decoration: underline;
+    color: #1a2845;
+}
+
+/* Попап */
+.fc-popup,
+.fc-popup.modal-like {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    font-size: 14px;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
+    z-index: 1060;
+}
 
 .fc-popup {
     position: absolute;
-    z-index: 999;
-    background: #ffffff;
     border: 1px solid #dee2e6;
-    border-radius: 8px;
-    padding: 15px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.fc-popup:not(.modal-like) {
     width: 260px;
-    font-size: 14px;
-    transition: 0.2s ease;
+}
+
+.fc-popup.modal-like {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%);
+    max-width: 700px;
+    max-height: 80vh;
+    overflow-y: auto;
 }
 
 .fc-popup h6 {
@@ -200,20 +234,7 @@ body {
     border-color: transparent transparent #fff transparent;
 }
 
-@media (max-width: 576px) {
-    .fc-popup {
-        width: 90%;
-        max-width: 320px;
-        left: 50% !important;
-        transform: translateX(-50%);
-    }
-}
-
-.popup-page {
-    font-size: 14px;
-    color: #333;
-}
-
+/* Элементы управления */
 .icon-btn {
     width: 32px;
     height: 32px;
@@ -224,7 +245,6 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0;
     transition: 0.2s ease;
 }
 
@@ -237,119 +257,89 @@ body {
     cursor: not-allowed;
 }
 
-/* Подсветка активного чекбокса */
-.form-check-input:checked {
-    background-color: #0e1b30;
-    border-color: #0e1b30;
-    box-shadow: 0 0 0 0.15rem rgba(14, 27, 48, 0.25);
-    /* эффект фокуса */
-}
-
-
+/* Кнопки */
 .custom-btn {
     background-color: #172b4d !important;
     color: #fff !important;
-    border: none;
     border-radius: 0.375rem;
     padding: 6px 12px;
     transition: background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Hover / Focus / Active */
 .custom-btn:hover,
 .custom-btn:focus,
 .custom-btn:active {
     background-color: #0e1b30 !important;
     box-shadow: 0 0 0 0.2rem rgba(14, 27, 48, 0.3);
-    color: #fff !important;
     outline: none;
 }
 
-/* Disabled */
 .custom-btn:disabled {
     background-color: #adb5bd !important;
-    color: #fff !important;
-    box-shadow: none;
     cursor: not-allowed;
 }
 
-/* Стилизуем кнопку "Добавить" как все остальные */
-.fc-addEventButton-button {
+/* Чекбокс */
+.form-check-input:checked {
     background-color: #0e1b30;
-    color: #fff;
-    border: none;
-    border-radius: 0.375rem;
-    padding: 6px 12px;
-    font-size: 14px;
-    transition: background-color 0.2s ease;
-    margin-left: 0.5rem;
+    border-color: #0e1b30;
+    box-shadow: 0 0 0 0.15rem rgba(14, 27, 48, 0.25);
 }
 
-.fc-addEventButton-button:hover {
-    background-color: #1b2b4b;
-}
-
-/* Отступы между кнопками справа */
-.fc-header-toolbar .fc-button {
-    margin-left: 0.5rem;
-}
-
-/* Заголовок месяца */
-.fc-toolbar-title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #0e1b30;
-}
-
-/* Адаптация для мобильных: просто нормальный отступ */
+/* Моб. адаптация */
 @media (max-width: 576px) {
+
+    .fc-popup,
+    .fc-popup.modal-like {
+        width: 95%;
+        font-size: 13px;
+    }
+
+    /* Обертка всей панели заголовка */
     .fc-toolbar.fc-header-toolbar {
-        flex-wrap: wrap;
         flex-direction: column;
         align-items: stretch;
         gap: 0.5rem;
     }
 
-    .fc-toolbar.fc-header-toolbar > div {
+    /* Обеспечивает равномерную ширину и выравнивание всех кнопок */
+    .fc-toolbar>div {
         display: flex;
         flex-wrap: wrap;
-        gap: 0.5rem;
         justify-content: space-between;
+        gap: 0.5rem;
+        width: 100%;
     }
 
-    .fc-toolbar .fc-button,
-    .fc-toolbar .fc-addEventButton-button {
-        flex: 1 1 48%;
-        min-width: 48%;
+    /* Все кнопки (включая кастомную "Добавить") */
+    .fc .fc-prev-button,
+    .fc .fc-next-button {
+        flex: 0 0 40px;
+        min-width: 40px;
+        max-width: 40px;
+        text-align: center;
+        padding: 6px 0;
     }
 
+    .fc .fc-today-button,
+    .fc-addEventButton-button {
+        flex: 1 1 auto;
+        min-width: 45%;
+        padding: 6px 0;
+        font-size: 0.85rem;
+        text-align: center;
+    }
+
+    /* Заголовок месяца */
     .fc-toolbar-title {
         text-align: center;
-        width: 100%;
         font-size: 1rem;
-        margin-bottom: 0.5rem;
+        margin-top: 0.5rem;
     }
 
+    /* Ячейки календаря */
     .fc-daygrid-day-frame {
-        min-height: 100px;
-        padding: 6px;
-    }
-
-    .card {
-        width: 100% !important;
-        padding: 10px !important;
-    }
-
-    #calendar {
-        width: 100% !important;
-    }
-
-    .fc {
-        font-size: 0.75rem; /* уменьшает шрифт, помогает вместить контент */
-    }
-
-    .fc-daygrid-day-frame {
-        min-height: 90px; /* чтобы события помещались */
+        min-height: 90px;
         padding: 4px;
     }
 
@@ -367,110 +357,32 @@ body {
     }
 }
 
-
-#addEventModal .modal-content {
-    border-radius: 1rem;
+.popup-separator {
+    border-top: 1px solid #dee2e6;
+    margin: 12px 0;
 }
 
-#addEventModal label {
-    font-weight: 500;
-    color: #0e1b30;
-}
-
-
-
-/* Цвет выбранной даты и времени в date/time input */
-input[type="date"]::-webkit-calendar-picker-indicator,
-input[type="time"]::-webkit-calendar-picker-indicator {
-    filter: invert(15%) sepia(100%) saturate(1000%) hue-rotate(180deg);
-}
-
-/* Для Firefox */
-input[type="date"],
-input[type="time"] {
-    accent-color: #0e1b30;
-    /* влияет на выделение */
-}
-
-.flatpickr-day.selected,
-.flatpickr-day.startRange,
-.flatpickr-day.endRange {
-    background-color: #0e1b30 !important;
-    color: #fff !important;
-    border-radius: 4px;
-}
-
-/* Время */
-select {
-    background-color: #fff;
-    border: 1px solid #ced4da;
-    color: #0e1b30;
-}
-
-select option:checked {
-    background-color: #0e1b30;
-    color: #fff;
-}
-
-/* Стилизация отдельного события */
-.fc-daygrid-event {
-    background-color: #1c2d4f !important;
-    color: #fff !important;
-    border: none !important;
-    border-radius: 6px;
-    padding: 2px 6px;
-    font-size: 0.85rem;
-    font-weight: 500;
-}
-
-/* Убираем подчеркивание при наведении */
-.fc-daygrid-event:hover {
-    text-decoration: none;
-    background-color: #0e1b30 !important;
-}
-
-/* Убираем границу и фон у события */
-.fc-event-title {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-/* Стилизация "+ ещё N" */
-.fc-daygrid-more-link {
-    font-size: 0.8rem;
-    color: #1c2d4f;
-    font-weight: 500;
-    display: inline-block;
-    margin-top: 3px;
-}
-
-.fc-daygrid-more-link:hover {
-    text-decoration: underline;
-    color: #1a2845;
-}
-
-.fc-popup.modal-like {
-    position: fixed !important;
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%);
-    z-index: 1060;
-    width: 90%;
-    max-width: 450px;
-    max-height: 80vh;
-    overflow-y: auto;
-    background-color: #fff;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
+.popup-meta {
     font-size: 14px;
+    color: #6c757d;
 }
 
-@media (max-width: 576px) {
-    .fc-popup.modal-like {
-        width: 95%;
-        max-height: 85vh;
-        font-size: 13px;
-    }
+.popup-image {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.accordion-button {
+    font-weight: 500;
+    padding: 0.75rem 1rem;
+}
+
+.accordion-button:focus {
+    box-shadow: none;
+}
+
+.accordion-button::after {
+    transition: transform 0.2s ease;
 }

@@ -16,6 +16,11 @@ const calendar = new FullCalendar.Calendar(document.getElementById('calendar'), 
     buttonText: {
         today: 'Сегодня'
     },
+    eventTimeFormat: {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+    },
     headerToolbar: {
         start: 'title',
         center: '',
@@ -25,7 +30,9 @@ const calendar = new FullCalendar.Calendar(document.getElementById('calendar'), 
         addEventButton: {
             text: 'Добавить',
             click: function () {
+                document.getElementById('floating-event-form').classList.add('d-none'); 
                 const modal = new bootstrap.Modal(document.getElementById('addEventModal'));
+                document.getElementById('addEventModalLabel').textContent = 'Новое мероприятие';
                 modal.show();
             }
         }
@@ -104,13 +111,23 @@ form.addEventListener('submit', function (e) {
     }
 });
 
+function formatTime(dateStr) {
+  const date = new Date(dateStr);
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  return `${hours}:${minutes}`;
+}
+
 function openPopup(dateStr) {
+    const events = eventsByDate[dateStr];
+    if (!events || events.length === 0) {
+        return;
+    }
     const popup = document.getElementById('floating-event-form');
     popup.classList.add('modal-like');
     popup.dataset.date = dateStr;
     popup.dataset.date = dateStr;
 
-    const events = eventsByDate[dateStr] || [];
     let currentPage = 1;
     const getTotalPages = () => Math.max(1, events.length);
 
@@ -120,48 +137,60 @@ function openPopup(dateStr) {
         if (currentPage > totalPages) currentPage = totalPages;
 
         popup.innerHTML = `
-      <div class="d-flex justify-content-between align-items-start">
-        <h6 class="mb-1">${new Date(dateStr).toLocaleDateString('ru-RU')}</h6>
-        <div class="d-flex align-items-center gap-2">
-          <button class="btn btn-sm p-1 custom-btn edit-btn-global" title="Редактировать">
-            <i class="bi bi-pencil"></i>
-          </button>
-          <button class="btn btn-sm p-1 custom-btn delete-btn-global" title="Удалить">
-            <i class="bi bi-trash"></i>
-          </button>
-          <button type="button" class="btn-close ms-2" aria-label="Закрыть" id="close-popup-btn"></button>
-        </div>
-      </div>
-      <div id="popup-pages">
-        ${events.map((ev, i) => {
-            const time = ev.start ? new Date(ev.start).toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }) : '';
-            return `
-          <div class="popup-page ${i + 1 !== currentPage ? 'd-none' : ''}" data-page="${i + 1}">
-            <strong>${ev.title}</strong>
-            <p class="mb-1 text-muted">${ev.description}</p>
-            <small class="text-secondary">
-              ${time ? `Время: ${time}` : ''} ${ev.extendedProps.place ? `| Место: ${ev.extendedProps.place}` : ''} ${ev.extendedProps.duration ? `| Длительность: ${ev.extendedProps.duration} ч` : ''}
-            </small>
-            <div class="d-flex justify-content-between align-items-center mt-3">
-              <div class="form-check mb-0">
-                <input class="form-check-input consent-checkbox" type="checkbox" id="consent-checkbox-${i}">
-                <label class="form-check-label small" for="consent-checkbox-${i}">Согласие на обработку</label>
-              </div>
-              <button class="btn-sm custom-btn register-btn ms-3" id="register-btn-${i}" disabled>Записаться</button>
+        <div class="d-flex justify-content-between align-items-start">
+            <h6 class="mb-1">${new Date(dateStr).toLocaleDateString('ru-RU')}</h6>
+            <div class="d-flex align-items-center gap-2">
+            <button class="btn btn-sm p-1 custom-btn edit-btn-global" title="Редактировать">
+                <i class="bi bi-pencil"></i>
+            </button>
+            <button class="btn btn-sm p-1 custom-btn delete-btn-global" title="Удалить">
+                <i class="bi bi-trash"></i>
+            </button>
+            <button type="button" class="btn-close ms-2" aria-label="Закрыть" id="close-popup-btn"></button>
             </div>
-          </div>`;
-        }).join('')}
-      </div>
-      <div class="d-flex justify-content-between align-items-center mt-3">
-        <button id="prev-page" class="icon-btn" ${currentPage === 1 ? 'disabled' : ''}>
-          <i class="bi bi-chevron-left"></i>
-        </button>
-        <span id="page-indicator" class="mx-2 small">${currentPage} / ${totalPages}</span>
-        <button id="next-page" class="icon-btn" ${currentPage === totalPages ? 'disabled' : ''}>
-          <i class="bi bi-chevron-right"></i>
-        </button>
-      </div>
-    `;
+        </div>
+
+        <div class="popup-separator"></div>
+
+        <div id="popup-pages">
+            ${events.map((ev, i) => {
+            const time = ev.start ? formatTime(ev.start) : '';
+            return `
+                <div class="popup-page ${i + 1 !== currentPage ? 'd-none' : ''}" data-page="${i + 1}">
+                
+                ${ev.image ? `<img src="${ev.image}" alt="Мероприятие" class="popup-image mb-2">` : ''}
+
+                <strong>${ev.title}</strong>
+                <p class="mb-1 text-muted">${ev.description}</p>
+
+                <div class="popup-meta text-secondary small">
+                    ${time ? `Время: ${time}` : ''} ${ev.extendedProps.place ? `| Место: ${ev.extendedProps.place}` : ''} ${ev.extendedProps.duration ? `| Длительность: ${ev.extendedProps.duration} ч` : ''}
+                </div>
+
+                <div class="popup-separator"></div>
+
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <div class="form-check mb-0">
+                    <input class="form-check-input consent-checkbox" type="checkbox" id="consent-checkbox-${i}">
+                    <label class="form-check-label small" for="consent-checkbox-${i}">Согласие на обработку</label>
+                    </div>
+                    <button class="btn-sm custom-btn register-btn ms-3" id="register-btn-${i}" disabled>Записаться</button>
+                </div>
+                </div>`;
+            }).join('')}
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mt-3">
+            <button id="prev-page" class="icon-btn" ${currentPage === 1 ? 'disabled' : ''}>
+            <i class="bi bi-chevron-left"></i>
+            </button>
+            <span id="page-indicator" class="mx-2 small">${currentPage} / ${totalPages}</span>
+            <button id="next-page" class="icon-btn" ${currentPage === totalPages ? 'disabled' : ''}>
+            <i class="bi bi-chevron-right"></i>
+            </button>
+        </div>
+        `;
+
 
         popup.querySelector('#prev-page').onclick = () => {
             if (currentPage > 1) {
@@ -182,7 +211,7 @@ function openPopup(dateStr) {
             eventDateToDelete = dateStr;
 
             const popup = document.getElementById('floating-event-form');
-            popup.classList.add('d-none'); 
+            popup.classList.add('d-none');
 
             const deleteModal = new bootstrap.Modal(document.getElementById('deleteConfirmModal'));
             deleteModal.show();
@@ -207,6 +236,7 @@ function openPopup(dateStr) {
             submitBtn.textContent = 'Сохранить';
 
             const modal = new bootstrap.Modal(document.getElementById('addEventModal'));
+            document.getElementById('addEventModalLabel').textContent = 'Редактирование мероприятия';
             modal.show();
         };
 
