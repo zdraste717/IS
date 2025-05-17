@@ -386,3 +386,25 @@ body {
 .accordion-button::after {
     transition: transform 0.2s ease;
 }
+
+.fc-event-time {
+    display: inline-block;
+    width: 45px;
+    font-family: 'Inter', sans-serif;
+    font-variant-numeric: tabular-nums; /* 👈 одинаковая ширина цифр */
+    font-weight: 600;
+    color: #fff;
+}
+
+.popup-page p.text-muted {
+    font-size: 0.9rem;
+    line-height: 1.4;
+    white-space: pre-wrap; /* сохраняет переносы строк */
+    word-break: break-word;
+}
+
+#description {
+    min-height: 120px;
+    resize: vertical;
+    line-height: 1.4;
+}

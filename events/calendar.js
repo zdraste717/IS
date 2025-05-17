@@ -30,13 +30,28 @@ const calendar = new FullCalendar.Calendar(document.getElementById('calendar'), 
         addEventButton: {
             text: 'Добавить',
             click: function () {
-                document.getElementById('floating-event-form').classList.add('d-none'); 
+                document.getElementById('floating-event-form').classList.add('d-none');
                 const modal = new bootstrap.Modal(document.getElementById('addEventModal'));
                 document.getElementById('addEventModalLabel').textContent = 'Новое мероприятие';
                 modal.show();
             }
         }
     },
+
+    eventDidMount: function (info) {
+        const time = info.timeText.padEnd(5, ' ');
+        const title = info.event.title;
+
+        const timeEl = info.el.querySelector('.fc-event-time');
+        const titleEl = info.el.querySelector('.fc-event-title');
+
+        if (timeEl && titleEl) {
+            timeEl.textContent = time;
+            titleEl.textContent = title;
+        }
+    },
+
+
     events: [],
     dateClick: function (info) {
         openPopup(info.dateStr);
@@ -80,7 +95,17 @@ form.addEventListener('submit', function (e) {
             }
         }
     } else {
+        // Уникальный ID для предотвращения дублирования
+        const eventId = `${date}-${time}-${title}`;
+
+        // Проверка: если событие с таким ID уже есть, не добавляем его
+        if (calendar.getEventById(eventId)) {
+            console.warn('Событие уже существует, не добавляем повторно.');
+            return;
+        }
+
         const eventObj = {
+            id: eventId, // 👈 важно!
             title,
             start: fullDateTime,
             description,
@@ -93,6 +118,7 @@ form.addEventListener('submit', function (e) {
         if (!eventsByDate[date]) eventsByDate[date] = [];
         eventsByDate[date].push(eventObj);
 
+        // 🔹 Этот блок оставляем — он обновляет popup, если он открыт
         if (document.getElementById('floating-event-form').dataset.date === date) {
             openPopup(date);
         }
@@ -112,10 +138,10 @@ form.addEventListener('submit', function (e) {
 });
 
 function formatTime(dateStr) {
-  const date = new Date(dateStr);
-  const hours = String(date.getHours()).padStart(2, '0');
-  const minutes = String(date.getMinutes()).padStart(2, '0');
-  return `${hours}:${minutes}`;
+    const date = new Date(dateStr);
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${hours}:${minutes}`;
 }
 
 function openPopup(dateStr) {
@@ -177,7 +203,7 @@ function openPopup(dateStr) {
                     <button class="btn-sm custom-btn register-btn ms-3" id="register-btn-${i}" disabled>Записаться</button>
                 </div>
                 </div>`;
-            }).join('')}
+        }).join('')}
         </div>
 
         <div class="d-flex justify-content-between align-items-center mt-3">
@@ -335,3 +361,16 @@ if (!document.getElementById('toast-container')) {
     container.className = 'toast-container position-fixed bottom-0 end-0 p-3';
     document.body.appendChild(container);
 }
+
+document.getElementById('addEventModal').addEventListener('hidden.bs.modal', () => {
+    // Сброс технических полей
+    form.edit_event_index.value = '';
+    form.edit_event_date.value = '';
+
+    // Сброс текста заголовка и кнопки
+    document.getElementById('addEventModalLabel').textContent = 'Новое мероприятие';
+    document.querySelector('#addEventModal button[type="submit"]').textContent = 'Добавить';
+
+    // Сброс полей формы
+    form.reset();
+});
