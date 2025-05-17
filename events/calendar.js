@@ -67,6 +67,7 @@ form.addEventListener('submit', function (e) {
 
     const title = form.name_e.value;
     const description = form.description.value;
+    const image = form.image_url.value;
     const date = form.data_s.value;
     const time = form.time_s.value;
     const duration = form.duration.value;
@@ -84,6 +85,7 @@ form.addEventListener('submit', function (e) {
             ev.start = fullDateTime;
             ev.extendedProps.place = place;
             ev.extendedProps.duration = duration;
+            ev.extendedProps.image = image;
 
             if (ev._ref) {
                 ev._ref.setProp('title', title);
@@ -109,7 +111,7 @@ form.addEventListener('submit', function (e) {
             title,
             start: fullDateTime,
             description,
-            extendedProps: { place, duration }
+            extendedProps: { place, duration, image }
         };
 
         const calendarEvent = calendar.addEvent(eventObj);
@@ -254,6 +256,7 @@ function openPopup(dateStr) {
             form.time_s.value = new Date(eventToEdit.start).toTimeString().slice(0, 5);
             form.place.value = eventToEdit.extendedProps.place || '';
             form.duration.value = eventToEdit.extendedProps.duration || '';
+            form.image_url.value = eventToEdit.extendedProps.image || '';
 
             form.edit_event_date.value = dateStr;
             form.edit_event_index.value = currentPage - 1;
