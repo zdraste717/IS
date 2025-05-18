@@ -55,39 +55,51 @@
 
       <!-- Фильтры (по умолчанию скрыты) -->
       <div id="filtersSection" class="mt-1">
-        <form>
-          <div class="row g-3">
-            <div class="col-md-4">
-              <label for="typeFilter" class="form-label">Тип достижения</label>
-              <select id="typeFilter" class="form-select">
-                <option selected>Все</option>
-                <option>Научные</option>
-                <option>Спортивные</option>
-                <option>Творческие</option>
-              </select>
-            </div>
-            <div class="col-md-4">
-              <label class="form-label">Период с</label>
-              <input type="date" class="form-control" />
-            </div>
-            <div class="col-md-4">
-              <label class="form-label">Период по</label>
-              <input type="date" class="form-control" />
-            </div>
-            <div class="col-md-12">
-              <label class="form-label">Поиск</label>
-              <input type="text" class="form-control" placeholder="Введите текст" />
-            </div>
-            <div class="col-12 text-end">
-              <button type="submit" class="btn btn-primary col-auto">Применить</button>
-            </div>
-          </div>
-        </form>
+  <form method="get">
+    <div class="row g-3">
+      <div class="col-md-4">
+        <label for="typeFilter" class="form-label">Тип достижения</label>
+        <select id="typeFilter" class="form-select" name="type">
+          <option value="scienes" {% if type_filter == "scienes" %}selected{% endif %}>Научные достижения</option>
+          <option value="sport" {% if type_filter == "sport" %}selected{% endif %}>Спортивные достижения</option>
+          <option value="creation" {% if type_filter == "creation" %}selected{% endif %}>Творческие достижения</option>
+          <option value="various_level" {% if type_filter == "various_level" %}selected{% endif %}>Различный уровень</option>
+          <option value="publication" {% if type_filter == "publication" %}selected{% endif %}>Публикации</option>
+          <option value="student_government" {% if type_filter == "student_government" %}selected{% endif %}>Студенческое управление</option>
+          <option value="other_achiev" {% if type_filter == "other_achiev" %}selected{% endif %}>Иные достижения</option>
+          <option value="add_programm" {% if type_filter == "add_programm" %}selected{% endif %}>Освоение доп. программ</option>
+          <option value="experience" {% if type_filter == "experience" %}selected{% endif %}>Опыт работы</option>
+        </select>
       </div>
+
+      <div class="col-md-4">
+        <label class="form-label">Период с</label>
+        <input type="date" class="form-control" name="date_from" value="{{ request.GET.date_from }}">
+      </div>
+
+      <div class="col-md-4">
+        <label class="form-label">Период по</label>
+        <input type="date" class="form-control" name="date_to" value="{{ request.GET.date_to }}">
+      </div>
+
+      <div class="col-md-12">
+        <label class="form-label">Поиск</label>
+        <input type="text" name="search" class="form-control" value="{{ search_query }}" placeholder="Введите текст">
+      </div>
+
+      <div class="col-12 text-end">
+        <button type="submit" class="btn btn-primary col-auto">Применить</button>
+        <a href="{% url 'admin_panel' %}" class="btn btn-secondary">Сбросить</a>
+      </div>
+    </div>
+  </form>
+</div>
+
 
       <div class="center-wrapper">
         <div class="form-container">
           <!-- Карточка научного достижения -->
+          {% if type_filter == "scienes" or type_filter == "all" %}
           {% for item in scienes %}
             <div class="card mb-4 w-100 shadow-sm" style="max-height: 70vh; overflow-y: auto; padding-right: 5px;">
               <div class="card-body">
@@ -153,9 +165,11 @@
               </div>
             </div>
           {% endfor %}
+          {% endif %}
           <!-- Конец карточки -->
 
           <!-- Карточка спортивного достижения -->
+          {% if type_filter == "sport" or type_filter == "all" %}
           {% for item in sport %}
             <div class="card mb-4 w-100 shadow-sm">
               <div class="card-body">
@@ -212,9 +226,11 @@
               </div>
             </div>
           {% endfor %}
+          {% endif %}
           <!-- Конец карточки -->
 
           <!-- Карточка творческого достижения -->
+           {% if type_filter == "creation" or type_filter == "all" %}
           {% for item in creation %}
             <div class="card mb-4 w-100 shadow-sm">
               <div class="card-body">
@@ -271,9 +287,11 @@
               </div>
             </div>
           {% endfor %}
+          {% endif %}
           <!-- Конец карточки -->
 
           <!-- Карточка Различный уровень -->
+           {% if type_filter == "various_level" or type_filter == "all" %}
           {% for item in various_level %}
             <div class="card mb-4 w-100 shadow-sm">
               <div class="card-body">
@@ -336,9 +354,11 @@
               </div>
             </div>
           {% endfor %}
+          {% endif %}
           <!-- Конец карточки -->
 
           <!-- Карточка Публикации -->
+           {% if type_filter == "publication" or type_filter == "all" %}
           {% for item in publication %}
             <div class="card mb-4 w-100 shadow-sm">
               <div class="card-body">
@@ -401,9 +421,11 @@
               </div>
             </div>
           {% endfor %}
+          {% endif %}
           <!-- Конец карточки -->
 
           <!-- Карточка Студенческое самоуправление -->
+           {% if type_filter == "student_government" or type_filter == "all" %}
           {% for item in student_government %}
             <div class="card mb-4 w-100 shadow-sm">
               <div class="card-body">
@@ -460,9 +482,11 @@
               </div>
             </div>
           {% endfor %}
+          {% endif %}
           <!-- Конец карточки -->
 
           <!-- Карточка Иные достижения -->
+           {% if type_filter == "other_achiev" or type_filter == "all" %}
           {% for item in other_achiev %}
             <div class="card mb-4 w-100 shadow-sm">
               <div class="card-body">
@@ -519,9 +543,11 @@
               </div>
             </div>
           {% endfor %}
+          {% endif %}
           <!-- Конец карточки -->
 
           <!-- Карточка Освоение доп. программ -->
+           {% if type_filter == "add_programm" or type_filter == "all" %}
           {% for item in add_programm %}
             <div class="card mb-4 w-100 shadow-sm">
               <div class="card-body">
@@ -584,9 +610,11 @@
               </div>
             </div>
           {% endfor %}
+          {% endif %}
           <!-- Конец карточки -->
 
           <!-- Карточка Опыт работы -->
+           {% if type_filter == "experience" or type_filter == "all" %}
            {% for item in experience %}
           <div class="card mb-4 w-100 shadow-sm">
             <div class="card-body">
@@ -646,6 +674,7 @@
             </div>
           </div>
           {% endfor %}
+          {% endif %}
           <!-- Конец карточки -->
         </div>
       </div>

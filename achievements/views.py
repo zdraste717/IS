@@ -1,6 +1,7 @@
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.db.models import Q
 from .models import (
     Student, Scienes, Sport, Creation, VariousLevel, Publication,
     StudentGovernment, OtherAchiev, AddProgramm, Experience
@@ -60,17 +61,42 @@ def login_view(request):
 def admin_panel_view(request):
     if not request.session.get('is_admin'):
         return redirect('main')  # доступ только для админа
+    
+    type_filter = request.GET.get('type')
+    search_query = request.GET.get('search', '').strip()
 
-    context = {
-        'scienes': Scienes.objects.all(),
-        'sport': Sport.objects.all(),
-        'creation': Creation.objects.all(),
-        'various_level': VariousLevel.objects.all(),
-        'publication': Publication.objects.all(),
-        'student_government': StudentGovernment.objects.all(),
-        'other_achiev': OtherAchiev.objects.all(),
-        'add_programm': AddProgramm.objects.all(),
-        'experience': Experience.objects.all(),
+    context = {}
+    def apply_search(queryset, fields):
+        if not search_query:
+            return queryset
+        q_objects = Q()
+        for field in fields:
+            q_objects |= Q(**{f"{field}__icontains": search_query})
+        return queryset.filter(q_objects)
+
+    model_map = {
+    'scienes': (Scienes, ['fullname', 'srw_name', 'customer', 'p_name', 'result']),
+    'sport': (Sport, ['fullname', 'sport_t', 'compet', 'note']),
+    'creation': (Creation, ['fullname', 'activity_t', 'part_fest', 'note']),
+    'various_level': (VariousLevel, ['fullname', 'event_e', 'name_e', 'venue', 'result']),
+    'publication': (Publication, ['fullname', 'fname_work', 'coauthors', 'form_w']),
+    'student_government': (StudentGovernment, ['fullname', 'body_g', 'activity_t', 'note']),
+    'other_achiev': (OtherAchiev, ['fullname', 'activity_t', 'achiev', 'note']),
+    'add_programm': (AddProgramm, ['fullname', 'name_p', 'education_t', 'education_p']),
+    'experience': (Experience, ['fullname', 'place_w', 'title_j', 'respons']),
     }
 
+    if not type_filter or type_filter == 'all':
+        for key, (model, fields) in model_map.items():
+            context[key] = apply_search(model.objects.all(), fields)
+    else:
+        model_info = model_map.get(type_filter)
+        if model_info:
+            model, fields = model_info
+            context[type_filter] = apply_search(model.objects.all(), fields)
+
+    context['type_filter'] = type_filter or 'all'
+    context['search_query'] = search_query
+
     return render(request, 'admin_panel.html', context)
+

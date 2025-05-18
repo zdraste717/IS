@@ -4,3 +4,5 @@ const toggleBtn = document.getElementById("toggleFiltersBtn");
   toggleBtn.addEventListener("click", () => {
     filters.classList.toggle("show");
   });
+
+
