@@ -84,91 +84,130 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content rounded-4">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addEventModalLabel">Новое мероприятие</h5>
+                    <h5 class="modal-title" id="addEventModalLabel"></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="addEventForm">
+                    <form id="addEventForm" enctype="multipart/form-data">
                         <input type="hidden" id="edit-event-date" name="edit_event_date">
                         <input type="hidden" id="edit-event-index" name="edit_event_index">
-                        <div class="mb-3">
-                            <label for="name_e" class="form-label">
-                                Название мероприятия <span class="text-danger">*</span>
-                            </label>
-                            <input type="text" class="form-control" id="name_e" name="name_e" required>
-                        </div>
 
-                        <div class="mb-3">
-                            <label for="tags" class="form-label">Тэги</label>
-                            <input type="text" class="form-control" id="tags" name="tags">
-                        </div>
+                        <div class="p-3">
 
-                        <div class="mb-3">
-                            <label for="description" class="form-label">
-                                Описание <span class="text-danger">*</span>
-                            </label>
-                            <textarea class="form-control" id="description" name="description" rows="3"
-                                required></textarea>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-4 mb-3">
-                                <label for="data_s" class="form-label">
-                                    Дата <span class="text-danger">*</span>
+                            <div class="mb-3">
+                                <label for="name_e" class="form-label">
+                                    Название мероприятия <span class="text-danger">*</span>
                                 </label>
-                                <input type="date" class="form-control" id="data_s" name="data_s" required>
+                                <input type="text" class="form-control" id="name_e" name="name_e" required>
                             </div>
-                            <div class="col-md-4 mb-3">
-                                <label for="time_s" class="form-label">
-                                    Время <span class="text-danger">*</span>
-                                </label>
-                                <input type="time" class="form-control" id="time_s" name="time_s" required>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <label for="duration" class="form-label">Продолжительность (в часах)</label>
-                                <input type="number" class="form-control" id="duration" name="duration" min="1"
-                                    max="72">
-                            </div>
-                        </div>
 
-                        <div class="mb-3">
-                            <label for="place" class="form-label">
-                                Место проведения <span class="text-danger">*</span>
-                            </label>
-                            <input type="text" class="form-control" id="place" name="place" required>
+                            <div class="mb-3">
+                                <label for="tags" class="form-label">Тэги</label>
+                                <input type="text" class="form-control" id="tags" name="tags">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="description" class="form-label">
+                                    Описание <span class="text-danger">*</span>
+                                </label>
+                                <textarea class="form-control" id="description" name="description" rows="3"
+                                    required></textarea>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <label for="data_s" class="form-label">Дата <span
+                                            class="text-danger">*</span></label>
+                                    <input type="date" class="form-control" id="data_s" name="data_s" required>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="time_s" class="form-label">Время <span
+                                            class="text-danger">*</span></label>
+                                    <input type="time" class="form-control" id="time_s" name="time_s" required>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="duration" class="form-label">Длительность(в часах)</label>
+                                    <input type="number" class="form-control" id="duration" name="duration" min="1"
+                                        max="72">
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="place" class="form-label">Место проведения <span
+                                        class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="place" name="place" required>
+                            </div>
+
+                            <div class="accordion mb-4" id="imageAccordion">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingImage">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapseImage"
+                                            aria-expanded="false" aria-controls="collapseImage">
+                                            Изображение к мероприятию
+                                        </button>
+                                    </h2>
+                                    <div id="collapseImage" class="accordion-collapse collapse"
+                                        aria-labelledby="headingImage" data-bs-parent="#imageAccordion">
+                                        <div class="accordion-body">
+                                            <div class="mb-3">
+                                                <label for="image_file" class="form-label">Выберите файл
+                                                    изображения</label>
+                                                <input type="file" class="form-control" id="image_file"
+                                                    name="image_file" accept="image/*">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                         <hr class="my-4">
 
-                        <h6 class="mb-3 text-dark">Настройки видимости</h6>
+                        <div class="accordion mb-3" id="visibilityAccordion">
+                            <div class="accordion-item border-0">
+                                <h2 class="accordion-header" id="visibilityHeading">
+                                    <button class="accordion-button collapsed shadow-none bg-light text-dark"
+                                        type="button" data-bs-toggle="collapse" data-bs-target="#visibilityCollapse"
+                                        aria-expanded="false" aria-controls="visibilityCollapse">
+                                        Настройки видимости
+                                    </button>
+                                </h2>
+                                <div id="visibilityCollapse" class="accordion-collapse collapse"
+                                    aria-labelledby="visibilityHeading" data-bs-parent="#visibilityAccordion">
+                                    <div class="accordion-body">
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="faculty" class="form-label">Факультет</label>
+                                                <select class="form-select" id="faculty" name="faculty">
+                                                    <option value="" selected>Для всех факультетов</option>
+                                                    <option value="ИТиП">ФСГН</option>
+                                                    <option value="ФНС">ИСАУ</option>
+                                                    <option value="ФЭН">ИФИ</option>
+                                                    <option value="ИФиТ">ФЕИН</option>
+                                                </select>
+                                            </div>
 
-                        <div class="row">
-                            <div class="col-md-4 mb-3">
-                                <label for="faculty" class="form-label">Факультет</label>
-                                <select class="form-select" id="faculty" name="faculty">
-                                    <option value="" selected>Для всех факультетов</option>
-                                    <option value="ИТиП">ФСГН</option>
-                                    <option value="ФНС">ИСАУ</option>
-                                    <option value="ФЭН">ИФИ</option>
-                                    <option value="ИФиТ">ФЕИН</option>
-                                </select>
-                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="course" class="form-label">Курс</label>
+                                                <select class="form-select" id="course" name="course">
+                                                    <option value="" selected>Для всех курсов</option>
+                                                    <option value="1">1 курс</option>
+                                                    <option value="2">2 курс</option>
+                                                    <option value="3">3 курс</option>
+                                                    <option value="4">4 курс</option>
+                                                    <option value="5">5 курс</option>
+                                                </select>
+                                            </div>
 
-                            <div class="col-md-4 mb-3">
-                                <label for="course" class="form-label">Курс</label>
-                                <select class="form-select" id="course" name="course">
-                                    <option value="" selected>Для всех курсов</option>
-                                    <option value="1">1 курс</option>
-                                    <option value="2">2 курс</option>
-                                    <option value="3">3 курс</option>
-                                    <option value="4">4 курс</option>
-                                    <option value="5">5 курс</option>
-                                </select>
-                            </div>
-
-                            <div class="col-md-12 mb-3">
-                                <label for="group" class="form-label">Группы</label>
-                                <input type="text" class="form-control" id="group" name="group"
-                                    placeholder="например: 1011, 2012, 3013">
+                                            <div class="col-12 mb-3">
+                                                <label for="group" class="form-label">Группы</label>
+                                                <input type="text" class="form-control" id="group" name="group"
+                                                    placeholder="например: 1011, 2012, 3013">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </form>
@@ -176,13 +215,36 @@
 
                 <div class="modal-footer">
                     <button type="submit" form="addEventForm" class="btn custom-btn">Добавить</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        id="cancelEditBtn">Отмена</button>
                 </div>
             </div>
         </div>
     </div>
 
 </body>
+
+<!-- Модальное окно подтверждения удаления -->
+<div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteConfirmModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-4">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteConfirmModalLabel">Подтверждение удаления</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+                Вы действительно хотите удалить это мероприятие?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    id="cancelDeleteBtn">Отмена</button>
+                <button type="button" class="btn custom-btn" id="confirmDeleteBtn">Удалить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="calendar.js"></script>
 
 </html>
