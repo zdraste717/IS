@@ -36,9 +36,26 @@
                 <a class="navbar-brand d-none d-lg-block" href="#">
                     <img src="../photo/logo.jpg" alt="Logo" width="80" height="50">
                 </a>
-                <div class="d-flex align-items-center ms-auto order-lg-3">
-                    <i class="bi bi-bell fs-4 text-primary me-3"></i>
-                    <i class="bi bi-person-circle fs-4 text-primary"></i>
+                <div class="d-flex align-items-center ms-auto order-lg-3 gap-3">
+                    <!-- Уведомления -->
+                    <button class="btn btn-icon" id="notificationButton" aria-label="Уведомления">
+                        <i class="bi bi-bell-fill"></i>
+                    </button>
+
+                    <!-- Аккаунт -->
+                    <div class="dropdown">
+                        <button class="btn btn-icon" id="accountDropdownBtn" data-bs-toggle="dropdown"
+                            aria-expanded="false" aria-label="Аккаунт">
+                            <i class="bi bi-person-circle"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="accountDropdownBtn">
+                            <li><a class="dropdown-item" href="#">Журнал логирования</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><button class="dropdown-item text-danger" id="logoutBtn">Выйти</button></li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="collapse navbar-collapse order-lg-2" id="navbarNav">
                     <ul class="navbar-nav">
@@ -104,7 +121,8 @@
                                 </div>
                                 <div class="col-md-4 mb-3">
                                     <label for="duration_time" class="form-label">Длительность(час/мин)</label>
-                                    <input type="time" class="form-control" id="duration_time" name="duration_time" step="60" min="00:01" max="23:59">
+                                    <input type="time" class="form-control" id="duration_time" name="duration_time"
+                                        step="60" min="00:01" max="23:59">
                                 </div>
 
                             </div>
