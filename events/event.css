@@ -50,7 +50,7 @@ body {
         display: block;
         width: 100%;
         padding: 12px 16px;
-        color: #000;
+        color: #1b2b4b;
     }
 
     .navbar-nav .nav-link.active {
@@ -65,6 +65,39 @@ body {
 
 .custom-toggler {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(23,43,77, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+.btn-icon {
+    background-color: transparent;
+    border: none;
+    padding: 6px;
+    border-radius: 8px;
+    color: #1b2b4b;
+    transition: background-color 0.2s ease;
+}
+
+.btn-icon:hover {
+    background-color: #f3f4f6;
+}
+
+.btn-icon i {
+    font-size: 20px;
+}
+
+.dropdown-menu {
+    min-width: 180px;
+    font-size: 14px;
+    z-index: 9999;
+}
+
+.dropdown-menu a,
+.dropdown-menu button {
+    cursor: pointer;
+}
+
+.dropdown-menu .dropdown-item:active {
+    background-color: #172b4d !important;
+    color: #fff !important;
 }
 
 /* Контейнер */
@@ -162,16 +195,31 @@ body {
 }
 
 .fc-event-title {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: unset !important;
 }
 
 .fc-daygrid-more-link {
-    font-size: 0.8rem;
-    color: #1c2d4f;
+    display: inline-block;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 2px 6px;
+    background-color: #f1f3f5;
+    border-radius: 4px;
     font-weight: 500;
-    margin-top: 3px;
+    font-size: 0.75rem;
+}
+
+.fc-daygrid-day-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding-top: 2px;
 }
 
 .fc-daygrid-more-link:hover {
@@ -286,77 +334,6 @@ body {
     box-shadow: 0 0 0 0.15rem rgba(14, 27, 48, 0.25);
 }
 
-/* Моб. адаптация */
-@media (max-width: 576px) {
-
-    .fc-popup,
-    .fc-popup.modal-like {
-        width: 95%;
-        font-size: 13px;
-    }
-
-    /* Обертка всей панели заголовка */
-    .fc-toolbar.fc-header-toolbar {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 0.5rem;
-    }
-
-    /* Обеспечивает равномерную ширину и выравнивание всех кнопок */
-    .fc-toolbar>div {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        gap: 0.5rem;
-        width: 100%;
-    }
-
-    /* Все кнопки (включая кастомную "Добавить") */
-    .fc .fc-prev-button,
-    .fc .fc-next-button {
-        flex: 0 0 40px;
-        min-width: 40px;
-        max-width: 40px;
-        text-align: center;
-        padding: 6px 0;
-    }
-
-    .fc .fc-today-button,
-    .fc-addEventButton-button {
-        flex: 1 1 auto;
-        min-width: 45%;
-        padding: 6px 0;
-        font-size: 0.85rem;
-        text-align: center;
-    }
-
-    /* Заголовок месяца */
-    .fc-toolbar-title {
-        text-align: center;
-        font-size: 1rem;
-        margin-top: 0.5rem;
-    }
-
-    /* Ячейки календаря */
-    .fc-daygrid-day-frame {
-        min-height: 90px;
-        padding: 4px;
-    }
-
-    .fc-daygrid-event {
-        font-size: 0.7rem;
-        padding: 2px 4px;
-    }
-
-    .fc-daygrid-more-link {
-        font-size: 0.7rem;
-    }
-
-    main.container {
-        padding: 0 0.5rem;
-    }
-}
-
 .popup-separator {
     border-top: 1px solid #dee2e6;
     margin: 12px 0;
@@ -365,13 +342,6 @@ body {
 .popup-meta {
     font-size: 14px;
     color: #6c757d;
-}
-
-.popup-image {
-    width: 100%;
-    max-height: 200px;
-    object-fit: cover;
-    border-radius: 8px;
 }
 
 .accordion-button {
@@ -391,15 +361,16 @@ body {
     display: inline-block;
     width: 45px;
     font-family: 'Inter', sans-serif;
-    font-variant-numeric: tabular-nums; /* 👈 одинаковая ширина цифр */
+    font-variant-numeric: tabular-nums;
     font-weight: 600;
     color: #fff;
+    margin-right: 4px;
 }
 
 .popup-page p.text-muted {
     font-size: 0.9rem;
     line-height: 1.4;
-    white-space: pre-wrap; /* сохраняет переносы строк */
+    white-space: pre-wrap;
     word-break: break-word;
 }
 
@@ -407,4 +378,240 @@ body {
     min-height: 120px;
     resize: vertical;
     line-height: 1.4;
+}
+
+.popup-image {
+    display: block;
+    max-width: 100%;
+    max-height: 250px;
+    width: auto;
+    height: auto;
+    margin: 12px auto;
+    border-radius: 8px;
+    object-fit: contain;
+}
+
+.flatpickr-calendar {
+    font-size: 13px !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+    padding: 0 !important;
+    width: auto !important;
+    min-width: 310px !important;
+    max-width: 100%;
+    border: 1px solid #dee2e6;
+    box-sizing: content-box !important;
+}
+
+
+.flatpickr-months {
+    background-color: #f1f3f5 !important;
+    color: #212529 !important;
+    border-radius: 12px 12px 0 0;
+    border-bottom: 1px solid #dee2e6;
+    padding: 6px 12px;
+}
+
+.flatpickr-month {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+}
+
+.flatpickr-current-month {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #212529;
+}
+
+.flatpickr-current-month .cur-month {
+    flex-shrink: 0;
+}
+
+.flatpickr-current-month input.cur-year {
+    display: inline-block !important;
+    width: 3.5em !important;
+    font-size: 14px;
+    font-weight: 500;
+    color: #212529;
+    text-align: left;
+    border: none !important;
+    background: transparent !important;
+}
+
+.flatpickr-weekdays {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    font-size: 12px;
+    text-align: center;
+    display: flex !important;
+    justify-content: space-between;
+    padding: 4px 8px;
+}
+
+.flatpickr-weekday {
+    flex: 1;
+    text-align: center;
+    padding: 4px 0;
+}
+
+.flatpickr-days {
+    display: grid !important;
+    grid-template-columns: repeat(7, 1fr) !important;
+}
+
+.flatpickr-day {
+    font-size: 13px;
+    line-height: 28px;
+    width: auto !important;
+    height: 32px;
+    margin: 2px;
+    border-radius: 6px;
+    transition: 0.2s ease;
+    text-align: center;
+}
+
+.flatpickr-day:hover {
+    background-color: #e9ecef;
+    color: #1b2b4b;
+}
+
+.flatpickr-day.today {
+    border: 1px solid #1b2b4b;
+    background-color: #fff7e6 !important;
+    font-weight: bold;
+}
+
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange {
+    background-color: #1b2b4b !important;
+    color: #fff !important;
+    border: none !important;
+}
+
+.flatpickr-day.inRange {
+    background-color: #dbe1f1;
+    color: #1b2b4b;
+}
+
+.flatpickr-calendar.arrowTop::before,
+.flatpickr-calendar.arrowTop::after {
+    display: none;
+}
+
+
+/* Кастомный шаблон мероприятия */
+.fc-event-custom {
+    display: flex;
+    flex-direction: column;
+    white-space: normal;
+    font-size: 0.85em;
+    line-height: 1.1;
+    word-break: break-word;
+}
+
+.fc-event-custom .fc-time {
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+.fc-event-custom .fc-title {
+    font-weight: normal;
+}
+
+.is-invalid {
+    border-color: #dc3545;
+}
+
+@media (max-width: 576px) {
+
+    /* Попап */
+    .fc-popup,
+    .fc-popup.modal-like {
+        width: 95%;
+        font-size: 13px;
+    }
+
+    /* Тулбар */
+    .fc-toolbar.fc-header-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
+    }
+
+    .fc-toolbar>div {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 0.5rem;
+        width: 100%;
+    }
+
+    /* Кнопки */
+    .fc .fc-prev-button,
+    .fc .fc-next-button {
+        flex: 0 0 40px;
+        min-width: 40px;
+        max-width: 40px;
+        text-align: center;
+        padding: 6px 0;
+    }
+
+    .fc .fc-today-button,
+    .fc-addEventButton-button {
+        flex: 1 1 auto;
+        min-width: 45%;
+        padding: 6px 0;
+        font-size: 0.85rem;
+        text-align: center;
+    }
+
+    /* Заголовок */
+    .fc-toolbar-title {
+        text-align: center;
+        font-size: 1rem;
+        margin-top: 0.5rem;
+    }
+
+    /* Контейнер */
+    main.container {
+        padding: 0 0.5rem;
+    }
+
+    /* Ячейки */
+    .fc-daygrid-day-frame {
+        min-height: 90px;
+        padding: 6px;
+    }
+
+    .mobile-event-dot {
+        display: block;
+        width: 6px;
+        height: 6px;
+        background-color: #0b2447;
+        /* тёмно-синий */
+        border-radius: 50%;
+        margin: 2px auto 0;
+    }
+
+    .fc-event-title,
+    .fc-event-time,
+    .fc-daygrid-more-link,
+    .fc-event {
+        display: none !important;
+    }
+
+    .navbar-brand {
+        font-size: 16px;
+    }
+    .dropdown-menu {
+        right: 0 !important;
+        left: auto !important;
+    }
 }

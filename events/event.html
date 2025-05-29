@@ -1,65 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мероприятия</title>
+    <title>Календарь мероприятий</title>
 
-    <!-- Bootstrap -->
+    <!-- Bootstrap & Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
-    <!-- Шрифт -->
+    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
     <!-- FullCalendar CSS -->
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/list/index.global.min.css" rel="stylesheet">
 
-    <!-- Стили -->
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="event.css">
 
-    <!-- JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+    <!-- Flatpickr -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
 
 <body>
+    <!-- Навигация -->
     <header>
         <nav class="navbar navbar-expand-lg bg-white">
             <div class="container-fluid">
-                <!-- Гамбургер -->
                 <button class="navbar-toggler border-0 me-2" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
-                    aria-label="Toggle navigation">
+                    data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon custom-toggler"></span>
                 </button>
-
-                <!-- Логотип -->
                 <a class="navbar-brand d-none d-lg-block" href="#">
                     <img src="../photo/logo.jpg" alt="Logo" width="80" height="50">
                 </a>
+                <div class="d-flex align-items-center ms-auto order-lg-3 gap-3">
+                    <!-- Уведомления -->
+                    <button class="btn btn-icon" id="notificationButton" aria-label="Уведомления">
+                        <i class="bi bi-bell-fill"></i>
+                    </button>
 
-                <!-- Иконки  -->
-                <div class="d-flex align-items-center ms-auto order-lg-3">
-                    <div class="position-relative me-3">
-                        <i class="bi bi-bell fs-4 text-primary"></i>
+                    <!-- Аккаунт -->
+                    <div class="dropdown">
+                        <button class="btn btn-icon" id="accountDropdownBtn" data-bs-toggle="dropdown"
+                            aria-expanded="false" aria-label="Аккаунт">
+                            <i class="bi bi-person-circle"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="accountDropdownBtn">
+                            <li><a class="dropdown-item" href="#">Журнал логирования</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><button class="dropdown-item text-danger" id="logoutBtn">Выйти</button></li>
+                        </ul>
                     </div>
-                    <i class="bi bi-person-circle fs-4 text-primary"></i>
                 </div>
-
-                <!-- Меню -->
                 <div class="collapse navbar-collapse order-lg-2" id="navbarNav">
                     <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link me-3" href="../main/main.html">В начало</a>
+                        <li class="nav-item"><a class="nav-link me-3" href="../main/main.html">В начало</a></li>
+                        <li class="nav-item"><a class="nav-link active me-3" href="../events/event.html">Мероприятия</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link active me-3" href="../events/event.html">Мероприятия</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link me-3" href="../achiev/achiev.html">Достижения</a>
-                        </li>
+                        <li class="nav-item"><a class="nav-link me-3" href="../achiev/achiev.html">Достижения</a></li>
                     </ul>
                 </div>
             </div>
@@ -75,50 +78,41 @@
                 <div id="floating-event-form" class="fc-popup d-none"></div>
             </div>
         </div>
-        </div>
-        </div>
-        </div>
     </main>
 
+    <!-- Модальное окно добавления/редактирования -->
     <div class="modal fade" id="addEventModal" tabindex="-1" aria-labelledby="addEventModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content rounded-4">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addEventModalLabel"></h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="addEventForm" enctype="multipart/form-data">
-                        <input type="hidden" id="edit-event-date" name="edit_event_date">
-                        <input type="hidden" id="edit-event-index" name="edit_event_index">
-
+                <form id="addEventForm" enctype="multipart/form-data">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addEventModalLabel"></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="edit_event_date" name="edit_event_date">
+                        <input type="hidden" id="edit_event_index" name="edit_event_index">
                         <div class="p-3">
-
                             <div class="mb-3">
-                                <label for="name_e" class="form-label">
-                                    Название мероприятия <span class="text-danger">*</span>
-                                </label>
+                                <label for="name_e" class="form-label">Название мероприятия <span
+                                        class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="name_e" name="name_e" required>
                             </div>
-
                             <div class="mb-3">
                                 <label for="tags" class="form-label">Тэги</label>
                                 <input type="text" class="form-control" id="tags" name="tags">
                             </div>
-
                             <div class="mb-3">
-                                <label for="description" class="form-label">
-                                    Описание <span class="text-danger">*</span>
-                                </label>
+                                <label for="description" class="form-label">Описание <span
+                                        class="text-danger">*</span></label>
                                 <textarea class="form-control" id="description" name="description" rows="3"
                                     required></textarea>
                             </div>
-
                             <div class="row">
                                 <div class="col-md-4 mb-3">
-                                    <label for="data_s" class="form-label">Дата <span
+                                    <label for="multi_date" class="form-label">Дата(ы) <span
                                             class="text-danger">*</span></label>
-                                    <input type="date" class="form-control" id="data_s" name="data_s" required>
+                                    <input type="text" class="form-control" id="multi_date" name="multi_date" required>
                                 </div>
                                 <div class="col-md-4 mb-3">
                                     <label for="time_s" class="form-label">Время <span
@@ -126,125 +120,116 @@
                                     <input type="time" class="form-control" id="time_s" name="time_s" required>
                                 </div>
                                 <div class="col-md-4 mb-3">
-                                    <label for="duration" class="form-label">Длительность(в часах)</label>
-                                    <input type="number" class="form-control" id="duration" name="duration" min="1"
-                                        max="72">
+                                    <label for="duration_time" class="form-label">Длительность(час/мин)</label>
+                                    <input type="time" class="form-control" id="duration_time" name="duration_time"
+                                        step="60" min="00:01" max="23:59">
                                 </div>
-                            </div>
 
+                            </div>
                             <div class="mb-3">
                                 <label for="place" class="form-label">Место проведения <span
                                         class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="place" name="place" required>
                             </div>
-
-                            <div class="accordion mb-4" id="imageAccordion">
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="headingImage">
-                                        <button class="accordion-button collapsed" type="button"
-                                            data-bs-toggle="collapse" data-bs-target="#collapseImage"
-                                            aria-expanded="false" aria-controls="collapseImage">
-                                            Изображение к мероприятию
+                            <div class="mb-3">
+                                <label for="event_link" class="form-label">Ссылка для записи</label>
+                                <input type="url" class="form-control" id="event_link" name="event_link"
+                                    placeholder="https://example.ru">
+                            </div>
+                            <div class="mb-3">
+                                <label for="image_file" class="form-label">Изображение к мероприятию</label>
+                                <input type="file" class="form-control" id="image_file" name="image_file"
+                                    accept="image/*">
+                                <div id="image-preview-container" class="position-relative mt-3 d-none">
+                                    <img id="image-preview" class="img-thumbnail"
+                                        style="max-width: 200px; height: auto;">
+                                    <button type="button" id="remove-image-btn"
+                                        class="btn btn-sm btn-danger position-absolute top-0 end-0"
+                                        style="border-radius: 50%; padding: 2px 8px;">&times;</button>
+                                </div>
+                            </div>
+                            <hr class="my-4">
+                            <div class="accordion mb-3" id="visibilityAccordion">
+                                <div class="accordion-item border-0">
+                                    <h2 class="accordion-header" id="visibilityHeading">
+                                        <button class="accordion-button collapsed shadow-none bg-light text-dark"
+                                            type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#visibilityCollapse">
+                                            Настройки видимости
                                         </button>
                                     </h2>
-                                    <div id="collapseImage" class="accordion-collapse collapse"
-                                        aria-labelledby="headingImage" data-bs-parent="#imageAccordion">
+                                    <div id="visibilityCollapse" class="accordion-collapse collapse">
                                         <div class="accordion-body">
-                                            <div class="mb-3">
-                                                <label for="image_file" class="form-label">Выберите файл
-                                                    изображения</label>
-                                                <input type="file" class="form-control" id="image_file"
-                                                    name="image_file" accept="image/*">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <hr class="my-4">
-
-                        <div class="accordion mb-3" id="visibilityAccordion">
-                            <div class="accordion-item border-0">
-                                <h2 class="accordion-header" id="visibilityHeading">
-                                    <button class="accordion-button collapsed shadow-none bg-light text-dark"
-                                        type="button" data-bs-toggle="collapse" data-bs-target="#visibilityCollapse"
-                                        aria-expanded="false" aria-controls="visibilityCollapse">
-                                        Настройки видимости
-                                    </button>
-                                </h2>
-                                <div id="visibilityCollapse" class="accordion-collapse collapse"
-                                    aria-labelledby="visibilityHeading" data-bs-parent="#visibilityAccordion">
-                                    <div class="accordion-body">
-                                        <div class="row">
-                                            <div class="col-md-6 mb-3">
-                                                <label for="faculty" class="form-label">Факультет</label>
-                                                <select class="form-select" id="faculty" name="faculty">
-                                                    <option value="" selected>Для всех факультетов</option>
-                                                    <option value="ИТиП">ФСГН</option>
-                                                    <option value="ФНС">ИСАУ</option>
-                                                    <option value="ФЭН">ИФИ</option>
-                                                    <option value="ИФиТ">ФЕИН</option>
-                                                </select>
-                                            </div>
-
-                                            <div class="col-md-6 mb-3">
-                                                <label for="course" class="form-label">Курс</label>
-                                                <select class="form-select" id="course" name="course">
-                                                    <option value="" selected>Для всех курсов</option>
-                                                    <option value="1">1 курс</option>
-                                                    <option value="2">2 курс</option>
-                                                    <option value="3">3 курс</option>
-                                                    <option value="4">4 курс</option>
-                                                    <option value="5">5 курс</option>
-                                                </select>
-                                            </div>
-
-                                            <div class="col-12 mb-3">
-                                                <label for="group" class="form-label">Группы</label>
-                                                <input type="text" class="form-control" id="group" name="group"
-                                                    placeholder="например: 1011, 2012, 3013">
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="faculty" class="form-label">Факультет</label>
+                                                    <select class="form-select" id="faculty" name="faculty">
+                                                        <option value="" selected>Для всех факультетов</option>
+                                                        <option value="ИТиП">ФСГН</option>
+                                                        <option value="ФНС">ИСАУ</option>
+                                                        <option value="ФЭН">ИФИ</option>
+                                                        <option value="ИФиТ">ФЕИН</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="course" class="form-label">Курс</label>
+                                                    <select class="form-select" id="course" name="course">
+                                                        <option value="" selected>Для всех курсов</option>
+                                                        <option value="1">1 курс</option>
+                                                        <option value="2">2 курс</option>
+                                                        <option value="3">3 курс</option>
+                                                        <option value="4">4 курс</option>
+                                                        <option value="5">5 курс</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-12 mb-3">
+                                                    <label for="group" class="form-label">Группы</label>
+                                                    <input type="text" class="form-control" id="group" name="group"
+                                                        placeholder="например: 1011, 2012, 3013">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn custom-btn">Добавить</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                            id="cancelEditBtn">Отмена</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно подтверждения удаления -->
+    <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteConfirmModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content rounded-4">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteConfirmModalLabel">Подтверждение удаления</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
                 </div>
-
+                <div class="modal-body">Вы действительно хотите удалить это мероприятие?</div>
                 <div class="modal-footer">
-                    <button type="submit" form="addEventForm" class="btn custom-btn">Добавить</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                        id="cancelEditBtn">Отмена</button>
+                        id="cancelDeleteBtn">Отмена</button>
+                    <button type="button" class="btn custom-btn" id="confirmDeleteBtn">Удалить</button>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Скрипты -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/list/index.global.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ru.js"></script>
+    <script src="calendar.js"></script>
 </body>
-
-<!-- Модальное окно подтверждения удаления -->
-<div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteConfirmModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content rounded-4">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteConfirmModalLabel">Подтверждение удаления</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-            </div>
-            <div class="modal-body">
-                Вы действительно хотите удалить это мероприятие?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                    id="cancelDeleteBtn">Отмена</button>
-                <button type="button" class="btn custom-btn" id="confirmDeleteBtn">Удалить</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script src="calendar.js"></script>
 
 </html>
