@@ -14,8 +14,13 @@
       <div class="row justify-content-center">
         <div class="col-md-10">
           <div class="card shadow-lg rounded-4 position-relative p-4">
-            <!-- Кнопка Выйти -->
-            <a href="../auto/index.html" class="btn btn-outline-danger position-absolute top-0 end-0 m-3">Выйти</a>
+
+            <!-- Кнопка для подачи заявления -->
+              <div class="text-end mb-3">
+                <button class="btn btn-outline-primary px-4 py-2" data-bs-toggle="modal" data-bs-target="#applicationModal">
+                  Подать заявление
+                </button>
+              </div>
 
             <!-- Блок профиля -->
             <div class="d-flex align-items-center gap-4 mb-4">
@@ -408,7 +413,300 @@
       </div>
     </div>
 {%endif%}
+
+    <!-- Поп-ап окно (макет) -->
+    <div class="modal fade" id="applicationModal" tabindex="-1" aria-labelledby="applicationModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <h5 class="modal-title" id="applicationModalLabel">Форма заявления</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+          </div>
+
+          <div class="modal-body">
+            <form id="applicationForm">
+              <div class="mb-3">
+                <label for="achievementType" class="form-label">Тип достижения</label>
+                <select id="achievementType" class="form-select" onchange="handleTypeChange()">
+                  <option value="">Выберите тип</option>
+                  <option value="science">Научное достижение</option>
+                  <option value="sport">Спортивное достижение</option>
+                  <option value="creative">Творческое достижение</option>
+                  <option value="various">Участие в мероприятиях различного уровня</option>
+                  <option value="public">Публикации</option>
+                  <option value="government">Студенческое самоуправление</option>
+                  <option value="other">Иное достижение</option>
+                  <option value="addprogramm">Освоение доп. программ</option>
+                  <option value="experience">Опыт работы</option>
+                </select>
+              </div>
+
+              <!-- Блок: Научное достижение -->
+              <div id="scienceFields" class="type-block d-none">
+                <div class="mb-3">
+                  <label class="form-label">Название НИР</label>
+                  <input type="text" class="form-control" name="srw_name" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Заказчик</label>
+                  <input type="text" class="form-control" name="customer" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Уровень программы</label>
+                  <input type="text" class="form-control" name="customer" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Название проекта</label>
+                  <input type="text" class="form-control" name="customer" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Дата начала</label>
+                  <input type="text" id="datepicker" name="date_event" class="form-control" placeholder="ДД.ММ.ГГГГ">
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Дата окончания</label>
+                  <input type="text" class="form-control" name="customer" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Результат</label>
+                  <input type="text" class="form-control" name="customer" />
+                </div>
+              </div>
+
+              <!-- Блок: Спортивное достижение -->
+              <div id="sportFields" class="type-block d-none">
+                <div class="mb-3">
+                  <label class="form-label">Вид спорта</label>
+                  <input type="text" class="form-control" name="sport_t" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Соревнование</label>
+                  <input type="text" class="form-control" name="compet" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Дата</label>
+                  <input type="text" class="form-control" name="compet" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Примечание</label>
+                  <input type="text" class="form-control" name="compet" />
+                </div>
+              </div>
+
+              <!-- Блок: Творческое достижение -->
+              <div id="creativeFields" class="type-block d-none">
+                <div class="mb-3">
+                  <label class="form-label">Вид деятельности</label>
+                  <input type="text" class="form-control" name="activity_t" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Участие в фестивале</label>
+                  <input type="text" class="form-control" name="part_fest" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Дата</label>
+                  <input type="text" class="form-control" name="part_fest" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Примечание</label>
+                  <input type="text" class="form-control" name="part_fest" />
+                </div>
+              </div>
+
+              <!--Блок: Участие в мероприятиях различного уровня-->
+              <div id="variousFields" class="type-block d-none">
+                <div class="mb-3">
+                  <label class="form-label">Вид мероприятия</label>
+                  <input type="text" class="form-control" name="activity_t" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Уровень мероприятия</label>
+                  <input type="text" class="form-control" name="part_fest" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Название мерпориятия</label>
+                  <input type="text" class="form-control" name="part_fest" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Место проведения</label>
+                  <input type="text" class="form-control" name="part_fest" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Дата</label>
+                  <input type="text" class="form-control" name="part_fest" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Результат</label>
+                  <input type="text" class="form-control" name="part_fest" />
+                </div>
+              </div>
+
+              <!--Блок: Публикации-->
+              <div id="publicFields" class="type-block d-none">
+                <div class="mb-3">
+                  <label class="form-label">Соавтор(ы)</label>
+                  <input type="text" class="form-control" name="activity_t" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Полное название работы</label>
+                  <input type="text" class="form-control" name="part_fest" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Выходные данные</label>
+                  <input type="text" class="form-control" name="part_fest" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Форма работы</label>
+                  <input type="text" class="form-control" name="part_fest" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Тип издания</label>
+                  <input type="text" class="form-control" name="part_fest" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Входит в ВАК/РИНЦ</label>
+                  <input type="text" class="form-control" name="part_fest" />
+                </div>
+              </div>
+
+              <!--Блок: Студенческое самоуправление-->
+              <div id="governmentFields" class="type-block d-none">
+                <div class="mb-3">
+                  <label class="form-label">Орган студенческого самоуправления</label>
+                  <input type="text" class="form-control" name="activity_t" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Вид деятельности</label>
+                  <input type="text" class="form-control" name="part_fest" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Период</label>
+                  <input type="text" class="form-control" name="part_fest" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Примечание</label>
+                  <input type="text" class="form-control" name="part_fest" />
+                </div>
+              </div>
+
+              <!--Блок: Иное достижение-->
+              <div id="otherFields" class="type-block d-none">
+                <div class="mb-3">
+                  <label class="form-label">Вид деятельности</label>
+                  <input type="text" class="form-control" name="activity_t" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Достижение</label>
+                  <input type="text" class="form-control" name="part_fest" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Дата</label>
+                  <input type="text" class="form-control" name="part_fest" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Примечание</label>
+                  <input type="text" class="form-control" name="part_fest" />
+                </div>
+              </div>
+
+              <!--Блок: Освоение доп. программ-->
+              <div id="addFields" class="type-block d-none">
+                <div class="mb-3">
+                  <label class="form-label">Название программы</label>
+                  <input type="text" class="form-control" name="activity_t" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Вид обучения</label>
+                  <input type="text" class="form-control" name="part_fest" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Часы</label>
+                  <input type="text" class="form-control" name="part_fest" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Сроки</label>
+                  <input type="text" class="form-control" name="part_fest" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Место обучения</label>
+                  <input type="text" class="form-control" name="part_fest" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Документ</label>
+                  <input type="text" class="form-control" name="part_fest" />
+                </div>
+              </div>
+
+              <!--Блок: Опыт работы-->
+              <div id="experienceFields" class="type-block d-none">
+                <div class="mb-3">
+                  <label class="form-label">Место работы</label>
+                  <input type="text" class="form-control" name="activity_t" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Вид работы</label>
+                  <input type="text" class="form-control" name="part_fest" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Должность</label>
+                  <input type="text" class="form-control" name="part_fest" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Сроки</label>
+                  <input type="text" class="form-control" name="part_fest" />
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Обязанности</label>
+                  <input type="text" class="form-control" name="part_fest" />
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary">Отправить</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
     <!-- JS -->
+     <script>
+            function handleTypeChange() {
+            const type = document.getElementById('achievementType').value;
+
+            const blocks = {
+              science: document.getElementById('scienceFields'),
+              sport: document.getElementById('sportFields'),
+              creative: document.getElementById('creativeFields'),
+              various: document.getElementById('variousFields'),
+              public: document.getElementById('publicFields'),
+              government: document.getElementById('governmentFields'),
+              other: document.getElementById('otherFields'),
+              addprogramm: document.getElementById('addFields'),
+              experience: document.getElementById('experienceFields'),
+            };
+
+            // Скрыть все
+            Object.values(blocks).forEach(block => block.classList.add('d-none'));
+
+            // Показать нужный
+            if (type && blocks[type]) {
+              blocks[type].classList.remove('d-none');
+            }
+        }
+     </script>
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+      <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+      <script>
+        flatpickr("#datepicker", {
+          dateFormat: "d.m.Y"
+        });
+      </script>
+
     <script src="{% static 'showSection.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   </body>

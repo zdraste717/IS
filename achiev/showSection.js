@@ -12,3 +12,4 @@ function showSection(id) {
     // Скролл к секции
     selected.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
+

@@ -60,6 +60,7 @@
       <div class="col-md-4">
         <label for="typeFilter" class="form-label">Тип достижения</label>
         <select id="typeFilter" class="form-select" name="type">
+          <option value="all" {% if type_filter == "all" %}selected{% endif %}>Все достижения</option>  
           <option value="scienes" {% if type_filter == "scienes" %}selected{% endif %}>Научные достижения</option>
           <option value="sport" {% if type_filter == "sport" %}selected{% endif %}>Спортивные достижения</option>
           <option value="creation" {% if type_filter == "creation" %}selected{% endif %}>Творческие достижения</option>
@@ -74,12 +75,12 @@
 
       <div class="col-md-4">
         <label class="form-label">Период с</label>
-        <input type="date" class="form-control" name="date_from" value="{{ request.GET.date_from }}">
+        <input type="date" class="form-control" name="date_from" value="{{ date_from }}">
       </div>
 
       <div class="col-md-4">
         <label class="form-label">Период по</label>
-        <input type="date" class="form-control" name="date_to" value="{{ request.GET.date_to }}">
+        <input type="date" class="form-control" name="date_to" value="{{ date_to }}">
       </div>
 
       <div class="col-md-12">
