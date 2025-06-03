@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'achievements',
+    'main'
 ]
 
 MIDDLEWARE = [
@@ -131,6 +132,7 @@ STATICFILES_DIRS = [
     BASE_DIR / "photo",
     BASE_DIR / "achiev",
     BASE_DIR / "admin",
+    BASE_DIR / "main",
     
 ]
 

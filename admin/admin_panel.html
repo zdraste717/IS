@@ -1,688 +1,1583 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Панель администратора</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="{% static 'admin_achiev.css' %}" />
-  </head>
-  <body class="bg-light">
-    <header>
-      <nav class="navbar navbar-expand-lg bg-white">
-        <div class="container-fluid">
-          <!-- Гамбургер -->
-          <button class="navbar-toggler border-0 me-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon custom-toggler"></span></button>
 
-          <!-- Логотип -->
-          <a class="navbar-brand d-none d-lg-block" href="#"><img src="{% static 'logo.jpg' %}" alt="Logo" width="80" height="50" /></a>
+<head>
+  <meta charset="UTF-8" />
+  <title>Панель администратора</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'admin_achiev.css' %}" />
+  <link rel="stylesheet" href="{% static 'main.css' %}" />
+</head>
 
-          <!-- Иконки -->
-          <div class="d-flex align-items-center ms-auto order-lg-3">
-            <div class="position-relative me-3">
-              <i class="bi bi-bell fs-4 text-primary"></i>
-            </div>
-            <i class="bi bi-person-circle fs-4 text-primary"></i>
+<body class="bg-light">
+  <header>
+    <nav class="navbar navbar-expand-lg bg-white">
+      <div class="container-fluid">
+        <!-- Гамбургер -->
+        <button class="navbar-toggler border-0 me-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span
+            class="navbar-toggler-icon custom-toggler"></span></button>
+
+        <!-- Логотип -->
+        <a class="navbar-brand d-none d-lg-block" href="#"><img src="{% static 'logo.jpg' %}" alt="Logo" width="80"
+            height="50" /></a>
+
+        <!-- Иконки -->
+        <div class="d-flex align-items-center ms-auto order-lg-3">
+          <div class="position-relative me-3">
+            <i class="bi bi-bell fs-4 text-primary"></i>
           </div>
-          <!-- Меню -->
-          <div class="collapse navbar-collapse order-lg-2" id="navbarNav">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link active me-3" href="#">В начало</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link me-3" href="#">Управление мероприятиями</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link me-3" href="#">Управление достижениями</a>
-              </li>
-            </ul>
-          </div>
+          <i class="bi bi-person-circle fs-4 text-primary"></i>
         </div>
-      </nav>
-    </header>
-    <div class="admin-panel-container">
-      <div class="d-flex justify-content-between align-items-center">
-        <div class="d-flex align-items-center">
-          <button class="btn btn-outline-primary" id="toggleFiltersBtn">Фильтры</button>
-        </div>
-
-        <div class="d-flex align-items-center justify-content-end gap-2">
-          <button class="btn btn-more me-2" id="addAchiev">Добавить достижение</button>
-          <button class="btn btn-more" id="loadDoc">Скачать отчет</button>
+        <!-- Меню -->
+        <div class="collapse navbar-collapse order-lg-2" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link me-3" href="{% url 'main' %}">В начало</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link me-3" href="{% url 'admin_pending' %}">Заявки</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active me-3" href="#">Управление достижениями</a>
+            </li>
+          </ul>
         </div>
       </div>
-
-      <!-- Фильтры (по умолчанию скрыты) -->
-      <div id="filtersSection" class="mt-1">
-  <form method="get">
-    <div class="row g-3">
-      <div class="col-md-4">
-        <label for="typeFilter" class="form-label">Тип достижения</label>
-        <select id="typeFilter" class="form-select" name="type">
-          <option value="all" {% if type_filter == "all" %}selected{% endif %}>Все достижения</option>  
-          <option value="scienes" {% if type_filter == "scienes" %}selected{% endif %}>Научные достижения</option>
-          <option value="sport" {% if type_filter == "sport" %}selected{% endif %}>Спортивные достижения</option>
-          <option value="creation" {% if type_filter == "creation" %}selected{% endif %}>Творческие достижения</option>
-          <option value="various_level" {% if type_filter == "various_level" %}selected{% endif %}>Различный уровень</option>
-          <option value="publication" {% if type_filter == "publication" %}selected{% endif %}>Публикации</option>
-          <option value="student_government" {% if type_filter == "student_government" %}selected{% endif %}>Студенческое управление</option>
-          <option value="other_achiev" {% if type_filter == "other_achiev" %}selected{% endif %}>Иные достижения</option>
-          <option value="add_programm" {% if type_filter == "add_programm" %}selected{% endif %}>Освоение доп. программ</option>
-          <option value="experience" {% if type_filter == "experience" %}selected{% endif %}>Опыт работы</option>
-        </select>
+    </nav>
+  </header>
+  <div class="admin-panel-container">
+    <div class="d-flex justify-content-between align-items-center">
+      <div class="d-flex align-items-center">
+        <button class="btn btn-outline-primary" id="toggleFiltersBtn">Фильтры</button>
       </div>
 
-      <div class="col-md-4">
-        <label class="form-label">Период с</label>
-        <input type="date" class="form-control" name="date_from" value="{{ date_from }}">
-      </div>
-
-      <div class="col-md-4">
-        <label class="form-label">Период по</label>
-        <input type="date" class="form-control" name="date_to" value="{{ date_to }}">
-      </div>
-
-      <div class="col-md-12">
-        <label class="form-label">Поиск</label>
-        <input type="text" name="search" class="form-control" value="{{ search_query }}" placeholder="Введите текст">
-      </div>
-
-      <div class="col-12 text-end">
-        <button type="submit" class="btn btn-primary col-auto">Применить</button>
-        <a href="{% url 'admin_panel' %}" class="btn btn-secondary">Сбросить</a>
-      </div>
-    </div>
-  </form>
-</div>
-
-
-      <div class="center-wrapper">
-        <div class="form-container">
-          <!-- Карточка научного достижения -->
-          {% if type_filter == "scienes" or type_filter == "all" %}
-          {% for item in scienes %}
-            <div class="card mb-4 w-100 shadow-sm" style="max-height: 70vh; overflow-y: auto; padding-right: 5px;">
-              <div class="card-body">
-                <h5 class="card-title d-flex justify-content-between align-items-center">
-                  {{ item.srw_name }}
-                  <span class="badge t-outline">Научное достижение</span>
-                </h5>
-
-                <p class="mb-1">
-                  <strong>ФИО:</strong> {{ item.fullname }}
-                </p>
-                <p class="mb-1">
-                  <strong>Дата начала:</strong> {{ item.s_date }}
-                </p>
-                <p class="mb-1">
-                  <strong>Дата окончания:</strong> {{ item.f_date }}
-                </p>
-                <button type="button" class="btn btn-more mt-2" data-bs-toggle="modal" data-bs-target="#scienceModal{{ item.id }}">Подробнее</button>
-              </div>
-            </div>
-
-            <!-- Модальное окно -->
-            <div class="modal fade" id="scienceModal{{ item.id }}" tabindex="-1" aria-labelledby="scienceModalLabel{{ item.id }}" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-scrollable modal-lg">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="scienceModalLabel{{ item.id }}">Подробности</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                  </div>
-                  <div class="modal-body">
-                    <p>
-                      <strong>ФИО:</strong> {{ item.fullname }}
-                    </p>
-                    <p>
-                      <strong>Группа:</strong> {{ item.group_s }}
-                    </p>
-                    <p>
-                      <strong>Название НИР:</strong> {{ item.srw_name }}
-                    </p>
-                    <p>
-                      <strong>Заказчик:</strong> {{ item.customer }}
-                    </p>
-                    <p>
-                      <strong>Уровень программы:</strong> {{ item.l_programm }}
-                    </p>
-                    <p>
-                      <strong>Название проекта:</strong> {{ item.p_name }}
-                    </p>
-                    <p>
-                      <strong>Дата начала:</strong> {{ item.s_date }}
-                    </p>
-                    <p>
-                      <strong>Дата окончания:</strong> {{ item.f_date }}
-                    </p>
-                    <p>
-                      <strong>Результат:</strong> {{ item.result }}
-                    </p>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          {% endfor %}
-          {% endif %}
-          <!-- Конец карточки -->
-
-          <!-- Карточка спортивного достижения -->
-          {% if type_filter == "sport" or type_filter == "all" %}
-          {% for item in sport %}
-            <div class="card mb-4 w-100 shadow-sm">
-              <div class="card-body">
-                <h5 class="card-title d-flex justify-content-between align-items-center">
-                  {{ item.sport_t }}
-                  <span class="badge t-outline">Спортивное достижение</span>
-                </h5>
-
-                <p class="mb-1">
-                  <strong>ФИО:</strong> {{ item.fullname }}
-                </p>
-                <p class="mb-1">
-                  <strong>Соревнование:</strong> {{ item.compet }}
-                </p>
-                <p class="mb-1">
-                  <strong>Дата:</strong> {{ item.date_c }}
-                </p>
-                <button type="button" class="btn btn-more mt-2" data-bs-toggle="modal" data-bs-target="#sportModal{{ item.id }}">Подробнее</button>
-              </div>
-            </div>
-
-            <!-- Модальное окно -->
-            <div class="modal fade" id="sportModal{{ item.id }}" tabindex="-1" aria-labelledby="sportModalLabel{{ item.id }}" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-scrollable modal-lg">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="sportModalLabel{{ item.id }}">Подробности</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                  </div>
-                  <div class="modal-body">
-                    <p>
-                      <strong>ФИО:</strong> {{ item.fullname }}
-                    </p>
-                    <p>
-                      <strong>Группа:</strong> {{ item.group_s }}
-                    </p>
-                    <p>
-                      <strong>Вид спорта:</strong> {{ item.sport_t }}
-                    </p>
-                    <p>
-                      <strong>Соревнование:</strong> {{ item.compet }}
-                    </p>
-                    <p>
-                      <strong>Дата:</strong> {{ item.date_c }}
-                    </p>
-                    <p>
-                      <strong>Примечание:</strong> {{ item.note }}
-                    </p>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          {% endfor %}
-          {% endif %}
-          <!-- Конец карточки -->
-
-          <!-- Карточка творческого достижения -->
-           {% if type_filter == "creation" or type_filter == "all" %}
-          {% for item in creation %}
-            <div class="card mb-4 w-100 shadow-sm">
-              <div class="card-body">
-                <h5 class="card-title d-flex justify-content-between align-items-center">
-                  {{ item.activity_t }}
-                  <span class="badge t-outline">Творческое достижение</span>
-                </h5>
-
-                <p class="mb-1">
-                  <strong>ФИО:</strong> {{ item.fullname }}
-                </p>
-                <p class="mb-1">
-                  <strong>Участие в фестивалях:</strong> {{ item.part_fest }}
-                </p>
-                <p class="mb-1">
-                  <strong>Дата :</strong> {{ item.date_f }}
-                </p>
-                <button type="button" class="btn btn-more mt-2" data-bs-toggle="modal" data-bs-target="#creativeModal{{ item.id }}">Подробнее</button>
-              </div>
-            </div>
-
-            <!-- Модальное окно -->
-            <div class="modal fade" id="creativeModal{{ item.id }}" tabindex="-1" aria-labelledby="creativeModalLabel{{ item.id }}" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-scrollable modal-lg">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="creativeModalLabel{{ item.id }}">Подробности</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                  </div>
-                  <div class="modal-body">
-                    <p>
-                      <strong>ФИО:</strong> {{ item.fullname }}
-                    </p>
-                    <p>
-                      <strong>Группа:</strong> {{ item.group_s }}
-                    </p>
-                    <p>
-                      <strong>Вид деятельности:</strong> {{ item.activity_t }}
-                    </p>
-                    <p>
-                      <strong>Участие в фестивалях:</strong> {{ item.part_fest }}
-                    </p>
-                    <p>
-                      <strong>Дата:</strong> {{ item.date_f }}
-                    </p>
-                    <p>
-                      <strong>Примечание:</strong> {{ item.note }}
-                    </p>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          {% endfor %}
-          {% endif %}
-          <!-- Конец карточки -->
-
-          <!-- Карточка Различный уровень -->
-           {% if type_filter == "various_level" or type_filter == "all" %}
-          {% for item in various_level %}
-            <div class="card mb-4 w-100 shadow-sm">
-              <div class="card-body">
-                <h5 class="card-title d-flex justify-content-between align-items-center">
-                  {{ item.event_t }}
-                  <span class="badge t-outline">Участие в мероприятиях различного уровня</span>
-                </h5>
-
-                <p class="mb-1">
-                  <strong>ФИО:</strong> {{ item.fullname }}
-                </p>
-                <p class="mb-1">
-                  <strong>Уровень:</strong> {{ item.level_e }}
-                </p>
-                <p class="mb-1">
-                  <strong>Дата:</strong> {{ item.date_e }}
-                </p>
-                <button type="button" class="btn btn-more mt-2" data-bs-toggle="modal" data-bs-target="#variousModal{{ item.id }}">Подробнее</button>
-              </div>
-            </div>
-
-            <!-- Модальное окно -->
-            <div class="modal fade" id="variousModal{{ item.id }}" tabindex="-1" aria-labelledby="variousModalLabel{{ item.id }}" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-scrollable modal-lg">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="variousModalLabel{{ item.id }}">Подробности</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                  </div>
-                  <div class="modal-body">
-                    <p>
-                      <strong>ФИО:</strong> {{ item.fullname }}
-                    </p>
-                    <p>
-                      <strong>Группа:</strong> {{ item.group_s }}
-                    </p>
-                    <p>
-                      <strong>Вид мероприятия:</strong> {{ item.event_t }}
-                    </p>
-                    <p>
-                      <strong>Уровень:</strong> {{ item.level_e }}
-                    </p>
-                    <p>
-                      <strong>Название мероприятия:</strong> {{ item.name_e }}
-                    </p>
-                    <p>
-                      <strong>Место проведения:</strong> {{ item.venue }}
-                    </p>
-                    <p>
-                      <strong>Дата:</strong> {{ item.date_e }}
-                    </p>
-                    <p>
-                      <strong>Результат:</strong> {{ item.result }}
-                    </p>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          {% endfor %}
-          {% endif %}
-          <!-- Конец карточки -->
-
-          <!-- Карточка Публикации -->
-           {% if type_filter == "publication" or type_filter == "all" %}
-          {% for item in publication %}
-            <div class="card mb-4 w-100 shadow-sm">
-              <div class="card-body">
-                <h5 class="card-title d-flex justify-content-between align-items-center">
-                  {{ item.fname_work }}
-                  <span class="badge t-outline">Публикации</span>
-                </h5>
-
-                <p class="mb-1">
-                  <strong>ФИО:</strong> {{ item.fullname }}
-                </p>
-                <p class="mb-1">
-                  <strong>Соавторы:</strong> {{ item.coauthors }}
-                </p>
-                <p class="mb-1">
-                  <strong>Форма работы:</strong> {{ item.form_w }}
-                </p>
-                <button type="button" class="btn btn-more mt-2" data-bs-toggle="modal" data-bs-target="#publicationModal{{ item.id }}">Подробнее</button>
-              </div>
-            </div>
-
-            <!-- Модальное окно -->
-            <div class="modal fade" id="publicationModal{{ item.id }}" tabindex="-1" aria-labelledby="publicationModalLabel{{ item.id }}" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-scrollable modal-lg">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="publicationModalLabel{{ item.id }}">Подробности</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                  </div>
-                  <div class="modal-body">
-                    <p>
-                      <strong>ФИО:</strong> {{ item.fullname }}
-                    </p>
-                    <p>
-                      <strong>Группа:</strong> {{ item.group_s }}
-                    </p>
-                    <p>
-                      <strong>Соавторы:</strong> {{ item.coauthors }}
-                    </p>
-                    <p>
-                      <strong>Полное название работы:</strong> {{ item.fname_work }}
-                    </p>
-                    <p>
-                      <strong>Выходные данные:</strong> {{ item.output_d }}
-                    </p>
-                    <p>
-                      <strong>Форма работы:</strong> {{ item.form_w }}
-                    </p>
-                    <p>
-                      <strong>Тип издания:</strong> {{ item.public_t }}
-                    </p>
-                    <p>
-                      <strong>Входит в ВАК/РИНЦ:</strong> {{ item.article_inc }}
-                    </p>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          {% endfor %}
-          {% endif %}
-          <!-- Конец карточки -->
-
-          <!-- Карточка Студенческое самоуправление -->
-           {% if type_filter == "student_government" or type_filter == "all" %}
-          {% for item in student_government %}
-            <div class="card mb-4 w-100 shadow-sm">
-              <div class="card-body">
-                <h5 class="card-title d-flex justify-content-between align-items-center">
-                  {{ item.activity_t }}
-                  <span class="badge t-outline">Студенческое самоуправление</span>
-                </h5>
-
-                <p class="mb-1">
-                  <strong>ФИО:</strong> {{ item.fullname }}
-                </p>
-                <p>
-                  <strong>Орган:</strong> {{ item.body_g }}
-                </p>
-                <p class="mb-1">
-                  <strong>Период:</strong> {{ item.activity_per }}
-                </p>
-                <button type="button" class="btn btn-more mt-2" data-bs-toggle="modal" data-bs-target="#governmentModal{{ item.id }}">Подробнее</button>
-              </div>
-            </div>
-
-            <!-- Модальное окно -->
-            <div class="modal fade" id="governmentModal{{ item.id }}" tabindex="-1" aria-labelledby="governmentModalLabel{{ item.id }}" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-scrollable modal-lg">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="governmentModalLabel{{ item.id }}">Подробности</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                  </div>
-                  <div class="modal-body">
-                    <p>
-                      <strong>ФИО:</strong> {{ item.fullname }}
-                    </p>
-                    <p>
-                      <strong>Группа:</strong> {{ item.group_s }}
-                    </p>
-                    <p>
-                      <strong>Орган:</strong> {{ item.body_g }}
-                    </p>
-                    <p>
-                      <strong>Вид деятельности:</strong> {{ item.activity_t }}
-                    </p>
-                    <p>
-                      <strong>Период:</strong> {{ item.activity_per }}
-                    </p>
-                    <p>
-                      <strong>Примечание:</strong> {{ item.note }}
-                    </p>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          {% endfor %}
-          {% endif %}
-          <!-- Конец карточки -->
-
-          <!-- Карточка Иные достижения -->
-           {% if type_filter == "other_achiev" or type_filter == "all" %}
-          {% for item in other_achiev %}
-            <div class="card mb-4 w-100 shadow-sm">
-              <div class="card-body">
-                <h5 class="card-title d-flex justify-content-between align-items-center">
-                  {{ item.achiev }}
-                  <span class="badge t-outline">Иные достижения</span>
-                </h5>
-
-                <p class="mb-1">
-                  <strong>ФИО:</strong> {{ item.fullname }}
-                </p>
-                <p class="mb-1">
-                  <strong>Вид деятельности:</strong> {{ item.activity_t }}
-                </p>
-                <p class="mb-1">
-                  <strong>Дата:</strong> {{ item.date_o }}
-                </p>
-                <button type="button" class="btn btn-more mt-2" data-bs-toggle="modal" data-bs-target="#otherModal{{ item.id }}">Подробнее</button>
-              </div>
-            </div>
-
-            <!-- Модальное окно -->
-            <div class="modal fade" id="otherModal{{ item.id }}" tabindex="-1" aria-labelledby="otherModalLabel{{ item.id }}" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-scrollable modal-lg">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="otherModalLabel{{ item.id }}">Подробности</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                  </div>
-                  <div class="modal-body">
-                    <p>
-                      <strong>ФИО:</strong> {{ item.fullname }}
-                    </p>
-                    <p>
-                      <strong>Группа:</strong> {{ item.group_s }}
-                    </p>
-                    <p>
-                      <strong>Вид деятельности:</strong> {{ item.activity_t }}
-                    </p>
-                    <p>
-                      <strong>Достижение:</strong> {{ item.achiev }}
-                    </p>
-                    <p>
-                      <strong>Дата:</strong> {{ item.date_o }}
-                    </p>
-                    <p>
-                      <strong>Примечание:</strong> {{ item.note }}
-                    </p>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          {% endfor %}
-          {% endif %}
-          <!-- Конец карточки -->
-
-          <!-- Карточка Освоение доп. программ -->
-           {% if type_filter == "add_programm" or type_filter == "all" %}
-          {% for item in add_programm %}
-            <div class="card mb-4 w-100 shadow-sm">
-              <div class="card-body">
-                <h5 class="card-title d-flex justify-content-between align-items-center">
-                  {{ item.name_p }}
-                  <span class="badge t-outline">Освоение доп. программ</span>
-                </h5>
-
-                <p class="mb-1">
-                  <strong>ФИО:</strong> {{ item.fullname }}
-                </p>
-                <p class="mb-1">
-                  <strong>Часы:</strong> {{ item.hours }}
-                </p>
-                <p class="mb-1">
-                  <strong>Сроки:</strong> {{ item.terms }}
-                </p>
-                <button type="button" class="btn btn-more mt-2" data-bs-toggle="modal" data-bs-target="#addModal{{ item.id }}">Подробнее</button>
-              </div>
-            </div>
-
-            <!-- Модальное окно -->
-            <div class="modal fade" id="addModal{{ item.id }}" tabindex="-1" aria-labelledby="addModalLabel{{ item.id }}" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-scrollable modal-lg">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="addModalLabel{{ item.id }}">Подробности</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                  </div>
-                  <div class="modal-body">
-                    <p>
-                      <strong>ФИО:</strong> {{ item.fullname }}
-                    </p>
-                    <p>
-                      <strong>Группа:</strong> {{ item.group_s }}
-                    </p>
-                    <p>
-                      <strong>Название программы:</strong> {{ item.name_p }}
-                    </p>
-                    <p>
-                      <strong>Вид обучения:</strong> {{ item.education_t }}
-                    </p>
-                    <p>
-                      <strong>Часы:</strong> {{ item.hours }}
-                    </p>
-                    <p>
-                      <strong>Сроки:</strong> {{ item.terms }}
-                    </p>
-                    <p>
-                      <strong>Место обучения:</strong> {{ item.education_p }}
-                    </p>
-                    <p>
-                      <strong>Документ:</strong> {{ item.name_d }}
-                    </p>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          {% endfor %}
-          {% endif %}
-          <!-- Конец карточки -->
-
-          <!-- Карточка Опыт работы -->
-           {% if type_filter == "experience" or type_filter == "all" %}
-           {% for item in experience %}
-          <div class="card mb-4 w-100 shadow-sm">
-            <div class="card-body">
-              <h5 class="card-title d-flex justify-content-between align-items-center">
-                {{ item.place_w }}
-                <span class="badge t-outline">Опыт работы</span>
-              </h5>
-
-              <p class="mb-1">
-                <strong>ФИО:</strong> {{ item.fullname }}
-              </p>
-              <p class="mb-1">
-                <strong>Должность:</strong> {{ item.title_j }}
-              </p>
-              <p class="mb-1">
-                <strong>Сроки:</strong> {{ item.deadlines }}
-              </p>
-              <button type="button" class="btn btn-more mt-2" data-bs-toggle="modal" data-bs-target="#experienceModal{{ item.id }}">Подробнее</button>
-            </div>
-          </div>
-
-          <!-- Модальное окно -->
-          <div class="modal fade" id="experienceModal{{ item.id }}" tabindex="-1" aria-labelledby="experienceModalLabel{{ item.id }}" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-scrollable modal-lg">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="experienceModalLabel{{ item.id }}">Подробности</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                </div>
-                <div class="modal-body">
-                  <p>
-                    <strong>ФИО:</strong> {{ item.fullname }}
-                  </p>
-                  <p>
-                    <strong>Группа:</strong> {{ item.group_s }}
-                  </p>
-                  <p>
-                    <strong>Место работы:</strong> {{ item.place_w }}
-                  </p>
-                  <p>
-                    <strong>Вид работы:</strong> {{ item.work_t }}
-                  </p>
-                  <p>
-                    <strong>Должность:</strong> {{ item.title_j }}
-                  </p>
-                  <p>
-                    <strong>Сроки:</strong> {{ item.deadlines }}
-                  </p>
-                  <p>
-                    <strong>Обязанности:</strong> {{ item.respons }}
-                  </p>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          {% endfor %}
-          {% endif %}
-          <!-- Конец карточки -->
-        </div>
+      <div class="d-flex align-items-center justify-content-end gap-2">
+        <button class="btn btn-more me-2" id="addAchiev">Добавить достижение</button>
+        <form id="reportForm" method="post" action="{% url 'generate_report_docx' %}">
+          {% csrf_token %}
+          <input type="hidden" name="report_data" id="reportData">
+          <button type="submit" class="btn btn-more">Скачать отчет</button>
+        </form>
       </div>
     </div>
 
-    <script src="{% static 'admin_achiev.js' %}"></script>
+    <!-- Фильтры (по умолчанию скрыты) -->
+    <div id="filtersSection" class="mt-1">
+      <form method="get">
+        <div class="row g-3">
+          <div class="col-md-4">
+            <label for="typeFilter" class="form-label">Тип достижения</label>
+            <select id="typeFilter" class="form-select" name="type">
+              <option value="all" {% if type_filter == "all" %}selected{% endif %}>Все достижения</option>
+              <option value="scienes" {% if type_filter == "scienes" %}selected{% endif %}>Научные достижения</option>
+              <option value="sport" {% if type_filter == "sport" %}selected{% endif %}>Спортивные достижения</option>
+              <option value="creation" {% if type_filter == "creation" %}selected{% endif %}>Творческие достижения</option>
+              <option value="various_level" {% if type_filter == "various_level" %}selected{% endif %}>Различный уровень</option>
+              <option value="publication" {% if type_filter == "publication" %}selected{% endif %}>Публикации</option>
+              <option value="student_government" {% if type_filter == "student_government" %}selected{% endif %}>Студенческое управление</option>
+              <option value="other_achiev" {% if type_filter == "other_achiev" %}selected{% endif %}>Иные достижения</option>
+              <option value="add_programm" {% if type_filter == "add_programm" %}selected{% endif %}>Освоение доп.программ</option>
+              <option value="experience" {% if type_filter == "experience" %}selected{% endif %}>Опыт работы</option>
+            </select>
+          </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  </body>
+          <div class="col-md-4">
+            <label for="date_from" class="form-label">Период с</label>
+            <input type="date" id="date_from" class="form-control" name="date_from" value="{{ date_from }}">
+          </div>
+
+          <div class="col-md-4">
+            <label for="date_to" class="form-label">Период по</label>
+            <input type="date" id="date_to" class="form-control" name="date_to" value="{{ date_to }}">
+          </div>
+
+          <div class="col-md-12">
+            <label for="search" class="form-label">Поиск</label>
+            <input type="text" id="search" name="search" class="form-control" value="{{ search_query }}"
+              placeholder="Введите текст">
+          </div>
+
+          <div class="col-12 text-end">
+            <button type="submit" class="btn btn-primary col-auto">Применить</button>
+            <a href="{% url 'admin_panel' %}" class="btn btn-secondary">Сбросить</a>
+          </div>
+        </div>
+      </form>
+    </div>
+
+
+    <div class="center-wrapper">
+      <div class="form-container">
+        <!-- Карточка научного достижения -->
+        {% if type_filter == "scienes" or type_filter == "all" %}
+        {% for item in scienes %}
+        <div class="card mb-4 w-100 shadow-sm" data-id="{{ item.id }}" data-type="scienes"
+          style="max-height: 70vh; overflow-y: auto; padding-right: 5px;">
+          <div class="card-body">
+            <h5 class="card-title d-flex justify-content-between align-items-center">
+              {{ item.srw_name }}
+              <span class="badge t-outline">Научное достижение</span>
+            </h5>
+            <p class="mb-1">
+              <strong>ФИО:</strong> {{ item.fullname }}
+            </p>
+            <p class="mb-1">
+              <strong>Дата начала:</strong> {{ item.s_date }}
+            </p>
+            <p class="mb-1">
+              <strong>Дата окончания:</strong> {{ item.f_date }}
+            </p>
+            <button type="button" class="btn btn-more mt-2" data-bs-toggle="modal"
+              data-bs-target="#scienceModal{{ item.id }}">Подробнее</button>
+          </div>
+          <div class="position-absolute bottom-0 end-0 p-3 d-flex gap-2">
+            <button type="button" class="btn btn-sm btn-outline-danger btn-reject">Удалить</button>
+          </div>
+        </div>
+
+        <!-- Модальное окно -->
+        <div class="modal fade" id="scienceModal{{ item.id }}" data-type="Научные достижения" tabindex="-1"
+          aria-labelledby="scienceModalLabel{{ item.id }}" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="scienceModalLabel{{ item.id }}">Подробности</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+              </div>
+              <div class="modal-body">
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>ФИО:</strong> {{ item.fullname }}</p>
+                  <div class="field-edit d-none">
+                    <label for="fullname{{ item.id }}" class="form-label">ФИО</label>
+                    <input type="text" name="fullname" class="form-control" value="{{ item.fullname }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Группа:</strong> {{ item.group_s }}</p>
+                  <div class="field-edit d-none">
+                    <label for="group_s{{ item.id }}" class="form-label">Группа</label>
+                    <input type="text" name="group_s" class="form-control" value="{{ item.group_s }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Название НИР:</strong> {{ item.srw_name }}</p>
+                  <div class="field-edit d-none">
+                    <label for="srw_name{{ item.id }}" class="form-label">Название НИР</label>
+                    <input type="text" name="srw_name" class="form-control" value="{{ item.srw_name }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Заказчик:</strong> {{ item.customer }}</p>
+                  <div class="field-edit d-none">
+                    <label for="customer{{ item.id }}" class="form-label">Заказчик</label>
+                    <input type="text" name="customer" class="form-control" value="{{ item.customer }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Уровень программы:</strong> {{ item.l_programm }}</p>
+                  <div class="field-edit d-none">
+                    <label for="l_program{{ item.id }}" class="form-label">Уровень программы</label>
+                    <input type="text" name="l_programm" class="form-control" value="{{ item.l_programm }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Название проекта:</strong> {{ item.p_name }}</p>
+                  <div class="field-edit d-none">
+                    <label for="p_name{{ item.id }}" class="form-label">Название проекта</label>
+                    <input type="text" name="p_name" class="form-control" value="{{ item.p_name }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Дата начала:</strong> {{ item.s_date }}</p>
+                  <div class="field-edit d-none">
+                    <label for="s_date{{ item.id }}" class="form-label">Дата начала</label>
+                    <input type="date" name="s_date" class="form-control" value="{{ item.s_date }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Дата окончания:</strong> {{ item.f_date }}</p>
+                  <div class="field-edit d-none">
+                    <label for="f_date{{ item.id }}" class="form-label">Дата окончания</label>
+                    <input type="date" name="f_date" class="form-control" value="{{ item.f_date }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Результат:</strong> {{ item.result }}</p>
+                  <div class="field-edit d-none">
+                    <label for="result{{ item.id }}" class="form-label">Результат</label>
+                    <input type="text" name="result" class="form-control" value="{{ item.result }}">
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-sm btn-more btn-edit">Изменить</button>
+                <button type="button" class="btn btn-secondary btn-close-modal" data-bs-dismiss="modal">Закрыть</button>
+                <div class="edit-actions d-none">
+                  <button type="button" class="btn btn-sm btn-success btn-save">Сохранить</button>
+                  <button type="button" class="btn btn-sm btn-secondary btn-cancel">Отмена</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <!-- Конец карточки -->
+
+        <!-- Карточка спортивного достижения -->
+        {% if type_filter == "sport" or type_filter == "all" %}
+        {% for item in sport %}
+        <div class="card mb-4 w-100 shadow-sm" data-id="{{ item.id }}" data-type="sport">
+          <div class="card-body">
+            <h5 class="card-title d-flex justify-content-between align-items-center">
+              {{ item.sport_t }}
+              <span class="badge t-outline">Спортивное достижение</span>
+            </h5>
+
+            <p class="mb-1">
+              <strong>ФИО:</strong> {{ item.fullname }}
+            </p>
+            <p class="mb-1">
+              <strong>Соревнование:</strong> {{ item.compet }}
+            </p>
+            <p class="mb-1">
+              <strong>Дата:</strong> {{ item.date_c }}
+            </p>
+            <button type="button" class="btn btn-more mt-2" data-bs-toggle="modal"
+              data-bs-target="#sportModal{{ item.id }}">Подробнее</button>
+          </div>
+          <div class="position-absolute bottom-0 end-0 p-3 d-flex gap-2">
+            <button type="button" class="btn btn-sm btn-outline-danger btn-reject">Удалить</button>
+          </div>
+        </div>
+
+        <!-- Модальное окно -->
+        <div class="modal fade" id="sportModal{{ item.id }}" tabindex="-1" data-type="Спортивные достижения"
+          aria-labelledby="sportModalLabel{{ item.id }}" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="sportModalLabel{{ item.id }}">Подробности</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+              </div>
+              <div class="modal-body">
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>ФИО:</strong> {{ item.fullname }}</p>
+                  <div class="field-edit d-none">
+                    <label for="fullname{{ item.id }}" class="form-label">ФИО</label>
+                    <input type="text" name="fullname" class="form-control" value="{{ item.fullname }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Группа:</strong> {{ item.group_s }}</p>
+                  <div class="field-edit d-none">
+                    <label for="group_s{{ item.id }}" class="form-label">Группа</label>
+                    <input type="text" name="group_s" class="form-control" value="{{ item.group_s }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Вид спорта:</strong> {{ item.sport_t }}</p>
+                  <div class="field-edit d-none">
+                    <label for="spoet_t{{ item.id }}" class="form-label">Вид спорта</label>
+                    <input type="text" name="sport_t" class="form-control" value="{{ item.sport_t }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Соревнование:</strong> {{ item.compet }}</p>
+                  <div class="field-edit d-none">
+                    <label for="compet{{ item.id }}" class="form-label">Соревнование</label>
+                    <input type="text" name="compet" class="form-control" value="{{ item.compet }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Дата:</strong> {{ item.date_c }}</p>
+                  <div class="field-edit d-none">
+                    <label for="date_c{{ item.id }}" class="form-label">Дата</label>
+                    <input type="text" name="date_c" class="form-control" value="{{ item.date_c }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Примечание:</strong> {{ item.note }}</p>
+                  <div class="field-edit d-none">
+                    <label for="note{{ item.id }}" class="form-label">Примечание</label>
+                    <input type="text" name="note" class="form-control" value="{{ item.note }}">
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-sm btn-more btn-edit">Изменить</button>
+                <button type="button" class="btn btn-secondary btn-close-modal" data-bs-dismiss="modal">Закрыть</button>
+                <div class="edit-actions d-none">
+                  <button type="button" class="btn btn-sm btn-success btn-save">Сохранить</button>
+                  <button type="button" class="btn btn-sm btn-secondary btn-cancel">Отмена</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <!-- Конец карточки -->
+
+        <!-- Карточка творческого достижения -->
+        {% if type_filter == "creation" or type_filter == "all" %}
+        {% for item in creation %}
+        <div class="card mb-4 w-100 shadow-sm" data-id="{{ item.id }}" data-type="creation">
+          <div class="card-body">
+            <h5 class="card-title d-flex justify-content-between align-items-center">
+              {{ item.activity_t }}
+              <span class="badge t-outline">Творческое достижение</span>
+            </h5>
+
+            <p class="mb-1">
+              <strong>ФИО:</strong> {{ item.fullname }}
+            </p>
+            <p class="mb-1">
+              <strong>Участие в фестивалях:</strong> {{ item.part_fest }}
+            </p>
+            <p class="mb-1">
+              <strong>Дата :</strong> {{ item.date_f }}
+            </p>
+            <button type="button" class="btn btn-more mt-2" data-bs-toggle="modal"
+              data-bs-target="#creativeModal{{ item.id }}">Подробнее</button>
+          </div>
+          <div class="position-absolute bottom-0 end-0 p-3 d-flex gap-2">
+            <button type="button" class="btn btn-sm btn-outline-danger btn-reject">Удалить</button>
+          </div>
+        </div>
+
+        <!-- Модальное окно -->
+        <div class="modal fade" id="creativeModal{{ item.id }}" tabindex="-1" data-type="Творческие достижения"
+          aria-labelledby="creativeModalLabel{{ item.id }}" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="creativeModalLabel{{ item.id }}">Подробности</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+              </div>
+              <div class="modal-body">
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>ФИО:</strong> {{ item.fullname }}</p>
+                  <div class="field-edit d-none">
+                    <label for="fullname{{ item.id }}" class="form-label">ФИО</label>
+                    <input type="text" name="fullname" class="form-control" value="{{ item.fullname }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Группа:</strong> {{ item.group_s }}</p>
+                  <div class="field-edit d-none">
+                    <label for="group_s{{ item.id }}" class="form-label">Группа</label>
+                    <input type="text" name="group_s" class="form-control" value="{{ item.group_s }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Вид деятельности:</strong> {{ item.activity_t }}</p>
+                  <div class="field-edit d-none">
+                    <label for="activity_t{{ item.id }}" class="form-label">Вид деятельности</label>
+                    <input type="text" name="activity_t" class="form-control" value="{{ item.activity_t }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Участие в фестивалях:</strong> {{ item.part_fest }}</p>
+                  <div class="field-edit d-none">
+                    <label for="part_fest{{ item.id }}" class="form-label">Участие в фестивалях</label>
+                    <input type="text" name="part_fest" class="form-control" value="{{ item.part_fest }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Дата:</strong> {{ item.date_f }}</p>
+                  <div class="field-edit d-none">
+                    <label for="date_f{{ item.id }}" class="form-label">Дата</label>
+                    <input type="text" name="date_f" class="form-control" value="{{ item.date_f }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Примечание:</strong> {{ item.note }}</p>
+                  <div class="field-edit d-none">
+                    <label for="note{{ item.id }}" class="form-label">Примечание</label>
+                    <input type="text" name="note" class="form-control" value="{{ item.note }}">
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-sm btn-more btn-edit">Изменить</button>
+                <button type="button" class="btn btn-secondary btn-close-modal" data-bs-dismiss="modal">Закрыть</button>
+                <div class="edit-actions d-none">
+                  <button type="button" class="btn btn-sm btn-success btn-save">Сохранить</button>
+                  <button type="button" class="btn btn-sm btn-secondary btn-cancel">Отмена</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <!-- Конец карточки -->
+
+        <!-- Карточка Различный уровень -->
+        {% if type_filter == "various_level" or type_filter == "all" %}
+        {% for item in various_level %}
+        <div class="card mb-4 w-100 shadow-sm" data-id="{{ item.id }}" data-type="various_level">
+          <div class="card-body">
+            <h5 class="card-title d-flex justify-content-between align-items-center">
+              {{ item.event_t }}
+              <span class="badge t-outline">Участие в мероприятиях различного уровня</span>
+            </h5>
+
+            <p class="mb-1">
+              <strong>ФИО:</strong> {{ item.fullname }}
+            </p>
+            <p class="mb-1">
+              <strong>Уровень:</strong> {{ item.level_e }}
+            </p>
+            <p class="mb-1">
+              <strong>Дата:</strong> {{ item.date_e }}
+            </p>
+            <button type="button" class="btn btn-more mt-2" data-bs-toggle="modal"
+              data-bs-target="#variousModal{{ item.id }}">Подробнее</button>
+          </div>
+          <div class="position-absolute bottom-0 end-0 p-3 d-flex gap-2">
+            <button type="button" class="btn btn-sm btn-outline-danger btn-reject">Удалить</button>
+          </div>
+        </div>
+
+        <!-- Модальное окно -->
+        <div class="modal fade" id="variousModal{{ item.id }}" tabindex="-1" data-type="Участие в мероприятиях различного уровня"
+          aria-labelledby="variousModalLabel{{ item.id }}" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="variousModalLabel{{ item.id }}">Подробности</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+              </div>
+              <div class="modal-body">
+                <div class="editable-field">
+                  <p class="field-static"><strong>ФИО:</strong> {{ item.fullname }}</p>
+                  <div class="field-edit d-none">
+                    <label for="fullname{{ item.id }}" class="form-label">ФИО</label>
+                    <input type="text" name="fullname" class="form-control" value="{{ item.fullname }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Группа:</strong> {{ item.group_s }}</p>
+                  <div class="field-edit d-none">
+                    <label for="group_s{{ item.id }}" class="form-label">Группа</label>
+                    <input type="text" name="group_s" class="form-control" value="{{ item.group_s }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Вид мероприятия:</strong> {{ item.event_t }}</p>
+                  <div class="field-edit d-none">
+                    <label for="event_t{{ item.id }}" class="form-label">Вид мероприятия</label>
+                    <input type="text" name="event_t" class="form-control" value="{{ item.event_t }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Уровень:</strong> {{ item.level_e }}</p>
+                  <div class="field-edit d-none">
+                    <label for="level_e{{ item.id }}" class="form-label">Уровень</label>
+                    <input type="text" name="level_e" class="form-control" value="{{ item.level_e }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Название мероприятия:</strong> {{ item.name_e }}</p>
+                  <div class="field-edit d-none">
+                    <label for="name_e{{ item.id }}" class="form-label">Название мероприятия</label>
+                    <input type="text" name="name_e" class="form-control" value="{{ item.name_e }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Место проведения:</strong> {{ item.venue }}</p>
+                  <div class="field-edit d-none">
+                    <label for="venue{{ item.id }}" class="form-label">Место проведения</label>
+                    <input type="text" name="venue" class="form-control" value="{{ item.venue }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Дата:</strong> {{ item.date_e }}</p>
+                  <div class="field-edit d-none">
+                    <label for="date_e{{ item.id }}" class="form-label">Дата</label>
+                    <input type="text" name="date_e" class="form-control" value="{{ item.date_e }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Результат:</strong> {{ item.result }}</p>
+                  <div class="field-edit d-none">
+                    <label for="result{{ item.id }}" class="form-label">Результат</label>
+                    <input type="text" name="result" class="form-control" value="{{ item.result }}">
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-sm btn-more btn-edit">Изменить</button>
+                <button type="button" class="btn btn-secondary btn-close-modal" data-bs-dismiss="modal">Закрыть</button>
+                <div class="edit-actions d-none">
+                  <button type="button" class="btn btn-sm btn-success btn-save">Сохранить</button>
+                  <button type="button" class="btn btn-sm btn-secondary btn-cancel">Отмена</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <!-- Конец карточки -->
+
+        <!-- Карточка Публикации -->
+        {% if type_filter == "publication" or type_filter == "all" %}
+        {% for item in publication %}
+        <div class="card mb-4 w-100 shadow-sm" data-id="{{ item.id }}" data-type="publication">
+          <div class="card-body">
+            <h5 class="card-title d-flex justify-content-between align-items-center">
+              {{ item.fname_work }}
+              <span class="badge t-outline">Публикации</span>
+            </h5>
+
+            <p class="mb-1">
+              <strong>ФИО:</strong> {{ item.fullname }}
+            </p>
+            <p class="mb-1">
+              <strong>Соавторы:</strong> {{ item.coauthors }}
+            </p>
+            <p class="mb-1">
+              <strong>Форма работы:</strong> {{ item.form_w }}
+            </p>
+            <button type="button" class="btn btn-more mt-2" data-bs-toggle="modal"
+              data-bs-target="#publicationModal{{ item.id }}">Подробнее</button>
+          </div>
+          <div class="position-absolute bottom-0 end-0 p-3 d-flex gap-2">
+            <button type="button" class="btn btn-sm btn-outline-danger btn-reject">Удалить</button>
+          </div>
+
+        </div>
+
+        <!-- Модальное окно -->
+        <div class="modal fade" id="publicationModal{{ item.id }}" tabindex="-1" data-type="Публикации"
+          aria-labelledby="publicationModalLabel{{ item.id }}" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="publicationModalLabel{{ item.id }}">Подробности</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+              </div>
+              <div class="modal-body">
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>ФИО:</strong> {{ item.fullname }}</p>
+                  <div class="field-edit d-none">
+                    <label for="fullname{{ item.id }}" class="form-label">ФИО</label>
+                    <input type="text" name="fullname" class="form-control" value="{{ item.fullname }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Группа:</strong> {{ item.group_s }}</p>
+                  <div class="field-edit d-none">
+                    <label for="group_s{{ item.id }}" class="form-label">Группа</label>
+                    <input type="text" name="group_s" class="form-control" value="{{ item.group_s }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Соавторы:</strong> {{ item.coauthors }}</p>
+                  <div class="field-edit d-none">
+                    <label for="coauthors{{ item.id }}" class="form-label">Соавторы</label>
+                    <input type="text" name="coauthors" class="form-control" value="{{ item.coauthors }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Полное название работы:</strong> {{ item.fname_work }}</p>
+                  <div class="field-edit d-none">
+                    <label for="fname_work{{ item.id }}" class="form-label">Полное название работы</label>
+                    <input type="text" name="fname_work" class="form-control" value="{{ item.fname_work }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Выходные данные:</strong> {{ item.output_d }}</p>
+                  <div class="field-edit d-none">
+                    <label for="output_d{{ item.id }}" class="form-label">Выходные данные</label>
+                    <input type="text" name="output_d" class="form-control" value="{{ item.output_d }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Форма работы:</strong> {{ item.form_w }}</p>
+                  <div class="field-edit d-none">
+                    <label for="form_w{{ item.id }}" class="form-label">Форма работы</label>
+                    <input type="text" name="form_w" class="form-control" value="{{ item.form_w }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Тип издания:</strong> {{ item.public_t }}</p>
+                  <div class="field-edit d-none">
+                    <label for="public_t{{ item.id }}" class="form-label">Тип издания</label>
+                    <input type="text" name="public_t" class="form-control" value="{{ item.public_t }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Входит в ВАК/РИНЦ:</strong> {{ item.article_inc }}</p>
+                  <div class="field-edit d-none">
+                    <label for="article_inc{{ item.id }}" class="form-label">Входит в ВАК/РИНЦ</label>
+                    <input type="text" name="article_inc" class="form-control" value="{{ item.article_inc }}">
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-sm btn-more btn-edit">Изменить</button>
+                <button type="button" class="btn btn-secondary btn-close-modal" data-bs-dismiss="modal">Закрыть</button>
+                <div class="edit-actions d-none">
+                  <button type="button" class="btn btn-sm btn-success btn-save">Сохранить</button>
+                  <button type="button" class="btn btn-sm btn-secondary btn-cancel">Отмена</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <!-- Конец карточки -->
+
+        <!-- Карточка Студенческое самоуправление -->
+        {% if type_filter == "student_government" or type_filter == "all" %}
+        {% for item in student_government %}
+        <div class="card mb-4 w-100 shadow-sm" data-id="{{ item.id }}" data-type="student_government">
+          <div class="card-body">
+            <h5 class="card-title d-flex justify-content-between align-items-center">
+              {{ item.activity_t }}
+              <span class="badge t-outline">Студенческое самоуправление</span>
+            </h5>
+
+            <p class="mb-1">
+              <strong>ФИО:</strong> {{ item.fullname }}
+            </p>
+            <p>
+              <strong>Орган:</strong> {{ item.body_g }}
+            </p>
+            <p class="mb-1">
+              <strong>Период:</strong> {{ item.activity_per }}
+            </p>
+            <button type="button" class="btn btn-more mt-2" data-bs-toggle="modal"
+              data-bs-target="#governmentModal{{ item.id }}">Подробнее</button>
+          </div>
+          <div class="position-absolute bottom-0 end-0 p-3 d-flex gap-2">
+            <button type="button" class="btn btn-sm btn-outline-danger btn-reject">Удалить</button>
+          </div>
+        </div>
+
+        <!-- Модальное окно -->
+        <div class="modal fade" id="governmentModal{{ item.id }}" tabindex="-1" data-type="Студенческое самоуправление"
+          aria-labelledby="governmentModalLabel{{ item.id }}" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="governmentModalLabel{{ item.id }}">Подробности</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+              </div>
+              <div class="modal-body">
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>ФИО:</strong> {{ item.fullname }}</p>
+                  <div class="field-edit d-none">
+                    <label for="fullname{{ item.id }}" class="form-label">ФИО</label>
+                    <input type="text" name="fullname" class="form-control" value="{{ item.fullname }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Группа:</strong> {{ item.group_s }}</p>
+                  <div class="field-edit d-none">
+                    <label for="group_s{{ item.id }}" class="form-label">Группа</label>
+                    <input type="text" name="group_s" class="form-control" value="{{ item.group_s }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Орган:</strong> {{ item.body_g }}</p>
+                  <div class="field-edit d-none">
+                    <label for="body_g{{ item.id }}" class="form-label">Орган</label>
+                    <input type="text" name="body_g" class="form-control" value="{{ item.body_g }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Вид деятельности:</strong> {{ item.activity_t }}</p>
+                  <div class="field-edit d-none">
+                    <label for="activity_t{{ item.id }}" class="form-label">Вид деятельности</label>
+                    <input type="text" name="activity_t" class="form-control" value="{{ item.activity_t }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Период:</strong> {{ item.activity_per }}</p>
+                  <div class="field-edit d-none">
+                    <label for="activity_per{{ item.id }}" class="form-label">Период</label>
+                    <input type="text" name="activity_per" class="form-control" value="{{ item.activity_per }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Примечание:</strong> {{ item.note }}</p>
+                  <div class="field-edit d-none">
+                    <label for="note{{ item.id }}" class="form-label">Примечание</label>
+                    <input type="text" name="note" class="form-control" value="{{ item.note }}">
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-sm btn-more btn-edit">Изменить</button>
+                <button type="button" class="btn btn-secondary btn-close-modal" data-bs-dismiss="modal">Закрыть</button>
+                <div class="edit-actions d-none">
+                  <button type="button" class="btn btn-sm btn-success btn-save">Сохранить</button>
+                  <button type="button" class="btn btn-sm btn-secondary btn-cancel">Отмена</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <!-- Конец карточки -->
+
+        <!-- Карточка Иные достижения -->
+        {% if type_filter == "other_achiev" or type_filter == "all" %}
+        {% for item in other_achiev %}
+        <div class="card mb-4 w-100 shadow-sm" data-id="{{ item.id }}" data-type="other_achiev">
+          <div class="card-body">
+            <h5 class="card-title d-flex justify-content-between align-items-center">
+              {{ item.achiev }}
+              <span class="badge t-outline">Иные достижения</span>
+            </h5>
+
+            <p class="mb-1">
+              <strong>ФИО:</strong> {{ item.fullname }}
+            </p>
+            <p class="mb-1">
+              <strong>Вид деятельности:</strong> {{ item.activity_t }}
+            </p>
+            <p class="mb-1">
+              <strong>Дата:</strong> {{ item.date_o }}
+            </p>
+            <button type="button" class="btn btn-more mt-2" data-bs-toggle="modal"
+              data-bs-target="#otherModal{{ item.id }}">Подробнее</button>
+          </div>
+          <div class="position-absolute bottom-0 end-0 p-3 d-flex gap-2">
+            <button type="button" class="btn btn-sm btn-outline-danger btn-reject">Удалить</button>
+          </div>
+        </div>
+
+        <!-- Модальное окно -->
+        <div class="modal fade" id="otherModal{{ item.id }}" tabindex="-1" data-type="Иные достижения"
+          aria-labelledby="otherModalLabel{{ item.id }}" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="otherModalLabel{{ item.id }}">Подробности</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+              </div>
+              <div class="modal-body">
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>ФИО:</strong> {{ item.fullname }}</p>
+                  <div class="field-edit d-none">
+                    <label for="fullname{{ item.id }}" class="form-label">ФИО</label>
+                    <input type="text" name="fullname" class="form-control" value="{{ item.fullname }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Группа:</strong> {{ item.group_s }}</p>
+                  <div class="field-edit d-none">
+                    <label for="group_s{{ item.id }}" class="form-label">Группа</label>
+                    <input type="text" name="group_s" class="form-control" value="{{ item.group_s }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Вид деятельности:</strong> {{ item.activity_t }}</p>
+                  <div class="field-edit d-none">
+                    <label for="activity_t{{ item.id }}" class="form-label">Вид деятельности</label>
+                    <input type="text" name="activity_t" class="form-control" value="{{ item.activity_t }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Достижение:</strong> {{ item.achiev }}</p>
+                  <div class="field-edit d-none">
+                    <label for="achiev{{ item.id }}" class="form-label">Достижение</label>
+                    <input type="text" name="achiev" class="form-control" value="{{ item.achiev }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Дата:</strong> {{ item.date_o }}</p>
+                  <div class="field-edit d-none">
+                    <label for="date_o{{ item.id }}" class="form-label">Дата</label>
+                    <input type="text" name="date_o" class="form-control" value="{{ item.date_o }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Примечание:</strong> {{ item.note }}</p>
+                  <div class="field-edit d-none">
+                    <label for="note{{ item.id }}" class="form-label">Примечание</label>
+                    <input type="text" name="note" class="form-control" value="{{ item.note }}">
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-sm btn-more btn-edit">Изменить</button>
+                <button type="button" class="btn btn-secondary btn-close-modal" data-bs-dismiss="modal">Закрыть</button>
+                <div class="edit-actions d-none">
+                  <button type="button" class="btn btn-sm btn-success btn-save">Сохранить</button>
+                  <button type="button" class="btn btn-sm btn-secondary btn-cancel">Отмена</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <!-- Конец карточки -->
+
+        <!-- Карточка Освоение доп. программ -->
+        {% if type_filter == "add_programm" or type_filter == "all" %}
+        {% for item in add_programm %}
+        <div class="card mb-4 w-100 shadow-sm" data-id="{{ item.id }}" data-type="add_programm">
+          <div class="card-body">
+            <h5 class="card-title d-flex justify-content-between align-items-center">
+              {{ item.name_p }}
+              <span class="badge t-outline">Освоение доп. программ</span>
+            </h5>
+
+            <p class="mb-1">
+              <strong>ФИО:</strong> {{ item.fullname }}
+            </p>
+            <p class="mb-1">
+              <strong>Часы:</strong> {{ item.hours }}
+            </p>
+            <p class="mb-1">
+              <strong>Сроки:</strong> {{ item.terms }}
+            </p>
+            <button type="button" class="btn btn-more mt-2" data-bs-toggle="modal"
+              data-bs-target="#addModal{{ item.id }}">Подробнее</button>
+          </div>
+          <div class="position-absolute bottom-0 end-0 p-3 d-flex gap-2">
+            <button type="button" class="btn btn-sm btn-outline-danger btn-reject">Удалить</button>
+          </div>
+        </div>
+
+        <!-- Модальное окно -->
+        <div class="modal fade" id="addModal{{ item.id }}" tabindex="-1" data-type="Освоение доп. программ" aria-labelledby="addModalLabel{{ item.id }}"
+          aria-hidden="true">
+          <div class="modal-dialog modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="addModalLabel{{ item.id }}">Подробности</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+              </div>
+              <div class="modal-body">
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>ФИО:</strong> {{ item.fullname }}</p>
+                  <div class="field-edit d-none">
+                    <label for="group_s{{ item.id }}" class="form-label">ФИО</label>
+                    <input type="text" name="fullname" class="form-control" value="{{ item.fullname }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Группа:</strong> {{ item.group_s }}</p>
+                  <div class="field-edit d-none">
+                    <label for="group_s{{ item.id }}" class="form-label">Группа</label>
+                    <input type="text" name="group_s" class="form-control" value="{{ item.group_s }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Название программы:</strong> {{ item.name_p }}</p>
+                  <div class="field-edit d-none">
+                    <label for="name_p{{ item.id }}" class="form-label">Название программы</label>
+                    <input type="text" name="name_p" class="form-control" value="{{ item.name_p }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Вид обучения:</strong> {{ item.education_t }}</p>
+                  <div class="field-edit d-none">
+                    <label for="education_t{{ item.id }}" class="form-label">Вид обучения</label>
+                    <input type="text" name="education_t" class="form-control" value="{{ item.education_t }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Часы:</strong> {{ item.hours }}</p>
+                  <div class="field-edit d-none">
+                    <label for="hours{{ item.id }}" class="form-label">Часы</label>
+                    <input type="text" name="hours" class="form-control" value="{{ item.hours }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Сроки:</strong> {{ item.terms }}</p>
+                  <div class="field-edit d-none">
+                    <label for="terms{{ item.id }}" class="form-label">Сроки</label>
+                    <input type="text" name="terms" class="form-control" value="{{ item.terms }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Место обучения:</strong> {{ item.education_p }}</p>
+                  <div class="field-edit d-none">
+                    <label for="education_p{{ item.id }}" class="form-label">Место обучения</label>
+                    <input type="text" name="education_p" class="form-control" value="{{ item.education_p }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Документ:</strong> {{ item.name_d }}</p>
+                  <div class="field-edit d-none">
+                    <label for="name_d{{ item.id }}" class="form-label">Примечание</label>
+                    <input type="text" name="name_d" class="form-control" value="{{ item.name_d }}">
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-sm btn-more btn-edit">Изменить</button>
+                <button type="button" class="btn btn-secondary btn-close-modal" data-bs-dismiss="modal">Закрыть</button>
+                <div class="edit-actions d-none">
+                  <button type="button" class="btn btn-sm btn-success btn-save">Сохранить</button>
+                  <button type="button" class="btn btn-sm btn-secondary btn-cancel">Отмена</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <!-- Конец карточки -->
+
+        <!-- Карточка Опыт работы -->
+        {% if type_filter == "experience" or type_filter == "all" %}
+        {% for item in experience %}
+        <div class="card mb-4 w-100 shadow-sm" data-id="{{ item.id }}" data-type="experience">
+          <div class="card-body">
+            <h5 class="card-title d-flex justify-content-between align-items-center">
+              {{ item.place_w }}
+              <span class="badge t-outline">Опыт работы</span>
+            </h5>
+            <p class="mb-1">
+              <strong>ФИО:</strong> {{ item.fullname }}
+            </p>
+            <p class="mb-1">
+              <strong>Должность:</strong> {{ item.title_j }}
+            </p>
+            <p class="mb-1">
+              <strong>Сроки:</strong> {{ item.deadlines }}
+            </p>
+            <button type="button" class="btn btn-more mt-2" data-bs-toggle="modal"
+              data-bs-target="#experienceModal{{ item.id }}">Подробнее</button>
+          </div>
+          <div class="position-absolute bottom-0 end-0 p-3 d-flex gap-2">
+            <button type="button" class="btn btn-sm btn-outline-danger btn-reject">Удалить</button>
+          </div>
+        </div>
+
+        <!-- Модальное окно -->
+        <div class="modal fade" id="experienceModal{{ item.id }}" tabindex="-1" data-type="Опыт работы"
+          aria-labelledby="experienceModalLabel{{ item.id }}" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="experienceModalLabel{{ item.id }}">Подробности</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+              </div>
+              <div class="modal-body">
+                <div class="editable-field">
+                  <p class="field-static"><strong>ФИО:</strong> {{ item.fullname }}</p>
+                  <div class="field-edit d-none">
+                    <label for="fullname{{ item.id }}" class="form-label">ФИО</label>
+                    <input type="text" name="fullname" class="form-contro" value="{{ item.fullname }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Группа:</strong> {{ item.group_s }}</p>
+                  <div class="field-edit d-none">
+                    <label for="group_s{{ item.id }}" class="form-label">Группа</label>
+                    <input type="text" name="group_s" class="form-control" value="{{ item.group_s }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Место работы:</strong> {{ item.place_w }}</p>
+                  <div class="field-edit d-none">
+                    <label for="place_w{{ item.id }}" class="form-label">Место работы</label>
+                    <input type="text" name="place_w" class="form-control" value="{{ item.place_w }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Вид работы:</strong> {{ item.work_t }}</p>
+                  <div class="field-edit d-none">
+                    <label for="work_t{{ item.id }}" class="form-label">Вид работы</label>
+                    <input type="text" name="work_t" class="form-control" value="{{ item.work_t }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Должность:</strong> {{ item.title_j }}</p>
+                  <div class="field-edit d-none">
+                    <label for="title_j{{ item.id }}" class="form-label">Должность</label>
+                    <input type="text" name="title_j" class="form-control" value="{{ item.title_j }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Сроки:</strong> {{ item.deadlines }}</p>
+                  <div class="field-edit d-none">
+                    <label for="deadlines{{ item.id }}" class="form-label">Сроки</label>
+                    <input type="text" name="deadlines" class="form-control" value="{{ item.deadlines }}">
+                  </div>
+                </div>
+                <div class="editable-field mb-3">
+                  <p class="field-static"><strong>Обязанности:</strong> {{ item.respons }}</p>
+                  <div class="field-edit d-none">
+                    <label for="respons{{ item.id }}" class="form-label">Обязанности</label>
+                    <input type="text" name="respons" class="form-control" value="{{ item.respons }}">
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-sm btn-more btn-edit">Изменить</button>
+                <button type="button" class="btn btn-secondary btn-close-modal" data-bs-dismiss="modal">Закрыть</button>
+                <div class="edit-actions d-none">
+                  <button type="button" class="btn btn-sm btn-success btn-save">Сохранить</button>
+                  <button type="button" class="btn btn-sm btn-secondary btn-cancel">Отмена</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <!-- Конец карточки -->
+      </div>
+    </div>
+  </div>
+  <!-- Модальное окно подтверждения удаления -->
+  <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmDeleteLabel">Подтвердите удаление</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+        </div>
+        <div class="modal-body">
+          Вы уверены, что хотите удалить это достижение? Действие необратимо.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+          <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Удалить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--Модальное окно подтверждения изменения-->
+  <div class="modal fade" id="confirmEditModal" tabindex="-1" aria-labelledby="confirmEditLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color: #172b4d;">
+          <h5 class="modal-title" style="color: white" id="confirmEditLabel">Подтвердите изменения</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+        </div>
+        <div class="modal-body">
+          Вы уверены, что хотите сохранить изменения?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+          <button type="button" class="btn btn-more" id="confirmSaveBtn">Сохранить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Поп-ап окно добавления достижений -->
+  <div class="modal fade" id="applicationModal" tabindex="-1" aria-labelledby="applicationModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title" id="applicationModalLabel">Форма заявления</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+        </div>
+
+        <div class="modal-body">
+          <form id="applicationForm" method="POST" action="{% url 'submit_application' %}" data-is-admin="1">
+            {% csrf_token %}
+            <input type="hidden" name="force_accepted" value="1">
+            <div class="mb-3">
+              <label for="achievementType" class="form-label">Тип достижения</label>
+              <select id="achievementType" name="achievementType" class="form-select" onchange="handleTypeChange()">
+                <option value="">Выберите тип</option>
+                <option value="science">Научное достижение</option>
+                <option value="sport">Спортивное достижение</option>
+                <option value="creative">Творческое достижение</option>
+                <option value="various">Участие в мероприятиях различного уровня</option>
+                <option value="public">Публикации</option>
+                <option value="government">Студенческое самоуправление</option>
+                <option value="other">Иное достижение</option>
+                <option value="addprogramm">Освоение доп. программ</option>
+                <option value="experience">Опыт работы</option>
+              </select>
+            </div>
+
+            <!-- Блок: Научное достижение -->
+            <div id="scienceFields" class="type-block d-none">
+              {% if is_admin %}
+              <div class="mb-3">
+                <label for="lastname" class="form-label">Фамилия</label>
+                <input type="text" name="lastname" id="lastname" class="form-control" required>
+              </div>
+              <div class="mb-3">
+                <label for="firstname" class="form-label">Имя</label>
+                <input type="text" name="firstname" id="firstname" class="form-control" required>
+              </div>
+              <div class="mb-3">
+                <label for="middlename" class="form-label">Отчество</label>
+                <input type="text" name="middlename" id="middlename" class="form-control" required>
+              </div>
+
+              <div class="mb-3">
+                <label for="group_s" class="form-label">Группа</label>
+                <input type="text" name="group_s" id="group_s" class="form-control" required>
+              </div>
+              <div class="mb-3">
+                <label for="faculty" class="form-label">Факультет</label>
+                <input type="text" name="faculty" id="faculty" class="form-control" required>
+              </div>
+              {% endif %}
+              <div class="mb-3">
+                <label class="form-label">Название НИР</label>
+                <input type="text" class="form-control" name="srw_name" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Заказчик</label>
+                <input type="text" class="form-control" name="customer" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Уровень программы</label>
+                <input type="text" class="form-control" name="programm_c" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Название проекта</label>
+                <input type="text" class="form-control" name="name_proj" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Дата начала</label>
+                <input type="text" name="dateS_event" class="form-control" placeholder="ДД.ММ.ГГГГ">
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Дата окончания</label>
+                <input type="text" name="dateF_event" class="form-control" placeholder="ДД.ММ.ГГГГ">
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Результат</label>
+                <input type="text" class="form-control" name="result_science" />
+              </div>
+            </div>
+
+            <!-- Блок: Спортивное достижение -->
+            <div id="sportFields" class="type-block d-none">
+              {% if is_admin %}
+              <div class="mb-3">
+                <label for="lastname" class="form-label">Фамилия</label>
+                <input type="text" name="lastname" id="lastname" class="form-control" required>
+              </div>
+              <div class="mb-3">
+                <label for="firstname" class="form-label">Имя</label>
+                <input type="text" name="firstname" id="firstname" class="form-control" required>
+              </div>
+              <div class="mb-3">
+                <label for="middlename" class="form-label">Отчество</label>
+                <input type="text" name="middlename" id="middlename" class="form-control" required>
+              </div>
+
+              <div class="mb-3">
+                <label for="group_s" class="form-label">Группа</label>
+                <input type="text" name="group_s" id="group_s" class="form-control" required>
+              </div>
+              <div class="mb-3">
+                <label for="faculty" class="form-label">Факультет</label>
+                <input type="text" name="faculty" id="faculty" class="form-control" required>
+              </div>
+              {% endif %}
+              <div class="mb-3">
+                <label class="form-label">Вид спорта</label>
+                <input type="text" class="form-control" name="sport_t" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Соревнование</label>
+                <input type="text" class="form-control" name="compet" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Дата</label>
+                <input type="text" name="date_compet" class="form-control" placeholder="ДД.ММ.ГГГГ">
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Примечание</label>
+                <input type="text" name="note_compet" class="form-control" />
+              </div>
+            </div>
+
+            <!-- Блок: Творческое достижение -->
+            <div id="creativeFields" class="type-block d-none">
+              {% if is_admin %}
+              <div class="mb-3">
+                <label for="lastname" class="form-label">Фамилия</label>
+                <input type="text" name="lastname" id="lastname" class="form-control" required>
+              </div>
+              <div class="mb-3">
+                <label for="firstname" class="form-label">Имя</label>
+                <input type="text" name="firstname" id="firstname" class="form-control" required>
+              </div>
+              <div class="mb-3">
+                <label for="middlename" class="form-label">Отчество</label>
+                <input type="text" name="middlename" id="middlename" class="form-control" required>
+              </div>
+
+              <div class="mb-3">
+                <label for="group_s" class="form-label">Группа</label>
+                <input type="text" name="group_s" id="group_s" class="form-control" required>
+              </div>
+              <div class="mb-3">
+                <label for="faculty" class="form-label">Факультет</label>
+                <input type="text" name="faculty" id="faculty" class="form-control" required>
+              </div>
+              {% endif %}
+              <div class="mb-3">
+                <label class="form-label">Вид деятельности</label>
+                <input type="text" class="form-control" name="activity_t_creative" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Участие в фестивале</label>
+                <input type="text" class="form-control" name="part_fest" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Дата</label>
+                <input type="text" name="date_fest" class="form-control" placeholder="ДД.ММ.ГГГГ">
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Примечание</label>
+                <input type="text" class="form-control" name="note_fest" />
+              </div>
+            </div>
+
+            <!--Блок: Участие в мероприятиях различного уровня-->
+            <div id="variousFields" class="type-block d-none">
+              {% if is_admin %}
+              <div class="mb-3">
+                <label for="lastname" class="form-label">Фамилия</label>
+                <input type="text" name="lastname" id="lastname" class="form-control" required>
+              </div>
+              <div class="mb-3">
+                <label for="firstname" class="form-label">Имя</label>
+                <input type="text" name="firstname" id="firstname" class="form-control" required>
+              </div>
+              <div class="mb-3">
+                <label for="middlename" class="form-label">Отчество</label>
+                <input type="text" name="middlename" id="middlename" class="form-control" required>
+              </div>
+
+              <div class="mb-3">
+                <label for="group_s" class="form-label">Группа</label>
+                <input type="text" name="group_s" id="group_s" class="form-control" required>
+              </div>
+              <div class="mb-3">
+                <label for="faculty" class="form-label">Факультет</label>
+                <input type="text" name="faculty" id="faculty" class="form-control" required>
+              </div>
+              {% endif %}
+              <div class="mb-3">
+                <label class="form-label">Вид мероприятия</label>
+                <input type="text" class="form-control" name="various_t" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Уровень мероприятия</label>
+                <input type="text" class="form-control" name="level_v" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Название мерпориятия</label>
+                <input type="text" class="form-control" name="name_v" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Место проведения</label>
+                <input type="text" class="form-control" name="place_v" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Дата</label>
+                <input type="text" name="date_various" class="form-control" placeholder="ДД.ММ.ГГГГ">
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Результат</label>
+                <input type="text" class="form-control" name="result_v" />
+              </div>
+            </div>
+
+            <!--Блок: Публикации-->
+            <div id="publicFields" class="type-block d-none">
+              {% if is_admin %}
+              <div class="mb-3">
+                <label for="lastname" class="form-label">Фамилия</label>
+                <input type="text" name="lastname" id="lastname" class="form-control" required>
+              </div>
+              <div class="mb-3">
+                <label for="firstname" class="form-label">Имя</label>
+                <input type="text" name="firstname" id="firstname" class="form-control" required>
+              </div>
+              <div class="mb-3">
+                <label for="middlename" class="form-label">Отчество</label>
+                <input type="text" name="middlename" id="middlename" class="form-control" required>
+              </div>
+
+              <div class="mb-3">
+                <label for="group_s" class="form-label">Группа</label>
+                <input type="text" name="group_s" id="group_s" class="form-control" required>
+              </div>
+              <div class="mb-3">
+                <label for="faculty" class="form-label">Факультет</label>
+                <input type="text" name="faculty" id="faculty" class="form-control" required>
+              </div>
+              {% endif %}
+              <div class="mb-3">
+                <label class="form-label">Соавтор(ы)</label>
+                <input type="text" class="form-control" name="coauthors" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Полное название работы</label>
+                <input type="text" class="form-control" name="fullname_w" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Выходные данные</label>
+                <input type="text" class="form-control" name="output" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Форма работы</label>
+                <input type="text" class="form-control" name="form_w" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Тип издания</label>
+                <input type="text" class="form-control" name="public_t" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Входит в ВАК/РИНЦ</label>
+                <input type="text" class="form-control" name="include" />
+              </div>
+            </div>
+
+            <!--Блок: Студенческое самоуправление-->
+            <div id="governmentFields" class="type-block d-none">
+              {% if is_admin %}
+              <div class="mb-3">
+                <label for="lastname" class="form-label">Фамилия</label>
+                <input type="text" name="lastname" id="lastname" class="form-control" required>
+              </div>
+              <div class="mb-3">
+                <label for="firstname" class="form-label">Имя</label>
+                <input type="text" name="firstname" id="firstname" class="form-control" required>
+              </div>
+              <div class="mb-3">
+                <label for="middlename" class="form-label">Отчество</label>
+                <input type="text" name="middlename" id="middlename" class="form-control" required>
+              </div>
+
+              <div class="mb-3">
+                <label for="group_s" class="form-label">Группа</label>
+                <input type="text" name="group_s" id="group_s" class="form-control" required>
+              </div>
+              <div class="mb-3">
+                <label for="faculty" class="form-label">Факультет</label>
+                <input type="text" name="faculty" id="faculty" class="form-control" required>
+              </div>
+              {% endif %}
+              <div class="mb-3">
+                <label class="form-label">Орган студенческого самоуправления</label>
+                <input type="text" class="form-control" name="government_t" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Вид деятельности</label>
+                <input type="text" class="form-control" name="activity_t" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Период</label>
+                <input type="text" name="per_g" class="form-control" placeholder="ДД.ММ.ГГГГ">
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Примечание</label>
+                <input type="text" class="form-control" name="note_g" />
+              </div>
+            </div>
+
+            <!--Блок: Иное достижение-->
+            <div id="otherFields" class="type-block d-none">
+              {% if is_admin %}
+              <div class="mb-3">
+                <label for="lastname" class="form-label">Фамилия</label>
+                <input type="text" name="lastname" id="lastname" class="form-control" required>
+              </div>
+              <div class="mb-3">
+                <label for="firstname" class="form-label">Имя</label>
+                <input type="text" name="firstname" id="firstname" class="form-control" required>
+              </div>
+              <div class="mb-3">
+                <label for="middlename" class="form-label">Отчество</label>
+                <input type="text" name="middlename" id="middlename" class="form-control" required>
+              </div>
+
+              <div class="mb-3">
+                <label for="group_s" class="form-label">Группа</label>
+                <input type="text" name="group_s" id="group_s" class="form-control" required>
+              </div>
+              <div class="mb-3">
+                <label for="faculty" class="form-label">Факультет</label>
+                <input type="text" name="faculty" id="faculty" class="form-control" required>
+              </div>
+              {% endif %}
+              <div class="mb-3">
+                <label class="form-label">Вид деятельности</label>
+                <input type="text" class="form-control" name="activity_o" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Достижение</label>
+                <input type="text" class="form-control" name="other_a" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Дата</label>
+                <input type="text" name="date_other" class="form-control" placeholder="ДД.ММ.ГГГГ">
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Примечание</label>
+                <input type="text" class="form-control" name="note_other" />
+              </div>
+            </div>
+
+            <!--Блок: Освоение доп. программ-->
+            <div id="addFields" class="type-block d-none">
+              {% if is_admin %}
+              <div class="mb-3">
+                <label for="lastname" class="form-label">Фамилия</label>
+                <input type="text" name="lastname" id="lastname" class="form-control" required>
+              </div>
+              <div class="mb-3">
+                <label for="firstname" class="form-label">Имя</label>
+                <input type="text" name="firstname" id="firstname" class="form-control" required>
+              </div>
+              <div class="mb-3">
+                <label for="middlename" class="form-label">Отчество</label>
+                <input type="text" name="middlename" id="middlename" class="form-control" required>
+              </div>
+
+              <div class="mb-3">
+                <label for="group_s" class="form-label">Группа</label>
+                <input type="text" name="group_s" id="group_s" class="form-control" required>
+              </div>
+              <div class="mb-3">
+                <label for="faculty" class="form-label">Факультет</label>
+                <input type="text" name="faculty" id="faculty" class="form-control" required>
+              </div>
+              {% endif %}
+              <div class="mb-3">
+                <label class="form-label">Название программы</label>
+                <input type="text" class="form-control" name="name_prog" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Вид обучения</label>
+                <input type="text" class="form-control" name="programm_t" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Часы</label>
+                <input type="text" class="form-control" name="hours_p" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Сроки</label>
+                <input type="text" name="date_compet" class="form-control" placeholder="ДД.ММ.ГГГГ-ДД.ММ.ГГГГ">
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Место обучения</label>
+                <input type="text" class="form-control" name="place_t" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Документ</label>
+                <input type="text" class="form-control" name="document" />
+              </div>
+            </div>
+
+            <!--Блок: Опыт работы-->
+            <div id="experienceFields" class="type-block d-none">
+              {% if is_admin %}
+              <div class="mb-3">
+                <label for="lastname" class="form-label">Фамилия</label>
+                <input type="text" name="lastname" id="lastname" class="form-control" required>
+              </div>
+              <div class="mb-3">
+                <label for="firstname" class="form-label">Имя</label>
+                <input type="text" name="firstname" id="firstname" class="form-control" required>
+              </div>
+              <div class="mb-3">
+                <label for="middlename" class="form-label">Отчество</label>
+                <input type="text" name="middlename" id="middlename" class="form-control" required>
+              </div>
+
+              <div class="mb-3">
+                <label for="group_s" class="form-label">Группа</label>
+                <input type="text" name="group_s" id="group_s" class="form-control" required>
+              </div>
+              <div class="mb-3">
+                <label for="faculty" class="form-label">Факультет</label>
+                <input type="text" name="faculty" id="faculty" class="form-control" required>
+              </div>
+              {% endif %}
+              <div class="mb-3">
+                <label class="form-label">Место работы</label>
+                <input type="text" class="form-control" name="place_e" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Вид работы</label>
+                <input type="text" class="form-control" name="exp_t" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Должность</label>
+                <input type="text" class="form-control" name="position" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Сроки</label>
+                <input type="text" name="per_e" class="form-control" placeholder="ДД.ММ.ГГГГ(-ДД.ММ.ГГГГ)">
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Обязанности</label>
+                <input type="text" class="form-control" name="duty" />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Отправить</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Уведомление об удалении -->
+  <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 9999">
+    <div id="toastDeleted" class="toast align-items-center text-white bg-danger border-0" role="alert">
+      <div class="d-flex">
+        <div class="toast-body">Достижение удалено</div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Уведомление об изменении -->
+  <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 9999">
+    <div id="toastEdited" class="toast align-items-center text-white bg-success border-0" role="alert">
+      <div class="d-flex">
+        <div class="toast-body">Изменения сохранены</div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+      </div>
+    </div>
+  </div>
+
+  <!--Уведомление о добавлении достижения-->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="toastSuccess" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive"
+      aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body">
+          Достижение успешно добавлено!
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+          aria-label="Закрыть"></button>
+      </div>
+    </div>
+  </div>
+
+
+
+  <script src="{% static 'admin_achiev.js' %}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
 </html>

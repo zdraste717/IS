@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -8,7 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="main.css" />
+    <link rel="stylesheet" href= "{% static 'main.css' %}" />
   </head>
 
   <body>
@@ -19,7 +20,7 @@
           <button class="navbar-toggler border-0 me-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon custom-toggler"></span></button>
 
           <!-- Логотип -->
-          <a class="navbar-brand d-none d-lg-block" href="#"><img src="../photo/logo.jpg" alt="Logo" width="80" height="50" /></a>
+          <a class="navbar-brand d-none d-lg-block" href="#"><img src="{% static 'logo.jpg' %}" alt="Logo" width="80" height="50" /></a>
 
           <!-- Иконки -->
           <div class="d-flex align-items-center ms-auto order-lg-3">
@@ -37,7 +38,7 @@
                   <a class="nav-link active me-3" href="#">В начало</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link me-3" href="../events/event.html">Управление мероприятиями</a>
+                  <a class="nav-link me-3" href="{% url 'admin_pending' %}">Заявки</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link me-3" href="{% url 'admin_panel' %}">Управление достижениями</a>
@@ -51,7 +52,7 @@
                   <a class="nav-link active me-3" href="#">В начало</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link me-3" href="../events/event.html">Мероприятия</a>
+                  <a class="nav-link me-3" href="#">Мероприятия</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link me-3" href="{% url 'achiev' %}">Достижения</a>

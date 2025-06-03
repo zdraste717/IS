@@ -1,0 +1,709 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Панель администратора</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{% static 'admin_achiev.css' %}" />
+    <link rel="stylesheet" href= "{% static 'main.css' %}" />
+  </head>
+  <body class="bg-light">
+    <header>
+      <nav class="navbar navbar-expand-lg bg-white">
+        <div class="container-fluid">
+          <!-- Гамбургер -->
+          <button class="navbar-toggler border-0 me-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon custom-toggler"></span></button>
+
+          <!-- Логотип -->
+          <a class="navbar-brand d-none d-lg-block" href="#"><img src="{% static 'logo.jpg' %}" alt="Logo" width="80" height="50" /></a>
+
+          <!-- Иконки -->
+          <div class="d-flex align-items-center ms-auto order-lg-3">
+            <div class="position-relative me-3">
+              <i class="bi bi-bell fs-4 text-primary"></i>
+            </div>
+            <i class="bi bi-person-circle fs-4 text-primary"></i>
+          </div>
+          <!-- Меню -->
+          <div class="collapse navbar-collapse order-lg-2" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link me-3" href="{% url 'main' %}">В начало</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active me-3" href="#">Заявки</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link me-3" href="{% url 'admin_panel' %}">Управление достижениями</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <div class="admin-panel-container">
+
+      <div class="center-wrapper">
+        <div class="form-container">
+          <!-- Карточка научного достижения -->
+          {% for item in scienes %}
+            <div class="card mb-4 w-100 shadow-sm" data-id="{{ item.id }}" data-type="scienes" style="max-height: 70vh; overflow-y: auto; padding-right: 5px;">
+              <div class="card-body">
+                <h5 class="card-title d-flex justify-content-between align-items-center">
+                  {{ item.srw_name }}
+                  <span class="badge t-outline">Научное достижение</span>
+                </h5>
+
+                <p class="mb-1">
+                  <strong>ФИО:</strong> {{ item.fullname }}
+                </p>
+                <p class="mb-1">
+                  <strong>Дата начала:</strong> {{ item.s_date }}
+                </p>
+                <p class="mb-1">
+                  <strong>Дата окончания:</strong> {{ item.f_date }}
+                </p>
+                <button type="button" class="btn btn-more mt-2" data-bs-toggle="modal" data-bs-target="#scienceModal{{ item.id }}">Подробнее</button>
+              </div>
+              <div class="position-absolute bottom-0 end-0 p-3 d-flex gap-2">
+                <button type="button" class="btn btn-sm btn-success btn-accept">Принять</button>
+                <button type="button" class="btn btn-sm btn-outline-danger btn-reject">Отклонить</button>
+              </div>
+            </div>
+
+            <!-- Модальное окно -->
+            <div class="modal fade" id="scienceModal{{ item.id }}" tabindex="-1" aria-labelledby="scienceModalLabel{{ item.id }}" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-scrollable modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="scienceModalLabel{{ item.id }}">Подробности</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                  </div>
+                  <div class="modal-body">
+                      <p>
+                        <strong>ФИО:</strong> {{ item.fullname }}
+                      </p>          
+                      <p>
+                        <strong>Группа:</strong> {{ item.group_s }}
+                      </p>
+                      <p>
+                        <strong>Название НИР:</strong> {{ item.srw_name }}
+                      </p>
+                      <p>
+                        <strong>Заказчик:</strong> {{ item.customer }}
+                      </p>
+                      <p>
+                        <strong>Уровень программы:</strong> {{ item.l_programm }}
+                      </p>
+                      <p>
+                        <strong>Название проекта:</strong> {{ item.p_name }}
+                      </p>
+                      <p>
+                        <strong>Дата начала:</strong> {{ item.s_date }}
+                      </p>
+                      <p>
+                        <strong>Дата окончания:</strong> {{ item.f_date }}</p>
+                      <p>
+                        <strong>Результат:</strong> {{ item.result }}
+                      </p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+          <!-- Конец карточки -->
+
+          <!-- Карточка спортивного достижения -->
+          {% for item in sport %}
+            <div class="card mb-4 w-100 shadow-sm " data-id="{{ item.id }}" data-type="sport">
+              <div class="card-body">
+                <h5 class="card-title d-flex justify-content-between align-items-center">
+                  {{ item.sport_t }}
+                  <span class="badge t-outline">Спортивное достижение</span>
+                </h5>
+                <p class="mb-1">
+                  <strong>ФИО:</strong> {{ item.fullname }}
+                </p>
+                <p class="mb-1">
+                  <strong>Соревнование:</strong> {{ item.compet }}
+                </p>
+                <p class="mb-1">
+                  <strong>Дата:</strong> {{ item.date_c }}
+                </p>
+                <button type="button" class="btn btn-more mt-2" data-bs-toggle="modal" data-bs-target="#sportModal{{ item.id }}">Подробнее</button>
+              </div>
+              <div class="position-absolute bottom-0 end-0 p-3 d-flex gap-2">
+                <button type="button" class="btn btn-sm btn-more btn-accept">Принять</button>
+                <button type="button" class="btn btn-sm btn-outline-danger btn-reject">Отклонить</button>
+              </div>
+            </div>
+
+            <!-- Модальное окно -->
+            <div class="modal fade" id="sportModal{{ item.id }}" tabindex="-1" aria-labelledby="sportModalLabel{{ item.id }}" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-scrollable modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="sportModalLabel{{ item.id }}">Подробности</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                  </div>
+                  <div class="modal-body">
+                    <p>
+                      <strong>ФИО:</strong> {{ item.fullname }}
+                    </p>
+                    <p>
+                      <strong>Группа:</strong> {{ item.group_s }}
+                    </p>
+                    <p>
+                      <strong>Вид спорта:</strong> {{ item.sport_t }}
+                    </p>
+                    <p>
+                      <strong>Соревнование:</strong> {{ item.compet }}
+                    </p>
+                    <p>
+                      <strong>Дата:</strong> {{ item.date_c }}
+                    </p>
+                    <p>
+                      <strong>Примечание:</strong> {{ item.note }}
+                    </p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-more btn-edit">Изменить</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+          <!-- Конец карточки -->
+
+          <!-- Карточка творческого достижения -->
+          {% for item in creation %}
+            <div class="card mb-4 w-100 shadow-sm" data-id="{{ item.id }}" data-type="creation">
+              <div class="card-body">
+                <h5 class="card-title d-flex justify-content-between align-items-center">
+                  {{ item.activity_t }}
+                  <span class="badge t-outline">Творческое достижение</span>
+                </h5>
+
+                <p class="mb-1">
+                  <strong>ФИО:</strong> {{ item.fullname }}
+                </p>
+                <p class="mb-1">
+                  <strong>Участие в фестивалях:</strong> {{ item.part_fest }}
+                </p>
+                <p class="mb-1">
+                  <strong>Дата :</strong> {{ item.date_f }}
+                </p>
+                <button type="button" class="btn btn-more mt-2" data-bs-toggle="modal" data-bs-target="#creativeModal{{ item.id }}">Подробнее</button>
+              </div>
+              <div class="position-absolute bottom-0 end-0 p-3 d-flex gap-2">
+                <button type="button" class="btn btn-sm btn-more btn-accept">Принять</button>
+                <button type="button" class="btn btn-sm btn-outline-danger btn-reject">Отклонить</button>
+              </div>
+            </div>
+
+            <!-- Модальное окно -->
+            <div class="modal fade" id="creativeModal{{ item.id }}" tabindex="-1" aria-labelledby="creativeModalLabel{{ item.id }}" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-scrollable modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="creativeModalLabel{{ item.id }}">Подробности</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                  </div>
+                  <div class="modal-body">
+                    <p>
+                      <strong>ФИО:</strong> {{ item.fullname }}
+                    </p>
+                    <p>
+                      <strong>Группа:</strong> {{ item.group_s }}
+                    </p>
+                    <p>
+                      <strong>Вид деятельности:</strong> {{ item.activity_t }}
+                    </p>
+                    <p>
+                      <strong>Участие в фестивалях:</strong> {{ item.part_fest }}
+                    </p>
+                    <p>
+                      <strong>Дата:</strong> {{ item.date_f }}
+                    </p>
+                    <p>
+                      <strong>Примечание:</strong> {{ item.note }}
+                    </p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-more btn-edit">Изменить</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+          <!-- Конец карточки -->
+
+          <!-- Карточка Различный уровень -->
+          {% for item in various_level %}
+            <div class="card mb-4 w-100 shadow-sm" data-id="{{ item.id }}" data-type="various_level">
+              <div class="card-body">
+                <h5 class="card-title d-flex justify-content-between align-items-center">
+                  {{ item.event_t }}
+                  <span class="badge t-outline">Участие в мероприятиях различного уровня</span>
+                </h5>
+
+                <p class="mb-1">
+                  <strong>ФИО:</strong> {{ item.fullname }}
+                </p>
+                <p class="mb-1">
+                  <strong>Уровень:</strong> {{ item.level_e }}
+                </p>
+                <p class="mb-1">
+                  <strong>Дата:</strong> {{ item.date_e }}
+                </p>
+                <button type="button" class="btn btn-more mt-2" data-bs-toggle="modal" data-bs-target="#variousModal{{ item.id }}">Подробнее</button>
+              </div>
+              <div class="position-absolute bottom-0 end-0 p-3 d-flex gap-2">
+                <button type="button" class="btn btn-sm btn-more btn-accept">Принять</button>
+                <button type="button" class="btn btn-sm btn-outline-danger btn-reject">Отклонить</button>
+              </div>
+            </div>
+
+            <!-- Модальное окно -->
+            <div class="modal fade" id="variousModal{{ item.id }}" tabindex="-1" aria-labelledby="variousModalLabel{{ item.id }}" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-scrollable modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="variousModalLabel{{ item.id }}">Подробности</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                  </div>
+                  <div class="modal-body">
+                    <p>
+                      <strong>ФИО:</strong> {{ item.fullname }}
+                    </p>
+                    <p>
+                      <strong>Группа:</strong> {{ item.group_s }}
+                    </p>
+                    <p>
+                      <strong>Вид мероприятия:</strong> {{ item.event_t }}
+                    </p>
+                    <p>
+                      <strong>Уровень:</strong> {{ item.level_e }}
+                    </p>
+                    <p>
+                      <strong>Название мероприятия:</strong> {{ item.name_e }}
+                    </p>
+                    <p>
+                      <strong>Место проведения:</strong> {{ item.venue }}
+                    </p>
+                    <p>
+                      <strong>Дата:</strong> {{ item.date_e }}
+                    </p>
+                    <p>
+                      <strong>Результат:</strong> {{ item.result }}
+                    </p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+          <!-- Конец карточки -->
+
+          <!-- Карточка Публикации -->
+          {% for item in publication %}
+            <div class="card mb-4 w-100 shadow-sm" data-id="{{ item.id }}" data-type="publication">
+              <div class="card-body">
+                <h5 class="card-title d-flex justify-content-between align-items-center">
+                  {{ item.fname_work }}
+                  <span class="badge t-outline">Публикации</span>
+                </h5>
+
+                <p class="mb-1">
+                  <strong>ФИО:</strong> {{ item.fullname }}
+                </p>
+                <p class="mb-1">
+                  <strong>Соавторы:</strong> {{ item.coauthors }}
+                </p>
+                <p class="mb-1">
+                  <strong>Форма работы:</strong> {{ item.form_w }}
+                </p>
+                <button type="button" class="btn btn-more mt-2" data-bs-toggle="modal" data-bs-target="#publicationModal{{ item.id }}">Подробнее</button>
+              </div>
+              <div class="position-absolute bottom-0 end-0 p-3 d-flex gap-2">
+                <button type="button" class="btn btn-sm btn-more btn-accept">Принять</button>
+                <button type="button" class="btn btn-sm btn-outline-danger btn-reject">Отклонить</button>
+              </div>
+
+            </div>
+
+            <!-- Модальное окно -->
+            <div class="modal fade" id="publicationModal{{ item.id }}" tabindex="-1" aria-labelledby="publicationModalLabel{{ item.id }}" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-scrollable modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="publicationModalLabel{{ item.id }}">Подробности</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                  </div>
+                  <div class="modal-body">
+                    <p>
+                      <strong>ФИО:</strong> {{ item.fullname }}
+                    </p>
+                    <p>
+                      <strong>Группа:</strong> {{ item.group_s }}
+                    </p>
+                    <p>
+                      <strong>Соавторы:</strong> {{ item.coauthors }}
+                    </p>
+                    <p>
+                      <strong>Полное название работы:</strong> {{ item.fname_work }}
+                    </p>
+                    <p>
+                      <strong>Выходные данные:</strong> {{ item.output_d }}
+                    </p>
+                    <p>
+                      <strong>Форма работы:</strong> {{ item.form_w }}
+                    </p>
+                    <p>
+                      <strong>Тип издания:</strong> {{ item.public_t }}
+                    </p>
+                    <p>
+                      <strong>Входит в ВАК/РИНЦ:</strong> {{ item.article_inc }}
+                    </p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+          <!-- Конец карточки -->
+
+          <!-- Карточка Студенческое самоуправление -->
+          {% for item in student_government %}
+            <div class="card mb-4 w-100 shadow-sm" data-id="{{ item.id }}" data-type="student_government">
+              <div class="card-body">
+                <h5 class="card-title d-flex justify-content-between align-items-center">
+                  {{ item.activity_t }}
+                  <span class="badge t-outline">Студенческое самоуправление</span>
+                </h5>
+
+                <p class="mb-1">
+                  <strong>ФИО:</strong> {{ item.fullname }}
+                </p>
+                <p>
+                  <strong>Орган:</strong> {{ item.body_g }}
+                </p>
+                <p class="mb-1">
+                  <strong>Период:</strong> {{ item.activity_per }}
+                </p>
+                <button type="button" class="btn btn-more mt-2" data-bs-toggle="modal" data-bs-target="#governmentModal{{ item.id }}">Подробнее</button>
+              </div>
+              <div class="position-absolute bottom-0 end-0 p-3 d-flex gap-2">
+                <button type="button" class="btn btn-sm btn-more btn-accept">Принять</button>
+                <button type="button" class="btn btn-sm btn-outline-danger btn-reject">Отклонить</button>
+              </div>
+            </div>
+
+            <!-- Модальное окно -->
+            <div class="modal fade" id="governmentModal{{ item.id }}" tabindex="-1" aria-labelledby="governmentModalLabel{{ item.id }}" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-scrollable modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="governmentModalLabel{{ item.id }}">Подробности</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                  </div>
+                  <div class="modal-body">
+                    <p>
+                      <strong>ФИО:</strong> {{ item.fullname }}
+                    </p>
+                    <p>
+                      <strong>Группа:</strong> {{ item.group_s }}
+                    </p>
+                    <p>
+                      <strong>Орган:</strong> {{ item.body_g }}
+                    </p>
+                    <p>
+                      <strong>Вид деятельности:</strong> {{ item.activity_t }}
+                    </p>
+                    <p>
+                      <strong>Период:</strong> {{ item.activity_per }}
+                    </p>
+                    <p>
+                      <strong>Примечание:</strong> {{ item.note }}
+                    </p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+          <!-- Конец карточки -->
+
+          <!-- Карточка Иные достижения -->
+          {% for item in other_achiev %}
+            <div class="card mb-4 w-100 shadow-sm" data-id="{{ item.id }}" data-type="other_achiev">
+              <div class="card-body">
+                <h5 class="card-title d-flex justify-content-between align-items-center">
+                  {{ item.achiev }}
+                  <span class="badge t-outline">Иные достижения</span>
+                </h5>
+
+                <p class="mb-1">
+                  <strong>ФИО:</strong> {{ item.fullname }}
+                </p>
+                <p class="mb-1">
+                  <strong>Вид деятельности:</strong> {{ item.activity_t }}
+                </p>
+                <p class="mb-1">
+                  <strong>Дата:</strong> {{ item.date_o }}
+                </p>
+                <button type="button" class="btn btn-more mt-2" data-bs-toggle="modal" data-bs-target="#otherModal{{ item.id }}">Подробнее</button>
+              </div>
+              <div class="position-absolute bottom-0 end-0 p-3 d-flex gap-2">
+                <button type="button" class="btn btn-sm btn-more btn-accept">Принять</button>
+                <button type="button" class="btn btn-sm btn-outline-danger btn-reject">Отклонить</button>
+              </div>
+            </div>
+
+            <!-- Модальное окно -->
+            <div class="modal fade" id="otherModal{{ item.id }}" tabindex="-1" aria-labelledby="otherModalLabel{{ item.id }}" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-scrollable modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="otherModalLabel{{ item.id }}">Подробности</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                  </div>
+                  <div class="modal-body">
+                    <p>
+                      <strong>ФИО:</strong> {{ item.fullname }}
+                    </p>
+                    <p>
+                      <strong>Группа:</strong> {{ item.group_s }}
+                    </p>
+                    <p>
+                      <strong>Вид деятельности:</strong> {{ item.activity_t }}
+                    </p>
+                    <p>
+                      <strong>Достижение:</strong> {{ item.achiev }}
+                    </p>
+                    <p>
+                      <strong>Дата:</strong> {{ item.date_o }}
+                    </p>
+                    <p>
+                      <strong>Примечание:</strong> {{ item.note }}
+                    </p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+          <!-- Конец карточки -->
+
+          <!-- Карточка Освоение доп. программ -->
+          {% for item in add_programm %}
+            <div class="card mb-4 w-100 shadow-sm" data-id="{{ item.id }}" data-type="add_programm">
+              <div class="card-body">
+                <h5 class="card-title d-flex justify-content-between align-items-center">
+                  {{ item.name_p }}
+                  <span class="badge t-outline">Освоение доп. программ</span>
+                </h5>
+
+                <p class="mb-1">
+                  <strong>ФИО:</strong> {{ item.fullname }}
+                </p>
+                <p class="mb-1">
+                  <strong>Часы:</strong> {{ item.hours }}
+                </p>
+                <p class="mb-1">
+                  <strong>Сроки:</strong> {{ item.terms }}
+                </p>
+                <button type="button" class="btn btn-more mt-2" data-bs-toggle="modal" data-bs-target="#addModal{{ item.id }}">Подробнее</button>
+              </div>
+              <div class="position-absolute bottom-0 end-0 p-3 d-flex gap-2">
+                <button type="button" class="btn btn-sm btn-more btn-accept">Принять</button>
+                <button type="button" class="btn btn-sm btn-outline-danger btn-reject">Отклонить</button>
+              </div>
+            </div>
+
+            <!-- Модальное окно -->
+            <div class="modal fade" id="addModal{{ item.id }}" tabindex="-1" aria-labelledby="addModalLabel{{ item.id }}" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-scrollable modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="addModalLabel{{ item.id }}">Подробности</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                  </div>
+                  <div class="modal-body">
+                    <p>
+                      <strong>ФИО:</strong> {{ item.fullname }}
+                    </p>
+                    <p>
+                      <strong>Группа:</strong> {{ item.group_s }}
+                    </p>
+                    <p>
+                      <strong>Название программы:</strong> {{ item.name_p }}
+                    </p>
+                    <p>
+                      <strong>Вид обучения:</strong> {{ item.education_t }}
+                    </p>
+                    <p>
+                      <strong>Часы:</strong> {{ item.hours }}
+                    </p>
+                    <p>
+                      <strong>Сроки:</strong> {{ item.terms }}
+                    </p>
+                    <p>
+                      <strong>Место обучения:</strong> {{ item.education_p }}
+                    </p>
+                    <p>
+                      <strong>Документ:</strong> {{ item.name_d }}
+                    </p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+          <!-- Конец карточки -->
+
+          <!-- Карточка Опыт работы -->
+           {% for item in experience %}
+          <div class="card mb-4 w-100 shadow-sm" data-id="{{ item.id }}" data-type="experience">
+            <div class="card-body">
+              <h5 class="card-title d-flex justify-content-between align-items-center">
+                {{ item.place_w }}
+                <span class="badge t-outline">Опыт работы</span>
+              </h5>
+
+              <p class="mb-1">
+                <strong>ФИО:</strong> {{ item.fullname }}
+              </p>
+              <p class="mb-1">
+                <strong>Должность:</strong> {{ item.title_j }}
+              </p>
+              <p class="mb-1">
+                <strong>Сроки:</strong> {{ item.deadlines }}
+              </p>
+              <button type="button" class="btn btn-more mt-2" data-bs-toggle="modal" data-bs-target="#experienceModal{{ item.id }}">Подробнее</button>
+            </div>
+              <div class="position-absolute bottom-0 end-0 p-3 d-flex gap-2">
+                <button type="button" class="btn btn-sm btn-more btn-accept">Принять</button>
+                <button type="button" class="btn btn-sm btn-outline-danger btn-reject">Отклонить</button>
+              </div>
+          </div>
+
+          <!-- Модальное окно -->
+          <div class="modal fade" id="experienceModal{{ item.id }}" tabindex="-1" aria-labelledby="experienceModalLabel{{ item.id }}" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="experienceModalLabel{{ item.id }}">Подробности</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                  <p>
+                    <strong>ФИО:</strong> {{ item.fullname }}
+                  </p>
+                  <p>
+                    <strong>Группа:</strong> {{ item.group_s }}
+                  </p>
+                  <p>
+                    <strong>Место работы:</strong> {{ item.place_w }}
+                  </p>
+                  <p>
+                    <strong>Вид работы:</strong> {{ item.work_t }}
+                  </p>
+                  <p>
+                    <strong>Должность:</strong> {{ item.title_j }}
+                  </p>
+                  <p>
+                    <strong>Сроки:</strong> {{ item.deadlines }}
+                  </p>
+                  <p>
+                    <strong>Обязанности:</strong> {{ item.respons }}
+                  </p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+          <!-- Конец карточки -->
+        </div>
+      </div>
+    </div>
+      <!-- Toast: Принято -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+      <div id="toastAccepted" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+          <div class="toast-body">
+            Достижение принято
+          </div>
+          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+      </div>
+
+      <!-- Toast: Отклонено -->
+      <div id="toastRejected" class="toast align-items-center text-bg-danger border-0 mt-2" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+          <div class="toast-body">
+            Достижение отклонено
+          </div>
+          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+      </div>
+    </div>
+    <!--Модальное окно для принятия достижения-->
+    <div class="modal fade" id="confirmAcceptModal" tabindex="-1" aria-labelledby="confirmAcceptLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-success text-white">
+            <h5 class="modal-title" id="confirmAcceptLabel">Подтвердить принятие</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+          </div>
+          <div class="modal-body">
+            Вы уверены, что хотите <strong>принять</strong> это достижение?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+            <button type="button" class="btn btn-success" id="confirmAcceptBtn">Принять</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--Модальное окно для отклонения достижения-->
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-danger text-white">
+            <h5 class="modal-title" id="confirmDeleteLabel">Подтверждение отклонения</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+          </div>
+          <div class="modal-body">
+            Вы уверены, что хотите <strong>отклонить</strong> это достижение?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+            <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Отклонить</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="{% static 'admin_pending.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

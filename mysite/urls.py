@@ -15,14 +15,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
-from achievements.views import redirect, login_view, main_view, achiev_view, admin_panel_view
+from achievements import views
 
 urlpatterns = [
-    path('', lambda request: redirect('login'), name='root_redirect'),
-    path('login/', login_view, name='login'),
-    path('main/', main_view, name='main'),  
-    path('achiev/', achiev_view, name='achiev'), 
-    path('admin_panel/', admin_panel_view, name='admin_panel') 
+    path('', lambda request: views.redirect('login'), name='root_redirect'),
+    path('login/', views.login_view, name='login'),
+    path('main/', views.main_view, name='main'),  
+    path('achiev/', views.achiev_view, name='achiev'), 
+    path('admin_panel/', views.admin_panel_view, name='admin_panel'),
+    path('submit-application/', views.submit_application, name='submit_application'),
+    path('admin_pending/', views.admin_pending_view, name='admin_pending'),
+    path('update_achievement/', views.update_achievement_status, name='update_achievement_status'),
+    path('generate_report/', views.generate_report_docx, name='generate_report_docx')
 ]
 
 
