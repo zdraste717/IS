@@ -26,7 +26,8 @@ urlpatterns = [
     path('submit-application/', views.submit_application, name='submit_application'),
     path('admin_pending/', views.admin_pending_view, name='admin_pending'),
     path('update_achievement/', views.update_achievement_status, name='update_achievement_status'),
-    path('generate_report/', views.generate_report_docx, name='generate_report_docx')
+    path('generate_report/', views.generate_report_docx, name='generate_report_docx'),
+    path('logout/', views.logout_view, name='logout')
 ]
 
 

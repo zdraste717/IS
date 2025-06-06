@@ -24,11 +24,16 @@
 
           <!-- Иконки -->
           <div class="d-flex align-items-center ms-auto order-lg-3">
-            <div class="position-relative me-3">
-              <i class="bi bi-bell fs-4 text-primary"></i>
+            <div class="dropdown">
+              <button class="btn btn-icon" id="accountDropdownBtn" data-bs-toggle="dropdown"
+                aria-expanded="false" aria-label="Аккаунт">
+                <i class="bi bi-person-circle"></i>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                <li><a class="dropdown-item text-danger" href="{% url 'logout' %}">Выйти</a></li>
+              </ul>
             </div>
-            <i class="bi bi-person-circle fs-4 text-primary"></i>
-          </div>
+        </div>
 
           <!-- Меню -->
           {% if request.session.is_admin %}

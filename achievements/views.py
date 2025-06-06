@@ -1,4 +1,3 @@
-from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render, redirect
 from datetime import datetime
 import re
@@ -6,8 +5,7 @@ from django.views.decorators.http import require_POST
 from django.http import HttpResponse
 import json
 from docx import Document
-from django.views.decorators.csrf import csrf_exempt
-from django.utils.html import strip_tags    
+from django.views.decorators.csrf import csrf_exempt   
 from io import BytesIO
 from django.http import JsonResponse
 from django.db.models import Q
@@ -497,3 +495,6 @@ def generate_report_docx(request):
     response['Content-Disposition'] = 'attachment; filename=report.docx'
     return response
 
+def logout_view(request):
+    request.session.flush()  
+    return redirect('login')  
