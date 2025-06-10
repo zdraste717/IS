@@ -62,10 +62,14 @@
 
       <div class="d-flex align-items-center justify-content-end gap-2">
         <button class="btn btn-more me-2" id="addAchiev">Добавить достижение</button>
-        <form id="reportForm" method="post" action="{% url 'generate_report_docx' %}">
+        <form id="reportForm" method="post">
           {% csrf_token %}
           <input type="hidden" name="report_data" id="reportData">
-          <button type="submit" class="btn btn-more">Скачать отчет</button>
+          <input type="hidden" name="format" id="reportFormat" value="docx">
+          <div class="btn-group" role="group">
+            <button type="submit" class="btn btn-more" onclick="setReportFormat('docx')">Docx</button>
+            <button type="submit" class="btn btn-more" onclick="setReportFormat('excel')">Excel</button>
+          </div>
         </form>
       </div>
     </div>

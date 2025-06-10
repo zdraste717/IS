@@ -287,6 +287,17 @@ document.getElementById('applicationForm').addEventListener('submit', function (
   });
 });
 
+function setReportFormat(format) {
+  document.getElementById('reportFormat').value = format;
+
+  const form = document.getElementById('reportForm');
+  if (format === 'docx') {
+  form.action = '/generate_report/';  
+  } else if (format === 'excel') {
+    form.action = '/generate_report_excel/';
+  }
+}
+
 document.getElementById('reportForm').addEventListener('submit', function(e) {
   const achievements = [];
 

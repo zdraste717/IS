@@ -46,4 +46,28 @@ body {
   background-color: transparent;
   color: #172b4d;
 }
-  
+
+.badge-custom {
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1.5px solid;
+  white-space: nowrap;
+}
+
+.badge-approved {
+  color: #172b4d;
+  border-color: #172b4d;
+  background-color: transparent;
+}
+
+.badge-pending {
+  color: #0d6efd;
+  border-color: #0d6efd;
+  background-color: transparent;
+}
+
+.accordion-button::after {
+  display: none;
+}

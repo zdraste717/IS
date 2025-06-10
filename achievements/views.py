@@ -5,6 +5,8 @@ from django.views.decorators.http import require_POST
 from django.http import HttpResponse
 import json
 from docx import Document
+from openpyxl import Workbook
+from openpyxl.utils import get_column_letter
 from django.views.decorators.csrf import csrf_exempt   
 from io import BytesIO
 from django.http import JsonResponse
@@ -22,15 +24,15 @@ def achiev_view(request):
     student = Student.objects.filter(fullname=fullname).first()
 
     data = {
-        'scienes': Scienes.objects.filter(fullname=fullname).exclude(status="В обработке"),
-        'sport': Sport.objects.filter(fullname=fullname).exclude(status="В обработке"),
-        'creation': Creation.objects.filter(fullname=fullname).exclude(status="В обработке"),
-        'various_level': VariousLevel.objects.filter(fullname=fullname).exclude(status="В обработке"),
-        'publication': Publication.objects.filter(fullname=fullname).exclude(status="В обработке"),
-        'student_government': StudentGovernment.objects.filter(fullname=fullname).exclude(status="В обработке"),
-        'other_achiev': OtherAchiev.objects.filter(fullname=fullname).exclude(status="В обработке"),
-        'add_programm': AddProgramm.objects.filter(fullname=fullname).exclude(status="В обработке"),
-        'experience': Experience.objects.filter(fullname=fullname).exclude(status="В обработке"),
+        'scienes': Scienes.objects.filter(fullname=fullname),
+        'sport': Sport.objects.filter(fullname=fullname),
+        'creation': Creation.objects.filter(fullname=fullname),
+        'various_level': VariousLevel.objects.filter(fullname=fullname),
+        'publication': Publication.objects.filter(fullname=fullname),
+        'student_government': StudentGovernment.objects.filter(fullname=fullname),
+        'other_achiev': OtherAchiev.objects.filter(fullname=fullname),
+        'add_programm': AddProgramm.objects.filter(fullname=fullname),
+        'experience': Experience.objects.filter(fullname=fullname)
     }
 
     # Проверяем — есть ли хоть одно достижение
@@ -493,6 +495,71 @@ def generate_report_docx(request):
         content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
     )
     response['Content-Disposition'] = 'attachment; filename=report.docx'
+    return response
+
+@csrf_exempt
+def generate_report_excel(request):
+    if request.method != 'POST':
+        return HttpResponse("Метод не разрешён", status=405)
+
+    try:
+        data = json.loads(request.POST.get('report_data', '[]'))
+    except json.JSONDecodeError:
+        return HttpResponse("Ошибка при обработке данных", status=400)
+
+    if not data:
+        return HttpResponse("Нет данных для отчёта", status=400)
+
+    wb = Workbook()
+    wb.remove(wb.active)  # Удаляем дефолтный пустой лист
+
+    grouped = {}
+    for item in data:
+        type_ = item.get('type', 'Без категории')
+        grouped.setdefault(type_, []).append(item)
+
+    for type_name, achievements in grouped.items():
+        ws = wb.create_sheet(title=type_name[:31])  # max 31 символ
+
+        # Заголовки
+        all_lines = [a['content'] for a in achievements if a['content']]
+        flat_fields = set()
+
+        for lines in all_lines:
+            for line in lines:
+                if ':' in line:
+                    key = line.split(':')[0].strip()
+                    flat_fields.add(key)
+
+        flat_fields.discard("ФИО")
+        headers = ["ФИО"] + sorted(flat_fields)
+        ws.append(headers)
+
+        for ach in achievements:
+            row = []
+            content_map = {}
+            for line in ach.get('content', []):
+                if ':' in line:
+                    key, val = line.split(':', 1)
+                    content_map[key.strip()] = val.strip()
+            row = [content_map.get(header, "") for header in headers]
+            ws.append(row)
+
+        # Автоширина
+        for col_idx, _ in enumerate(headers, start=1):
+            col_letter = get_column_letter(col_idx)
+            max_len = max((len(str(ws.cell(row=i, column=col_idx).value)) for i in range(1, ws.max_row + 1)), default=10)
+            ws.column_dimensions[col_letter].width = max_len + 2
+
+    buffer = BytesIO()
+    wb.save(buffer)
+    buffer.seek(0)
+
+    response = HttpResponse(
+        buffer.getvalue(),
+        content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    )
+    response['Content-Disposition'] = 'attachment; filename=report.xlsx'
     return response
 
 def logout_view(request):

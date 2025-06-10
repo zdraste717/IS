@@ -168,9 +168,15 @@
             <div class="accordion" id="scienceAccordion">
               {% for item in scienes %}
               <div class="accordion-item">
-                <h2 class="accordion-header" id="headingScience{{ forloop.counter }}"><button
-                    class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseScience{{ forloop.counter }}">Проект: {{ item.p_name }}</button></h2>
+                <h2 class="accordion-header" id="headingScience{{ forloop.counter }}">
+                  <button class="accordion-button collapsed d-flex align-items-center" type="button"
+                          data-bs-toggle="collapse"
+                          data-bs-target="#collapseScience{{ forloop.counter }}">
+                    <span class="flex-grow-1">Проект: {{ item.p_name }}</span>
+                    <span class="badge-custom {% if item.status == 'Принято' %}badge-approved{% else %}badge-pending{% endif %} ms-auto">
+                      {{ item.status }}
+                    </span>
+                  </button></h2>
                 <div id="collapseScience{{ forloop.counter }}" class="accordion-collapse collapse"
                   data-bs-parent="#scienceAccordion">
                   <div class="accordion-body">
@@ -210,9 +216,15 @@
             <div class="accordion" id="sportAccordion">
               {% for item in sport %}
               <div class="accordion-item">
-                <h2 class="accordion-header" id="headingSport{{ forloop.counter }}"><button
-                    class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseSport{{ forloop.counter }}">Вид спорта: {{ item.sport_t }}</button></h2>
+                <h2 class="accordion-header" id="headingSport{{ forloop.counter }}">
+                  <button class="accordion-button collapsed d-flex align-items-center" type="button"
+                          data-bs-toggle="collapse"
+                          data-bs-target="#collapseSport{{ forloop.counter }}">
+                    <span class="flex-grow-1">Проект: {{ item.sport_t }}</span>
+                    <span class="badge-custom {% if item.status == 'Принято' %}badge-approved{% else %}badge-pending{% endif %} ms-auto">
+                      {{ item.status }}
+                    </span>
+                  </button></h2>
                 <div id="collapseSport{{ forloop.counter }}" class="accordion-collapse collapse"
                   data-bs-parent="#sportAccordion">
                   <div class="accordion-body">
@@ -242,9 +254,15 @@
             <div class="accordion" id="creativeAccordion">
               {% for item in creation %}
               <div class="accordion-item">
-                <h2 class="accordion-header" id="headingCreative{{ forloop.counter }}"><button
-                    class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseCreative{{ forloop.counter }}">{{ item.activity_t }}</button></h2>
+                <h2 class="accordion-header" id="headingCreative{{ forloop.counter }}">
+                  <button class="accordion-button collapsed d-flex align-items-center" type="button"
+                          data-bs-toggle="collapse"
+                          data-bs-target="#collapseCreative{{ forloop.counter }}">
+                    <span class="flex-grow-1">Проект: {{ item.activity_t }}</span>
+                    <span class="badge-custom {% if item.status == 'Принято' %}badge-approved{% else %}badge-pending{% endif %} ms-auto">
+                      {{ item.status }}
+                    </span>
+                  </button></h2>
                 <div id="collapseCreative{{ forloop.counter }}" class="accordion-collapse collapse"
                   data-bs-parent="#creativeAccordion">
                   <div class="accordion-body">
@@ -274,9 +292,15 @@
             <div class="accordion" id="variousAccordion">
               {% for item in various_level %}
               <div class="accordion-item">
-                <h2 class="accordion-header" id="headingVarious{{ forloop.counter }}"><button
-                    class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseVarious{{ forloop.counter }}">{{ item.name_e }}</button></h2>
+                <h2 class="accordion-header" id="headingVarious{{ forloop.counter }}">
+                  <button class="accordion-button collapsed d-flex align-items-center" type="button"
+                          data-bs-toggle="collapse"
+                          data-bs-target="#collapseVarious{{ forloop.counter }}">
+                    <span class="flex-grow-1">Проект: {{ item.name_e }}</span>
+                    <span class="badge-custom {% if item.status == 'Принято' %}badge-approved{% else %}badge-pending{% endif %} ms-auto">
+                      {{ item.status }}
+                    </span>
+                  </button></h2>
                 <div id="collapseVarious{{ forloop.counter }}" class="accordion-collapse collapse"
                   data-bs-parent="#variousAccordion">
                   <div class="accordion-body">
@@ -312,9 +336,15 @@
             <div class="accordion" id="publicAccordion">
               {% for item in publication %}
               <div class="accordion-item">
-                <h2 class="accordion-header" id="headingPub{{ forloop.counter }}"><button
-                    class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapsePub{{ forloop.counter }}">{{ item.fname_work }}</button></h2>
+                <h2 class="accordion-header" id="headingPub{{ forloop.counter }}">
+                  <button class="accordion-button collapsed d-flex align-items-center" type="button"
+                          data-bs-toggle="collapse"
+                          data-bs-target="#collapsePub{{ forloop.counter }}">
+                    <span class="flex-grow-1">Проект: {{ item.fname_work }}</span>
+                    <span class="badge-custom {% if item.status == 'Принято' %}badge-approved{% else %}badge-pending{% endif %} ms-auto">
+                      {{ item.status }}
+                    </span>
+                  </button></h2>
                 <div id="collapsePub{{ forloop.counter }}" class="accordion-collapse collapse"
                   data-bs-parent="#publicAccordion">
                   <div class="accordion-body">
@@ -350,9 +380,15 @@
             <div class="accordion" id="governmentAccordion">
               {% for item in student_government %}
               <div class="accordion-item">
-                <h2 class="accordion-header" id="headingGov{{ forloop.counter }}"><button
-                    class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseGov{{ forloop.counter }}">{{ item.activity_t }}</button></h2>
+                <h2 class="accordion-header" id="headingGov{{ forloop.counter }}">
+                  <button class="accordion-button collapsed d-flex align-items-center" type="button"
+                          data-bs-toggle="collapse"
+                          data-bs-target="#collapseGov{{ forloop.counter }}">
+                    <span class="flex-grow-1">Проект: {{ item.activity_t }}</span>
+                    <span class="badge-custom {% if item.status == 'Принято' %}badge-approved{% else %}badge-pending{% endif %} ms-auto">
+                      {{ item.status }}
+                    </span>
+                  </button></h2>
                 <div id="collapseGov{{ forloop.counter }}" class="accordion-collapse collapse"
                   data-bs-parent="#governmentAccordion">
                   <div class="accordion-body">
@@ -382,7 +418,15 @@
             <div class="accordion" id="otherAccordion">
               {% for item in other_achiev %}
               <div class="accordion-item">
-                <h2 class="accordion-header" id="headingOther{{ forloop.counter }}"><button
+                <h2 class="accordion-header" id="headingOther{{ forloop.counter }}">
+                  <button class="accordion-button collapsed d-flex align-items-center" type="button"
+                          data-bs-toggle="collapse"
+                          data-bs-target="#collapseOther{{ forloop.counter }}">
+                    <span class="flex-grow-1">Проект: {{ item.activity_t }}</span>
+                    <span class="badge-custom {% if item.status == 'Принято' %}badge-approved{% else %}badge-pending{% endif %} ms-auto">
+                      {{ item.status }}
+                    </span>
+                  </button><button
                     class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapseOther{{ forloop.counter }}">{{ item.activity_t }}</button></h2>
                 <div id="collapseOther{{ forloop.counter }}" class="accordion-collapse collapse"
@@ -414,9 +458,15 @@
             <div class="accordion" id="addAccordion">
               {% for item in add_programm %}
               <div class="accordion-item">
-                <h2 class="accordion-header" id="headingAdd{{ forloop.counter }}"><button
-                    class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseAdd{{ forloop.counter }}">{{ item.name_p }}</button></h2>
+                <h2 class="accordion-header" id="headingAdd{{ forloop.counter }}">
+                  <button class="accordion-button collapsed d-flex align-items-center" type="button"
+                          data-bs-toggle="collapse"
+                          data-bs-target="#collapseAdd{{ forloop.counter }}">
+                    <span class="flex-grow-1">Проект: {{ item.name_p }}</span>
+                    <span class="badge-custom {% if item.status == 'Принято' %}badge-approved{% else %}badge-pending{% endif %} ms-auto">
+                      {{ item.status }}
+                    </span>
+                  </button></h2>
                 <div id="collapseAdd{{ forloop.counter }}" class="accordion-collapse collapse"
                   data-bs-parent="#addAccordion">
                   <div class="accordion-body">
@@ -452,9 +502,15 @@
             <div class="accordion" id="experienceAccordion">
               {% for item in experience %}
               <div class="accordion-item">
-                <h2 class="accordion-header" id="headingExp{{ forloop.counter }}"><button
-                    class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseExp{{ forloop.counter }}">{{ item.place_w }}</button></h2>
+                <h2 class="accordion-header" id="headingExp{{ forloop.counter }}">
+                  <button class="accordion-button collapsed d-flex align-items-center" type="button"
+                          data-bs-toggle="collapse"
+                          data-bs-target="#collapseExp{{ forloop.counter }}">
+                    <span class="flex-grow-1">Проект: {{ item.place_w }}</span>
+                    <span class="badge-custom {% if item.status == 'Принято' %}badge-approved{% else %}badge-pending{% endif %} ms-auto">
+                      {{ item.status }}
+                    </span>
+                  </button></h2>
                 <div id="collapseExp{{ forloop.counter }}" class="accordion-collapse collapse"
                   data-bs-parent="#experienceAccordion">
                   <div class="accordion-body">
